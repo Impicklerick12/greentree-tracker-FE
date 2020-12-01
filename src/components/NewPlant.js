@@ -33,7 +33,7 @@ const NewPlant = ({history}) => {
             type: "setPlants",
             data: [...plants, newPlant]
         })
-        history.push(`/`)
+        history.push(`/plants/${nextId}`)
     }
 
     const initialFormState = {
@@ -68,4 +68,4 @@ const NewPlant = ({history}) => {
     )
 }
 
-export default NewPlant
+export default withRouter(NewPlant)
