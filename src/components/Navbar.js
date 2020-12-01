@@ -1,137 +1,136 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { useGlobalState } from '../config/store'
 
 import {
     AppBar,
     Toolbar,
+    Typography,
     IconButton,
-    List,
-    ListItem,
-    ListItemText,
-    Container
+    Button,
+    Switch,
+    FormControlLabel,
+    FormGroup,
+    MenuItem,
+    Menu,
+    Container,
+    useMediaQuery
 } from "@material-ui/core"
-import { Home } from "@material-ui/icons"
-import { makeStyles } from "@material-ui/core/styles"
 
-import {
-    Landing,
-    Login,
-    Register,
-    UserAccount,
-    Plants,
-    QuoteRequest,
-    Contact,
-    Admin,
-    NotFound
-} from '../Exports'
+import AccountCircle from "@material-ui/icons/AccountCircle"
+import MenuIcon from '@material-ui/icons/Menu'
 
-const useStyles = makeStyles({
-    navbarDisplayFlex: {
-        display: `flex`,
-        justifyContent: `space-between`
+import { 
+    makeStyles,
+    useTheme
+} from "@material-ui/core/styles"
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
     },
-    navDisplayFlex: {
-      display: `flex`,
-      justifyContent: `space-between`
+    menuButton: {
+      marginRight: theme.spacing(2),
     },
-    linkText: {
-      textDecoration: `none`,
-      textTransform: `uppercase`,
-      color: `white`
+    title: {
+      flexGrow: 1,
+    },
+  }));
+
+const Navbar = ({history}) => {
+
+    // Logout user
+    function handleLogout() {
+        dispatch({
+        type: "setLoggedInUser",
+        data: null
+        })
     }
-});
 
-const Navbar = () => {
-    const classes = useStyles();
+    const {store, dispatch} = useGlobalState()
+    const {loggedInUser} = store
+
+    const classes = useStyles()
+
+    const [anchorEl, setAnchorEl] = React.useState(null)
+    const open = Boolean(anchorEl);
+
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down("xs"))
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget)
+    };
+
+    const handleMenuClick = (pageURL) => {
+        history.push(pageURL)
+        setAnchorEl(null);
+    };
 
     return (
-        <BrowserRouter>
+        <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Container maxWidth="md" className={classes.navbarDisplayFlex}>
-                        {/* Logo Here */}
-                        <IconButton edge="start" color="inherit" aria-label="home">
-                            <Home fontSize="large" />
-                        </IconButton>
-                        <List 
-                            component="nav" 
-                            aria-labelledby="main navigation"
-                            className={classes.navDisplayFlex}
-                        >
-                            <Link to="/" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Home" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/login" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Login" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/register" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Register" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/account" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Account" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/plants" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Plants" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/quote" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Quote" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/contact" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Contact" />
-                                </ListItem>
-                            </Link>
-                            <Link to="/admin" className={classes.linkText}>
-                                <ListItem button>
-                                    <ListItemText primary="Admin" />
-                                </ListItem>
-                            </Link>
-                        </List>
-                    </Container>
+                    <Typography variant="h6" className={classes.title}>
+                        Greentree Tracker
+                    </Typography>
+                    <div>
+                        {isMobile ? (
+                            <>
+                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={() => setAnchorEl(null)}
+                            >
+                            {loggedInUser ? (
+                                <>
+                                <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
+                                <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
+                                <MenuItem onClick={() => handleMenuClick('/quote')}>Quote</MenuItem>
+                                <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </>
+                            ) : (
+                                <>
+                                <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
+                                <MenuItem onClick={() => handleMenuClick('/quote')}>Quote</MenuItem>
+                                <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+                                <MenuItem onClick={() => handleMenuClick('/auth/login')}>Login</MenuItem>
+                                <MenuItem onClick={() => handleMenuClick('/auth/register')}>Register</MenuItem>
+                                </>
+                            )}
+                            </Menu>
+                            </>
+                        ) : (
+                            <>
+                            <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
+                            <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
+                            <Button onClick={() => handleMenuClick('/quote')}>Quote</Button>
+                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
+                            <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
+                            <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                            <Button onClick={handleLogout}>Logout</Button>
+                            </>
+                        )
+                        }
+                    </div>
                 </Toolbar>
             </AppBar>
-            <Switch>
-                {/* Home Component */}
-                <Route exact path="/"><Landing /></Route>
-
-                {/* Login Component */}
-                <Route exact path="/login"><Login /></Route>
-
-                {/* Register Component */}
-                <Route exact path="/register"><Register /></Route>
-
-                {/* UserAccount Component */}
-                <Route exact path="/account"><UserAccount /></Route>
-
-                {/* Plants Component */}
-                <Route exact path="/plants"><Plants /></Route>
-
-                {/* Quote Request Component */}
-                <Route exact path="/quote"><QuoteRequest /></Route>
-
-                {/* Contact Component */}
-                <Route exact path="/contact"><Contact /></Route>
-
-                {/* Admin Component */}
-                <Route exact path="/admin"><Admin /></Route>
-
-                {/* Not found component which will display if a URL doesn't match a route */}
-                <Route component={NotFound} />
-            </Switch>
-        </BrowserRouter>
+        </div>
     )
 }
 
-export default Navbar
+export default withRouter(Navbar)
