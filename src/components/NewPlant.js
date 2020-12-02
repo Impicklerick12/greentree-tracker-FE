@@ -24,10 +24,14 @@ const NewPlant = ({history}) => {
         const nextId = getNextId()
         const newPlant = {
             _id: nextId,
-            commonName: formState.commonName,
+            common_name: formState.common_name,
+            botanical_name: formState.botanical_name,
             category: formState.category || "Bush",
             modified_date: new Date(),
-            description: formState.description
+            description: formState.description,
+            price: formState.price,
+            pot_size: formState.pot_size,
+            quantity: formState.quantity,
         }
         dispatch({
             type: "setPlants",
@@ -37,9 +41,13 @@ const NewPlant = ({history}) => {
     }
 
     const initialFormState = {
-        commonName: "",
+        common_name: "",
+        botanical_name: "",
         category: "",
-        description: ""
+        description: "",
+        price: 0,
+        pot_size: "",
+        quantity: ""
     } 
 
     const [formState, setFormState] = useState(initialFormState)
@@ -49,18 +57,34 @@ const NewPlant = ({history}) => {
     return (
         <div>
             <h1>New Plant</h1>
-            <form id="newPostForm" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label>Common Name</label>
-                    <input required type="text" name="commonName" placeholder="Enter the common name" onChange={handleChange}></input>
+                    <input required type="text" name="common_name" placeholder="Enter the common name" onChange={handleChange}></input>
+                </div>
+                <div>
+                    <label>Botanical Name</label>
+                    <input required type="text" name="botanical_name" placeholder="Enter the botanical name" onChange={handleChange}></input>
                 </div>
                 <div>
                     <label>Category</label>
                     <input type="text" name="category" placeholder="Enter a category" onChange={handleChange}></input>
                 </div>
                 <div>
-                    <label>Content</label>
-                    <textarea form="newPlantForm" required name="description" placeholder="Enter description here" onChange={handleChange}></textarea>
+                    <label>Description</label>
+                    <textarea required name="description" placeholder="Plant Description" onChange={handleChange}></textarea>
+                </div>
+                <div>
+                    <label>Pot Size</label>
+                    <input type="text" name="pot_size" placeholder="Enter a pot size" onChange={handleChange}></input>
+                </div>
+                <div>
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" placeholder="Enter a quantity" onChange={handleChange}></input>
+                </div>
+                <div>
+                    <label>Price</label>
+                    <input type="number" name="price" placeholder="Enter a price" onChange={handleChange}></input>
                 </div>
                 <input type="submit" value="Add Plant"></input>
             </form>

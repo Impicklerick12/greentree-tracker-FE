@@ -14,6 +14,7 @@ import {
   UserAccount,
   Plants,
   PlantsShow,
+  PlantsEdit,
   QuoteRequest,
   Contact,
   Admin,
@@ -90,6 +91,9 @@ const App = () => {
 
             {/* Show Plant Component */}
             <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} /> } />
+
+            {/* Edit Plant Component */}
+            <Route exact path="/plants/edit/:id" component={PlantsEdit} />
 
             {/* Quote Request Component */}
             <Route exact path="/quote"><QuoteRequest /></Route>

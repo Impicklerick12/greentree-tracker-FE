@@ -122,6 +122,7 @@ const Navbar = ({history}) => {
                             <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
                             <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
                             <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                            <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
                             <Button onClick={handleLogout}>Logout</Button>
                             </>
                         )
