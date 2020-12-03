@@ -69,6 +69,7 @@ const App = () => {
         <BrowserRouter>
           {/* Navbar Component */}
           <Navbar />
+          <h1>Home</h1>
             {loggedInUser 
             ? (<p>{loggedInUser}</p>)
             : (<p>Guest</p>)
