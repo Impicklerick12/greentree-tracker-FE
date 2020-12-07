@@ -6,6 +6,7 @@ const Register = ({history}) => {
     const initialFormState = {
         username: "",
         email: "",
+        business_name: "",
         password: ""
     } 
 
@@ -43,6 +44,10 @@ const Register = ({history}) => {
             <div>
                 <label>Email</label>
                 <input required type="email" name="email" placeholder="Enter an email" onChange={handleChange}></input>
+            </div>
+            <div>
+                <label>Business Name</label>
+                <input required type="text" name="business_name" placeholder="Business Name" onChange={handleChange}></input>
             </div>
             <div>
                 <label>Password</label>

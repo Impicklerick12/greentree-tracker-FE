@@ -50,8 +50,9 @@ const PlantsShow = ({history, plant}) => {
         history.push("/plants")
     }
 
-    function handleClick(event) {
-        console.log(event.target)
+    function handleBack(event) {
+        event.preventDefault()
+        history.goBack()
     }
 
     // If we don't have a plant, return null
@@ -71,15 +72,13 @@ const PlantsShow = ({history, plant}) => {
 
     return (
         <div>
-            <Card className={classes.root} onclick={handleClick}>
+            <Card className={classes.root}>
                 <CardActionArea>
-                    <Link to={`plants/${plant._id}`}>
                         <CardMedia
                         className={classes.media}
-                        image="/static/images/cards/contemplative-reptile.jpg"
+                        image="/public/images/stock-plant.jpg"
                         title="Contemplative Reptile"
                         />
-                    </Link>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             {common_name}
@@ -118,7 +117,7 @@ const PlantsShow = ({history, plant}) => {
                     </CardActions>
                 )}
             </Card>
-            <Button>Back</Button>
+            <Button onClick={handleBack}>Back</Button>
         </div>
     )
 }

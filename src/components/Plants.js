@@ -1,5 +1,5 @@
 import React from 'react'
-import PlantsShow from './PlantsShow'
+import PlantsEach from './PlantsEach'
 import { useGlobalState } from '../config/store'
 
 const Plants = () => {
@@ -11,7 +11,7 @@ const Plants = () => {
         <div>
             { plants
                 .sort((a, b) => b.modified_date - a.modified_date)
-                .map((plant) => <PlantsShow key={plant._id} plant={plant} />)
+                .map((plant) => <PlantsEach key={plant._id} plant={plant} />)
             }
         </div>
     )
