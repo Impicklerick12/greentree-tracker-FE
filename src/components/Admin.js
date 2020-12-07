@@ -5,7 +5,8 @@ import {
     Paper, 
     Grid,
     TextField,
-    Typography
+    Typography,
+    Container
 } from '@material-ui/core';
 
 import NewPlant from './NewPlant'
@@ -26,7 +27,7 @@ const Admin = () => {
 
     return (
         <div className={classes.root}>
-            <Typography variant="h2">Admin Dashboard</Typography>
+            {/* <Typography variant="h2">Admin Dashboard</Typography> */}
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <Paper className={classes.paper}>

@@ -8,16 +8,10 @@ import {
     Typography,
     IconButton,
     Button,
-    Switch,
-    FormControlLabel,
-    FormGroup,
     MenuItem,
     Menu,
-    Container,
     useMediaQuery
 } from "@material-ui/core"
-
-import AccountCircle from "@material-ui/icons/AccountCircle"
 import MenuIcon from '@material-ui/icons/Menu'
 
 import { 

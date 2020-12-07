@@ -7,6 +7,10 @@ import { useGlobalState } from './config/store'
 import { getPlantFromId } from './services/plantServices'
 
 import {
+  Container
+} from '@material-ui/core'
+
+import {
   Navbar,
   Landing,
   Login,
@@ -70,45 +74,46 @@ const App = () => {
         <BrowserRouter>
           {/* Navbar Component */}
           <Navbar />
-          <h1>Home</h1>
-            {loggedInUser 
-            ? (<p>{loggedInUser}</p>)
-            : (<p>Guest</p>)
-            }
-          <Switch>
-            {/* Home Component */}
-            <Route exact path="/"><Landing /></Route>
+          <Container maxWidth="lg">
+              {loggedInUser 
+              ? (<p>{loggedInUser}</p>)
+              : (<p>Guest</p>)
+              }
+            <Switch>
+              {/* Home Component */}
+              <Route exact path="/"><Landing /></Route>
 
-            {/* Login Component */}
-            <Route exact path="/auth/login" component={Login} />
+              {/* Login Component */}
+              <Route exact path="/auth/login" component={Login} />
 
-            {/* Register Component */}
-            <Route exact path="/auth/register" component={Register} />
+              {/* Register Component */}
+              <Route exact path="/auth/register" component={Register} />
 
-            {/* UserAccount Component */}
-            <Route exact path="/account"><UserAccount /></Route>
+              {/* UserAccount Component */}
+              <Route exact path="/account"><UserAccount /></Route>
 
-            {/* Plants Component */}
-            <Route exact path="/plants" component={Plants} />
+              {/* Plants Component */}
+              <Route exact path="/plants" component={Plants} />
 
-            {/* Show Plant Component */}
-            <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} /> } />
+              {/* Show Plant Component */}
+              <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} /> } />
 
-            {/* Edit Plant Component */}
-            <Route exact path="/plants/edit/:id" component={PlantsEdit} />
+              {/* Edit Plant Component */}
+              <Route exact path="/plants/edit/:id" component={PlantsEdit} />
 
-            {/* Quote Request Component */}
-            <Route exact path="/quote"><QuoteRequest /></Route>
+              {/* Quote Request Component */}
+              <Route exact path="/quote"><QuoteRequest /></Route>
 
-            {/* Contact Component */}
-            <Route exact path="/contact"><Contact /></Route>
+              {/* Contact Component */}
+              <Route exact path="/contact"><Contact /></Route>
 
-            {/* Admin Component */}
-            <Route exact path="/admin"><Admin /></Route>
+              {/* Admin Component */}
+              <Route exact path="/admin"><Admin /></Route>
 
-            {/* Not found component which will display if a URL doesn't match a route */}
-            <Route component={NotFound} />
-          </Switch>
+              {/* Not found component which will display if a URL doesn't match a route */}
+              <Route component={NotFound} />
+            </Switch>
+          </Container>
         </BrowserRouter>
       </StateContext.Provider>
     </div>
