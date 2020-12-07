@@ -2,7 +2,27 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 
+import { makeStyles } from '@material-ui/core/styles';
+import {
+    TextField, 
+    Button,
+    Typography
+} from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    textArea: {
+        width: '75%'
+    }
+  }));
+
 const NewPlant = ({history}) => {
+
+    const classes = useStyles();
 
     // Gets the next available id for a new post 
     function getNextId(){
@@ -56,37 +76,30 @@ const NewPlant = ({history}) => {
 
     return (
         <div>
-            <h1>New Plant</h1>
-            <form onSubmit={handleSubmit}>
+            <Typography variant="h2">New Plant</Typography>
+            <form className={classes.root} onSubmit={handleSubmit}>
                 <div>
-                    <label>Common Name</label>
-                    <input required type="text" name="common_name" placeholder="Enter the common name" onChange={handleChange}></input>
+                    <TextField className={classes.textArea} id="standard-basic" required type="text" name="common_name" label="Common Name" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <label>Botanical Name</label>
-                    <input required type="text" name="botanical_name" placeholder="Enter the botanical name" onChange={handleChange}></input>
+                    <TextField className={classes.textArea} required id="standard-basic" type="text" name="botanical_name" label="Botanical Name" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <label>Category</label>
-                    <input type="text" name="category" placeholder="Enter a category" onChange={handleChange}></input>
+                    <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <label>Description</label>
-                    <textarea required name="description" placeholder="Plant Description" onChange={handleChange}></textarea>
+                    <TextField className={classes.textArea} multiline required rows={4} name="description" label="Description" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <label>Pot Size</label>
-                    <input type="text" name="pot_size" placeholder="Enter a pot size" onChange={handleChange}></input>
+                    <TextField className={classes.textArea} type="text" name="pot_size" label="Pot Size" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <label>Quantity</label>
-                    <input type="number" name="quantity" placeholder="Enter a quantity" onChange={handleChange}></input>
+                    <TextField className={classes.textArea} type="number" name="quantity" label="Quantity" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <label>Price</label>
-                    <input type="number" name="price" placeholder="Enter a price" onChange={handleChange}></input>
+                    <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
                 </div>
-                <input type="submit" value="Add Plant"></input>
+                <Button type="submit" value="Add Plant">Add Plant</Button>
             </form>
         </div>
     )
