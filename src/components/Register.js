@@ -25,7 +25,7 @@ const Register = ({history}) => {
     function handleSubmit(event) {
         event.preventDefault()
         registerUser()
-        history.push("/")
+        history.goBack()
     }
 
     function registerUser() {

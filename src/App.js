@@ -25,12 +25,13 @@ const App = () => {
 
   const initialState = {
     plants: [],
-    loggedInUser: null
+    loggedInUser: null,
+    quotes: []
   }
 
   // Create state reducer store and dispatcher
-  const [store,dispatch] = useReducer(stateReducer, initialState)
-  const {loggedInUser, plants} = store
+  const [store, dispatch] = useReducer(stateReducer, initialState)
+  const { loggedInUser, plants } = store
 
   useEffect(() => {
     dispatch({

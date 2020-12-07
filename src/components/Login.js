@@ -23,7 +23,7 @@ const Login = ({history}) => {
     function handleSubmit(event) {
         event.preventDefault()
         loginUser()
-        history.push("/")
+        history.goBack()
     }
 
     // Login User

@@ -11,26 +11,34 @@ import {
     CardMedia,
     Button,
     Typography,
-    IconButton
+    IconButton,
+    TextField
 } from '@material-ui/core';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
   media: {
     height: 140,
   },
-});
+  form: {
+    margin: theme.spacing(2),
+    width: '100%',
+  },
+  quantity_field: {
+      width: '10%'
+  }
+}))
 
 const PlantsShow = ({history, plant}) => {
 
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { plants, loggedInUser } = store
+    const { plants, loggedInUser, quotes } = store
 
     function handleEdit(event) {
         event.preventDefault()
@@ -53,6 +61,40 @@ const PlantsShow = ({history, plant}) => {
     function handleBack(event) {
         event.preventDefault()
         history.goBack()
+    }
+
+    const initialQuoteFormState = {
+        quantity: "",
+        item: "",
+        user: ""
+    }
+
+    const [quoteFormState, setQuoteFormState] = useState(initialQuoteFormState)
+
+    function handleChange(event) {
+        const name = event.target.name
+        const value = event.target.value
+
+        setQuoteFormState({
+            ...quoteFormState,
+            [name]: value
+        })
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault()
+        const newQuote = {
+            quantity: quoteFormState.quantity,
+            item: `${common_name} - ${pot_size} - $${price}`,
+            user: loggedInUser.email
+        }
+        
+        dispatch({
+            type: "setQuotes",
+            data: [...quotes, newQuote]
+        })
+
+        history.push('/quote')
     }
 
     // If we don't have a plant, return null
@@ -107,14 +149,30 @@ const PlantsShow = ({history, plant}) => {
                     </CardContent>
                 </CardActionArea>
                 {loggedInUser && (
-                    <CardActions>
-                        <Button size="small" color="primary" onClick={handleEdit}>
-                        Edit
-                        </Button>
-                        <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </CardActions>
+                    <>
+                        <form className={classes.form} onSubmit={handleSubmit}>
+                            <TextField 
+                                className={classes.quantity_field} 
+                                size="small" 
+                                id="standard-basic" 
+                                label="Quantity" 
+                                type="number" 
+                                name="quantity"
+                                onChange={handleChange} 
+                            />
+                            <p>x</p>
+                            <p>{common_name} - {pot_size} - ${price}</p>
+                            <input type="submit" value="Add to quote request"></input>
+                        </form>
+                        <CardActions>
+                            <Button size="small" color="primary" onClick={handleEdit}>
+                            Edit
+                            </Button>
+                            <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </CardActions>
+                    </>
                 )}
             </Card>
             <Button onClick={handleBack}>Back</Button>

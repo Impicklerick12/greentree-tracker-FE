@@ -23,10 +23,6 @@ const PlantsEach = ({history, plant}) => {
 
     const classes = useStyles();
 
-    function handleClick(event) {
-        console.log(event.target)
-    }
-
     // If we don't have a plant, return null
     if (!plant) return null
 
@@ -38,7 +34,7 @@ const PlantsEach = ({history, plant}) => {
 
     return (
         <div>
-            <Card className={classes.root} onclick={handleClick}>
+            <Card className={classes.root} >
                 <CardActionArea>
                     <Link to={`plants/${plant._id}`}>
                         <CardMedia
