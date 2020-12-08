@@ -25,7 +25,7 @@ const Plants = () => {
         <>
             <Grid container className={classes.gridContainer}>
                     { plants
-                        .sort((a, b) => b.modified_date - a.modified_date)
+                        .sort((a, b) => a.common_name.localeCompare(b.common_name))
                         .map((plant) => <PlantsEach key={plant._id} plant={plant} />)
                     }
             </Grid>
