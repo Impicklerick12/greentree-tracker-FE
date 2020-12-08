@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useGlobalState } from '../config/store'
+import { registerUser } from '../services/authServices'
 
 const Register = ({history}) => {
 
@@ -11,6 +12,7 @@ const Register = ({history}) => {
     } 
 
     const [userDetails, setUserDetails] = useState(initialFormState)
+    // const [errorMessage, setErrorMessage] = useState(null)
     const { dispatch } = useGlobalState()
 
     function handleChange(event) {
@@ -26,8 +28,31 @@ const Register = ({history}) => {
         event.preventDefault()
         registerUser()
         history.goBack()
+
+        // CONNECTION TO SERVER IN DEPOLYMENT
+
+        // event.preventDefault()
+        // registerUser(userDetails).then(() => {
+        //     dispatch({
+        //         type: "setLoggedInUser",
+        //         data: userDetails.username
+        //     })
+        //     history.goBack()
+        // }).catch((error) => {
+        //     const status = error.response ? error.response.status : 500
+		// 	if(status === 409) {
+		// 		// This username is already registered. Let the user know.
+		// 		setErrorMessage("This username already exists. Please login, or specify another username.")				
+        //     }
+        //     else {
+        //         // There was some other error - maybe the server or db is down
+        //         setErrorMessage("There may be a problem with the server. Please try again after a few moments.")
+        //     }
+		// 	console.log(`registration failed with error: ${error} and status ${status}`)
+        // })
     }
 
+    // Will not need this in production. Use handleSubmit function
     function registerUser() {
         dispatch({
             type: "setLoggedInUser",
