@@ -31,14 +31,14 @@ const UserAccount = () => {
 
     const [formState, setFormState] = useState(initialFormState)
 
-    useEffect(() => {
-        loggedInUser && setFormState({
-            username: loggedInUser.username,
-            email: loggedInUser.email,
-            business_name: loggedInUser.business_name,
-            password: loggedInUser.password,
-        }, [loggedInUser])
-    })
+    // useEffect(() => {
+    //     loggedInUser && setFormState({
+    //         username: loggedInUser.username,
+    //         email: loggedInUser.email,
+    //         business_name: loggedInUser.business_name,
+    //         password: loggedInUser.password,
+    //     }, [loggedInUser])
+    // })
 
     return (
         <div>

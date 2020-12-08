@@ -2,7 +2,28 @@ import React, { useState } from 'react'
 import { useGlobalState } from '../config/store'
 import { registerUser } from '../services/authServices'
 
+import { makeStyles } from '@material-ui/core/styles';
+import { 
+    Grid,
+    TextField,
+    Typography,
+    Button
+} from '@material-ui/core'
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    textArea: {
+        width: '100%'
+    }
+  }));
+
 const Register = ({history}) => {
+
+    const classes = useStyles();
 
     const initialFormState = {
         username: "",
@@ -61,26 +82,35 @@ const Register = ({history}) => {
     }
  
     return (
-        <form onSubmit={handleSubmit}>
+        <>
             <div>
-                <label>Username</label>
-                <input required type="text" name="username" placeholder="Enter a username" onChange={handleChange}></input>
+                <Grid container justify="center">
+                    <Typography variant="h2">Register</Typography>
+                </Grid>
+                <Grid container justify="center">
+                    <Grid item xs={10} sm={8} md={6} lg={4}>
+                        <form className={classes.root} onSubmit={handleSubmit}>
+                            <div>
+                                <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
+                            </div>
+                            <div>
+                                <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
+                            </div>
+                            <div>
+                                <TextField className={classes.textArea} id="standard-basic" required type="text" name="business_name" label="Business Name" onChange={handleChange}></TextField>
+                            </div>
+                            <div>
+                                <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
+                            </div>
+                            <div>
+                                <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField>
+                            </div>
+                            <Button type="submit" value="Register">Register</Button>
+                        </form>
+                    </Grid>
+                </Grid>
             </div>
-            <div>
-                <label>Email</label>
-                <input required type="email" name="email" placeholder="Enter an email" onChange={handleChange}></input>
-            </div>
-            <div>
-                <label>Business Name</label>
-                <input required type="text" name="business_name" placeholder="Business Name" onChange={handleChange}></input>
-            </div>
-            <div>
-                <label>Password</label>
-                <input required type="password" name="password" placeholder="Enter a password" onChange={handleChange}></input>
-            </div>
-            <input type="submit" value="Register"></input>
-            
-        </form>
+        </>
     )
 }
 

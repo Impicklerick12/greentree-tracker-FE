@@ -1,9 +1,8 @@
-import react, { useState, useEffect, useReducer } from 'react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import react, { useEffect, useReducer } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import plantData from './data/plant_data'
 import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
-import { useGlobalState } from './config/store'
 import { getPlantFromId } from './services/plantServices'
 
 import {
@@ -44,29 +43,29 @@ const App = () => {
     })
   },[])
 
-  // Register user
-  function registerUser(user) {
-    dispatch({
-      type: "setLoggedInUser",
-      data: user.username
-    })
-  }
+  // // Register user
+  // function registerUser(user) {
+  //   dispatch({
+  //     type: "setLoggedInUser",
+  //     data: user.username
+  //   })
+  // }
 
-  // Login user
-  function loginUser(user) {
-    dispatch({
-      type: "setLoggedInUser",
-      data: user.username
-    })
-  }
+  // // Login user
+  // function loginUser(user) {
+  //   dispatch({
+  //     type: "setLoggedInUser",
+  //     data: user.username
+  //   })
+  // }
 
-  // Logout user
-  function logoutUser() {
-    dispatch({
-      type: "setLoggedInUser",
-      data: null
-    })
-  }
+  // // Logout user
+  // function logoutUser() {
+  //   dispatch({
+  //     type: "setLoggedInUser",
+  //     data: null
+  //   })
+  // }
 
   return (
     <div>

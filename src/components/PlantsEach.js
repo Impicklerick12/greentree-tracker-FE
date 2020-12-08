@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { withRouter, Link } from 'react-router-dom'
+import StockPlant from '../images/stock-plant.jpg'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -7,17 +8,27 @@ import {
     CardActionArea,
     CardContent,
     CardMedia,
-    Typography
+    Typography,
+    Grid,
+    Paper
 } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    margin: theme.spacing(2),
   },
   media: {
-    height: 140,
+    width: "100%"
   },
-});
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  cardRoot: {
+      minWidth: 200
+  }
+}));
 
 const PlantsEach = ({history, plant}) => {
 
@@ -33,16 +44,17 @@ const PlantsEach = ({history, plant}) => {
     } = plant
 
     return (
-        <div>
-            <Card className={classes.root} >
-                <CardActionArea>
+        <div className={classes.root}>
+            <Grid item xs={12} sm={6} md={3} lg={3}>
+                <Card className={classes.cardRoot}>
                     <Link to={`plants/${plant._id}`}>
-                        <CardMedia
+                        {/* <CardMedia
                         className={classes.media}
-                        image="/public/images/stock-plant.jpg"
+                        src="/public/images/stock-plant.jpg"
                         title="Stock Image"
                         alt="Photo by Syded Mohammad Ismail"
-                        />
+                        /> */}
+                        <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
                     </Link>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
@@ -55,8 +67,8 @@ const PlantsEach = ({history, plant}) => {
                             Price: ${price}
                         </Typography>
                     </CardContent>
-                </CardActionArea>
-            </Card>
+                </Card>
+            </Grid>
         </div>
     )
 }

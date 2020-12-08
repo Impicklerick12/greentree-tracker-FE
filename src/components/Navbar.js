@@ -75,68 +75,70 @@ const Navbar = ({history}) => {
     };
 
     return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        Greentree Tracker
-                    </Typography>
-                    <div>
-                        {isMobile ? (
-                            <>
-                                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                    <MenuIcon />
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={() => setAnchorEl(null)}
-                                >
-                                {loggedInUser ? (
-                                    <>
-                                        <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
-                                        <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
-                                        <MenuItem onClick={() => handleMenuClick('/quote')}>Quote</MenuItem>
-                                        <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
-                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                    </>
-                                ) : (
-                                    <>
-                                        <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
-                                        <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
-                                        <MenuItem onClick={() => handleMenuClick('/auth/login')}>Login</MenuItem>
-                                        <MenuItem onClick={() => handleMenuClick('/auth/register')}>Register</MenuItem>
-                                    </>
-                                )}
-                                </Menu>
-                            </>
-                        ) : (
-                            <>
-                                <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
-                                <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                <Button onClick={() => handleMenuClick('/quote')}>Quote</Button>
-                                <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
-                                <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
-                                <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
-                                <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
-                                <Button onClick={handleLogout}>Logout</Button>
-                            </>
-                        )
-                        }
-                    </div>
-                </Toolbar>
-            </AppBar>
-        </div>
+        <>
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="h6" className={classes.title}>
+                            Greentree Tracker
+                        </Typography>
+                        <div>
+                            {isMobile ? (
+                                <>
+                                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                        <MenuIcon />
+                                    </IconButton>
+                                    <Menu
+                                        id="menu-appbar"
+                                        anchorEl={anchorEl}
+                                        anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                        }}
+                                        keepMounted
+                                        transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                        }}
+                                        open={open}
+                                        onClose={() => setAnchorEl(null)}
+                                    >
+                                    {loggedInUser ? (
+                                        <>
+                                            <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/quote')}>Quote</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+                                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/auth/login')}>Login</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/auth/register')}>Register</MenuItem>
+                                        </>
+                                    )}
+                                    </Menu>
+                                </>
+                            ) : (
+                                <>
+                                    <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
+                                    <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
+                                    <Button onClick={() => handleMenuClick('/quote')}>Quote</Button>
+                                    <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
+                                    <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
+                                    <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                                    <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
+                                    <Button onClick={handleLogout}>Logout</Button>
+                                </>
+                            )
+                            }
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            </div>
+        </>
     )
 }
 

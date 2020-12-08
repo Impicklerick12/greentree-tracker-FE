@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
+import StockPlant from '../images/stock-plant.jpg'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 345,
   },
   media: {
-    height: 140,
+    width: "100%",
   },
   form: {
     margin: theme.spacing(2),
@@ -115,39 +116,38 @@ const PlantsShow = ({history, plant}) => {
     return (
         <div>
             <Card className={classes.root}>
-                <CardActionArea>
-                        <CardMedia
+                        {/* <CardMedia
                         className={classes.media}
-                        image="/public/images/stock-plant.jpg"
+                        image="/src/images/stock-plant.jpg"
                         title="Contemplative Reptile"
-                        />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {common_name}
-                        </Typography>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {botanical_name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Date Added: {modified_date.toLocaleString()}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Category: {category}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {description}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Pot Size: {pot_size}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Price: ${price}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Quantity Available: {quantity}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
+                        /> */}
+                <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {common_name}
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {botanical_name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Date Added: {modified_date.toLocaleString()}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Category: {category}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {description}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Pot Size: {pot_size}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Price: ${price}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Quantity Available: {quantity}
+                    </Typography>
+                </CardContent>
                 {loggedInUser && (
                     <>
                         <form className={classes.form} onSubmit={handleSubmit}>
