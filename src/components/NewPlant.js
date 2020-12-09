@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
+import S3 from 'aws-s3';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -8,6 +9,16 @@ import {
     Button,
     Typography
 } from '@material-ui/core';
+
+// NEED TO FIND AWS ACCESS KEY
+const config = {
+    bucketName: 'greentree-tracker-images',
+    region: 'ap-southeast-2',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+}
+
+const S3Client = new S3(config)
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,6 +71,18 @@ const NewPlant = ({history}) => {
         history.push(`/plants/${nextId}`)
     }
 
+    function handleImageUpload(event) {
+        // console.log(event.target.files[0])
+        const plantImage = event.target.files[0]
+
+        S3Client
+            .uploadFile(plantImage)
+            .then((res) => {
+                console.log(res.location)
+            })
+            .catch((err) => console.log(err))
+    }
+
     const initialFormState = {
         common_name: "",
         botanical_name: "",
@@ -83,6 +106,9 @@ const NewPlant = ({history}) => {
                 </div>
                 <div>
                     <TextField className={classes.textArea} required id="standard-basic" type="text" name="botanical_name" label="Botanical Name" onChange={handleChange}></TextField>
+                </div>
+                <div>
+                    <input type="file" name="plant_image" onChange={handleImageUpload}/>
                 </div>
                 <div>
                     <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>

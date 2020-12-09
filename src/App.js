@@ -26,6 +26,8 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
+require('dotenv').config()
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -84,7 +86,7 @@ const App = () => {
 
           {/* Navbar Component */}
           <Navbar />
-          
+
           <Container maxWidth="lg">
               {loggedInUser 
               ? (<p>{loggedInUser}</p>)
