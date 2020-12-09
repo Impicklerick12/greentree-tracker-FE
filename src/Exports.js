@@ -33,3 +33,6 @@ export { default as Admin } from './components/Admin'
 
 // Not Found Page
 export { default as NotFound } from './components/NotFound'
+
+// Footer Component
+export { default as Footer } from './components/Footer'

@@ -6,10 +6,6 @@ import { StateContext } from './config/store'
 import { getPlantFromId } from './services/plantServices'
 
 import {
-  Container
-} from '@material-ui/core'
-
-import {
   Navbar,
   Landing,
   Login,
@@ -21,10 +17,24 @@ import {
   QuoteRequest,
   Contact,
   Admin,
-  NotFound
+  NotFound,
+  Footer
 } from './Exports'
 
+import {
+  Container
+} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100vh",
+  },
+}));
+
 const App = () => {
+
+  const classes = useStyles();
 
   const initialState = {
     plants: [],
@@ -68,11 +78,13 @@ const App = () => {
   // }
 
   return (
-    <div>
+    <div className={classes.root}>
       <StateContext.Provider value={{store, dispatch}}>
         <BrowserRouter>
+
           {/* Navbar Component */}
           <Navbar />
+          
           <Container maxWidth="lg">
               {loggedInUser 
               ? (<p>{loggedInUser}</p>)
@@ -113,6 +125,10 @@ const App = () => {
               <Route component={NotFound} />
             </Switch>
           </Container>
+
+          {/* Footer component */}
+          <Footer />
+
         </BrowserRouter>
       </StateContext.Provider>
     </div>
