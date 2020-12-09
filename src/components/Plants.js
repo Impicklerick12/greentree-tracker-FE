@@ -1,5 +1,6 @@
 import React from 'react'
 import PlantsEach from './PlantsEach'
+import FilterOptions from './FilterOptions'
 import { useGlobalState } from '../config/store'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,6 +24,7 @@ const Plants = () => {
 
     return (
         <>
+            <FilterOptions />
             <Grid container className={classes.gridContainer}>
                     { plants
                         .sort((a, b) => a.common_name.localeCompare(b.common_name))
