@@ -1,4 +1,5 @@
 import react, { useState } from 'react';
+import { useGlobalState } from '../config/store'
 import {
     Grid,
     Paper,
@@ -65,12 +66,24 @@ const useStyles = makeStyles((theme) => ({
 
 const FilerOptions = () => {
 
-    const [value, setValue] = useState('female');
+    const { dispatch } = useGlobalState()
+
+    const [value, setValue] = useState(null);
+    const [searchValue, setSearchValue] = useState(null)
 
     const handleChange = (event) => {
-        setValue(event.target.value);
-        console.log(value)
+        
     };
+
+    const handleSearchChange = (event) => {
+
+        setSearchValue(event.target.value)
+
+        dispatch({
+            type: "setSearchValue",
+            data: searchValue
+        })
+    }
 
     const classes = useStyles()
 
@@ -84,7 +97,8 @@ const FilerOptions = () => {
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                placeholder="Search…"
+                                onChange={handleSearchChange}
+                                placeholder="Search Plants…"
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,

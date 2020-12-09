@@ -18,6 +18,12 @@ export default function (state, action) {
                 quotes: action.data
             }
         }
+        case "setSearchValue": {
+            return {
+                ...state,
+                searchValue: action.data
+            }
+        }
         case "setError": {
             return {
                 ...state,
