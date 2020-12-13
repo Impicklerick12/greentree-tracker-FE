@@ -129,7 +129,7 @@ const App = () => {
           </Container>
 
           {/* Footer component */}
-          <Footer />
+          {/* <Footer /> */}
 
         </BrowserRouter>
       </StateContext.Provider>

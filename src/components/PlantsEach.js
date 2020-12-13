@@ -5,12 +5,9 @@ import StockPlant from '../images/stock-plant.jpg'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Card,
-    CardActionArea,
     CardContent,
-    CardMedia,
     Typography,
-    Grid,
-    Paper
+    Grid
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({

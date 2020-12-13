@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core'
 
 const QuoteRequest = ({history}) => {
 
-    const { store, dispatch } = useGlobalState()
+    const { store } = useGlobalState()
     const { loggedInUser, quotes } = store
     console.log(quotes)
 

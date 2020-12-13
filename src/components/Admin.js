@@ -4,9 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { 
     Paper, 
     Grid,
-    TextField,
-    Typography,
-    Container
+    Typography
 } from '@material-ui/core';
 
 import NewPlant from './NewPlant'
