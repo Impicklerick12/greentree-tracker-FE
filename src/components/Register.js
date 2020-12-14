@@ -26,7 +26,7 @@ const Register = ({history}) => {
     const classes = useStyles();
 
     const initialFormState = {
-        business_name: "",
+        username: "",
         email: "",
         password: ""
     } 
@@ -54,14 +54,14 @@ const Register = ({history}) => {
         registerUser(userDetails).then(() => {
             dispatch({
                 type: "setLoggedInUser",
-                data: userDetails.business_name
+                data: userDetails.username
             })
             history.goBack()
         }).catch((error) => {
             const status = error.response ? error.response.status : 500
 			if(status === 409) {
-				// This business_name is already registered. Let the user know.
-				setErrorMessage("This business name already exists. Please login, or specify another business name.")				
+				// This username is already registered. Let the user know.
+				setErrorMessage("This username already exists. Please login, or specify another username.")				
             }
             else {
                 // There was some other error - maybe the server or db is down
@@ -90,13 +90,13 @@ const Register = ({history}) => {
                     <Grid item xs={10} sm={8} md={6} lg={4}>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <div>
-                                <TextField className={classes.textArea} id="standard-basic" required type="text" name="business_name" label="Business Name" onChange={handleChange}></TextField>
+                                <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
                             </div>
                             <div>
                                 <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
                             </div>
                             <div>
-                                {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="business_name" label="Business Name" onChange={handleChange}></TextField> */}
+                                {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField> */}
                             </div>
                             <div>
                                 <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>

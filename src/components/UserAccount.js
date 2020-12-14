@@ -23,9 +23,8 @@ const UserAccount = () => {
     }
 
     const initialFormState = {
-        business_name: "",
+        username: "",
         email: "",
-        business_name: "",
         password: ""
     }
 
@@ -35,7 +34,6 @@ const UserAccount = () => {
     //     loggedInUser && setFormState({
     //         username: loggedInUser.username,
     //         email: loggedInUser.email,
-    //         business_name: loggedInUser.business_name,
     //         password: loggedInUser.password,
     //     }, [loggedInUser])
     // })
@@ -47,16 +45,12 @@ const UserAccount = () => {
                 <h1>User Account</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Business Name</label>
-                        <input required type="text" name="business_name" value={loggedInUser.business_name} onChange={handleChange}></input>
+                        <label>Username</label>
+                        <input required type="text" name="username" value={loggedInUser.username} onChange={handleChange}></input>
                     </div>
                     <div>
                         <label>Email</label>
                         <input required type="email" name="email" value={formState.email} onChange={handleChange}></input>
-                    </div>
-                    <div>
-                        <label>Business Name</label>
-                        <input required type="text" name="business_name" value={formState.business_name} onChange={handleChange}></input>
                     </div>
                     <div>
                         <label>Password</label>

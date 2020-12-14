@@ -1,5 +1,5 @@
 describe('Testing the login functionality', () => {
-    it('should log us in with a business name and password', () => {
+    it('should log us in with a username name and password', () => {
         cy.visit('/')
         // If not signed in, expect Guest to be shown
         cy.contains('Guest')

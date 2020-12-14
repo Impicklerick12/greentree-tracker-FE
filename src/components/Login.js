@@ -27,7 +27,7 @@ const Login = ({history}) => {
     const classes = useStyles();
 
     const initialFormState = {
-        business_name: "",
+        username: "",
         password: ""
     } 
 
@@ -53,16 +53,16 @@ const Login = ({history}) => {
         event.preventDefault()
         // Attempt login on server
         loginUser(userDetails).then(() => {
-            setLoggedInUser(userDetails.business_name)
+            setLoggedInUser(userDetails.username)
             dispatch({
                 type: "setLoggedInUser",
-                data: userDetails.business_name
+                data: userDetails.username
             })
             history.goBack()
 
         }).catch((error) => {
             if (error.response && error.response.status === 401)
-                setErrorMessage("Authentication failed. Please check your business name and password.")
+                setErrorMessage("Authentication failed. Please check your username and password.")
             else   
                 setErrorMessage("There may be a problem with the server. Please try again after a few moments.")
         })
@@ -86,7 +86,7 @@ const Login = ({history}) => {
                 <Grid item xs={10} sm={8} md={6} lg={4}>
                     <form className={classes.root} onSubmit={handleSubmit}>
                         <div>
-                            <TextField className={classes.textArea} id="standard-basic" required type="text" name="business_name" label="Business Name" onChange={handleChange}></TextField>
+                            <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
                         </div>
                         <div>
                             <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
