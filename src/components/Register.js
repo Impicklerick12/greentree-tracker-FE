@@ -28,7 +28,6 @@ const Register = ({history}) => {
     const initialFormState = {
         username: "",
         email: "",
-        business_name: "",
         password: ""
     } 
 
@@ -97,13 +96,13 @@ const Register = ({history}) => {
                                 <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
                             </div>
                             <div>
-                                <TextField className={classes.textArea} id="standard-basic" required type="text" name="business_name" label="Business Name" onChange={handleChange}></TextField>
+                                {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="business_name" label="Business Name" onChange={handleChange}></TextField> */}
                             </div>
                             <div>
                                 <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
                             </div>
                             <div>
-                                <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField>
+                                {/* <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField> */}
                             </div>
                             <Button type="submit" value="Register">Register</Button>
                         </form>
