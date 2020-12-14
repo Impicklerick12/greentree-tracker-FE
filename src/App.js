@@ -160,7 +160,7 @@ const App = () => {
                 <Route exact path="/admin"><Admin /></Route>
 
                 {/* Not found component which will display if a URL doesn't match a route */}
-                <Route component={NotFound} />
+                {/* <Route component={NotFound} /> */}
               </Switch>
             </Container>
           )}
