@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import StockPlant from '../images/stock-plant.jpg'
+import { deletePlant } from '../services/plantServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -48,15 +49,34 @@ const PlantsShow = ({history, plant}) => {
     }
 
     function handleDelete(event) {
+        // event.preventDefault()
+
+        // const updatedPlants = plants.filter((p) => p._id !== plant._id)
+        // dispatch({
+        //     type: "setPlants",
+        //     data: updatedPlants
+        // })
+
+        // history.push("/plants")
+
+        // TO USE IN PRODUCTION - REPLACE CODE ABOVE
         event.preventDefault()
-
-        const updatedPlants = plants.filter((p) => p._id !== plant._id)
-        dispatch({
-            type: "setPlants",
-            data: updatedPlants
+        deletePlant(plant._id).then(() => {
+            console.log("deleted plant")
+            const updatedPlants = plants.filter((p) => p._id !== plant._id)
+            dispatch({
+                type: "setPlants",
+                data: updatedPlants
+            })
+            history.push("/plants")
+        }).catch((error) => {
+            const status = error.response ? error.response.status : 500
+            console.log("caught error on delete", error)
+            if(status === 403)
+                setErrorMessage("Oops! It appears we lost your login session. Make sure 3rd party cookies are not blocked by your browser settings.")
+            else
+                setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })
-
-        history.push("/plants")
     }
 
     function handleBack(event) {
@@ -71,6 +91,7 @@ const PlantsShow = ({history, plant}) => {
     }
 
     const [quoteFormState, setQuoteFormState] = useState(initialQuoteFormState)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     function handleChange(event) {
         const name = event.target.name
@@ -82,7 +103,7 @@ const PlantsShow = ({history, plant}) => {
         })
     }
 
-    function handleSubmit(event) {
+    function handleQuoteSubmit(event) {
         event.preventDefault()
         const newQuote = {
             quantity: quoteFormState.quantity,
@@ -115,6 +136,7 @@ const PlantsShow = ({history, plant}) => {
 
     return (
         <div>
+            {errorMessage && <p>{errorMessage}</p>}
             <Card className={classes.root}>
                         {/* <CardMedia
                         className={classes.media}
@@ -150,7 +172,7 @@ const PlantsShow = ({history, plant}) => {
                 </CardContent>
                 {loggedInUser && (
                     <>
-                        <form className={classes.form} onSubmit={handleSubmit}>
+                        <form className={classes.form} onSubmit={handleQuoteSubmit}>
                             <TextField 
                                 className={classes.quantity_field} 
                                 size="small" 

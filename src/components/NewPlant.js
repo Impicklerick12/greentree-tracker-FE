@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
+import { addPlant } from '../services/plantServices'
 import S3 from 'aws-s3';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import {
 } from '@material-ui/core';
 
 // NEED TO FIND AWS ACCESS KEY
+// BUGS - Need to fix
 const config = {
     bucketName: 'greentree-tracker-images',
     region: 'ap-southeast-2',
@@ -53,10 +55,28 @@ const NewPlant = ({history}) => {
     }
 
     function handleSubmit(event) {
+        // event.preventDefault()
+        // const nextId = getNextId()
+        // const newPlant = {
+        //     _id: nextId,
+        //     common_name: formState.common_name,
+        //     botanical_name: formState.botanical_name,
+        //     category: formState.category || "Bush",
+        //     modified_date: new Date(),
+        //     description: formState.description,
+        //     price: formState.price,
+        //     pot_size: formState.pot_size,
+        //     quantity: formState.quantity,
+        // }
+        // dispatch({
+        //     type: "setPlants",
+        //     data: [...plants, newPlant]
+        // })
+        // history.push(`/plants/${nextId}`)
+
+        // TO USE IN PRODUCTION - REPLACE CODE ABOVE
         event.preventDefault()
-        const nextId = getNextId()
         const newPlant = {
-            _id: nextId,
             common_name: formState.common_name,
             botanical_name: formState.botanical_name,
             category: formState.category || "Bush",
@@ -66,11 +86,20 @@ const NewPlant = ({history}) => {
             pot_size: formState.pot_size,
             quantity: formState.quantity,
         }
-        dispatch({
-            type: "setPlants",
-            data: [...plants, newPlant]
+        addPlant(newPlant).then((newPlant) => {
+            dispatch({
+                type: "setPlants",
+                data: [...plants, newPlant]
+            })
+            history.push(`/plants/${newPlant._id}`)
+        }).catch((error) => {
+            const status = error.response ? error.response.status : 500
+            console.log("caught error on Add Plant", error)
+            if(status === 403)
+                setErrorMessage("Oops! It appears we lost your login session. Make sure 3rd party cookies are not blocked by your browser settings.")
+            else
+                setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })
-        history.push(`/plants/${nextId}`)
     }
 
     function handleImageUpload(event) {
@@ -96,6 +125,7 @@ const NewPlant = ({history}) => {
     } 
 
     const [formState, setFormState] = useState(initialFormState)
+    const [errorMessage, setErrorMessage] = useState(null)
     const { store, dispatch } = useGlobalState()
     const { plants } = store
 

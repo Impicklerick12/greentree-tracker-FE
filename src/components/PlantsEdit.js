@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
-import { getPlantFromId } from '../services/plantServices'
+import { getPlantFromId, updatePlant } from '../services/plantServices'
 
 const PlantsEdit = ({history, match}) => {
 
@@ -21,8 +21,30 @@ const PlantsEdit = ({history, match}) => {
     }
 
     function handleSubmit(event) {
-        event.preventDefault()
+        // event.preventDefault()
 
+        // const updatedPlant = {
+        //     _id: plant._id,
+        //     common_name: formState.common_name,
+        //     botanical_name: formState.botanical_name,
+        //     category: formState.category || "Bush",
+        //     modified_date: new Date(),
+        //     description: formState.description,
+        //     price: formState.price,
+        //     pot_size: formState.pot_size,
+        //     quantity: formState.quantity,
+        // }
+
+        // const otherPlants = plants.filter((plant) => plant._id !== updatedPlant._id)
+        // dispatch({
+        //     type: "setPlants",
+        //     data: [...otherPlants, updatedPlant]
+        // })
+
+        // history.push(`/plants/${plant._id}`)
+
+        // TO USE IN PRODUCTION - REPLACE CODE ABOVE
+        event.preventDefault()
         const updatedPlant = {
             _id: plant._id,
             common_name: formState.common_name,
@@ -34,14 +56,21 @@ const PlantsEdit = ({history, match}) => {
             pot_size: formState.pot_size,
             quantity: formState.quantity,
         }
-
-        const otherPlants = plants.filter((plant) => plant._id !== updatedPlant._id)
-        dispatch({
-            type: "setPlants",
-            data: [...otherPlants, updatedPlant]
+        updatePlant(updatedPlant).then(() => {
+            const otherPlants = plants.filter((plant) => plant._id !== updatedPlant._id)
+            dispatch({
+                type: "setPlants",
+                data: [...otherPlants, updatedPlant]
+            })
+            history.push(`/plants/${plant._id}`)
+        }).catch((error) => {
+            const status = error.response ? error.response.status : 500
+            console.log("caught error on edit", error)
+            if(status === 403)
+                setErrorMessage("Oops! It appears we lost your login session. Make sure 3rd party cookies are not blocked by your browser settings.")
+            else
+                setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })
-
-        history.push(`/plants/${plant._id}`)
     }
     
     const initialFormState = {
@@ -55,6 +84,7 @@ const PlantsEdit = ({history, match}) => {
     } 
 
     const [formState, setFormState] = useState(initialFormState)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
        // Set the formState to the fields in the post after mount and when post changes
@@ -73,6 +103,7 @@ const PlantsEdit = ({history, match}) => {
     return (
         <div>
             <h1>Plants Edit Page</h1>
+            {errorMessage && <p>{errorMessage}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Common Name</label>

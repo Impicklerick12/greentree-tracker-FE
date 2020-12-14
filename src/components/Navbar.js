@@ -36,22 +36,22 @@ const Navbar = ({history}) => {
 
     // Logout user
     function handleLogout() {
-        dispatch({
-        type: "setLoggedInUser",
-        data: null
-        })
+        // dispatch({
+        // type: "setLoggedInUser",
+        // data: null
+        // })
 
         // For use when connecting to SERVER
-        // logoutUser().then((response) => {
-        //     console.log("Got back response on logout", response.status)
-        // }).catch ((error) => {
-        //     console.log("The server may be down - caught an exception on logout:", error)
-        // })
-        // // Even if we catch an error, logout the user locally
-        // dispatch({
-        //     type: "setLoggedInUser",
-        //     data: null
-        // })
+        logoutUser().then((response) => {
+            console.log("Got back response on logout", response.status)
+        }).catch ((error) => {
+            console.log("The server may be down - caught an exception on logout:", error)
+        })
+        // Even if we catch an error, logout the user locally
+        dispatch({
+            type: "setLoggedInUser",
+            data: null
+        })
     }
 
     const {store, dispatch} = useGlobalState()
