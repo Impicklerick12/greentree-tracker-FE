@@ -37,7 +37,7 @@ export function getLoggedInUser() {
     return localStorage.getItem("loggedInUser")
 }
 
-// Store loggedInUser username in local storage
+// Store loggedInUser business_name in local storage
 export function setLoggedInUser(user) {
     user ? localStorage.setItem("loggedInUser", user) : localStorage.removeItem("loggedInUser")
 }

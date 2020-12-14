@@ -42,7 +42,9 @@ const App = () => {
   const initialState = {
     plants: [],
     loggedInUser: null,
-    quotes: []
+    quotes: [],
+    quoteRequestData: [],
+    searchValue: null
   }
 
   // Create state reducer store and dispatcher

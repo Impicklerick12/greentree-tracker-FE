@@ -27,8 +27,8 @@ const QuoteRequest = ({history}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, quotes } = store
-    console.log(quotes)
+    const { loggedInUser, quotes, quoteRequestData } = store
+    // console.log(quotes)
 
     const initialFormState = {
         plantQuotes: [],
@@ -36,14 +36,14 @@ const QuoteRequest = ({history}) => {
         comment: ""
     } 
 
-    const [quoteRequestData, setQuoteRequestData] = useState(initialFormState)
+    const [quoteRequestComment, setQuoteRequestComment] = useState(initialFormState)
 
     const handleChange = (event) => {
         const name = event.target.name
         const value = event.target.value
 
-        setQuoteRequestData({
-            ...quoteRequestData,
+        setQuoteRequestComment({
+            ...quoteRequestComment,
             [name]: value
         })
     }
@@ -53,22 +53,15 @@ const QuoteRequest = ({history}) => {
         const newQuoteRequest = {
             plantQuotes: quotes,
             user: loggedInUser,
-            comment: quoteRequestData.comment
+            comment: quoteRequestComment.comment
         }
         dispatch({
             type: "setQuoteRequestData",
             data: [...quoteRequestData, newQuoteRequest]
         })
-        console.log(quoteRequestData)
+        console.log("Quote request data: ", quoteRequestData)
         // history.push('/plants')
     }
-
-    // const addQuoteRequest = () => {
-    //     dispatch({
-    //         type: "setQuoteRequests",
-    //         data: 
-    //     })
-    // }
 
     return (
         <div>

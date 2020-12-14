@@ -23,7 +23,7 @@ const UserAccount = () => {
     }
 
     const initialFormState = {
-        username: "",
+        business_name: "",
         email: "",
         business_name: "",
         password: ""
@@ -47,8 +47,8 @@ const UserAccount = () => {
                 <h1>User Account</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Username</label>
-                        <input required type="text" name="username" value={loggedInUser.username} onChange={handleChange}></input>
+                        <label>Business Name</label>
+                        <input required type="text" name="business_name" value={loggedInUser.business_name} onChange={handleChange}></input>
                     </div>
                     <div>
                         <label>Email</label>

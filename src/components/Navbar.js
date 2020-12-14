@@ -14,6 +14,7 @@ import {
     useMediaQuery
 } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import { 
     makeStyles,
@@ -55,7 +56,7 @@ const Navbar = ({history}) => {
     }
 
     const {store, dispatch} = useGlobalState()
-    const {loggedInUser} = store
+    const {loggedInUser, quotes} = store
 
     const classes = useStyles()
 
@@ -123,9 +124,18 @@ const Navbar = ({history}) => {
                                 </>
                             ) : (
                                 <>
+                                { quotes.length >= 1 ? (
+                                    <IconButton
+                                        onClick={() => handleMenuClick('/quote')}
+                                        color="inherit"
+                                    >
+                                        <ShoppingCartIcon />
+                                    </IconButton>
+                                ) : (
+                                    <div></div>
+                                )}
                                     <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
                                     <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                    <Button onClick={() => handleMenuClick('/quote')}>Quote</Button>
                                     <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
                                     <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
                                     <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
