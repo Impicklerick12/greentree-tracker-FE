@@ -14,7 +14,7 @@ export async function getAllPlants() {
 
 // Adds a Plant on the server
 export async function addPlant(newPlant) {
-    const response = await api.post("/plants", newPlant)
+    const response = await api.post("/plants/new", newPlant)
     return response.data
 }
 
