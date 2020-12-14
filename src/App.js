@@ -60,7 +60,7 @@ const App = () => {
         type: "setError",
         data: true
       })
-      console.log("An error occurred fetching blog posts from the server:", error) 
+      console.log("An error occurred fetching plants from the server:", error) 
     })
   }
 
