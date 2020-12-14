@@ -58,7 +58,7 @@ const Login = ({history}) => {
                 type: "setLoggedInUser",
                 data: userDetails.username
             })
-            history.push("/")
+            history.goBack()
 
         }).catch((error) => {
             if (error.response && error.response.status === 401)
@@ -69,12 +69,12 @@ const Login = ({history}) => {
     }
 
     // Login User - Will not need in production. Use handleSubmit function
-    function loginUser() {
-        dispatch({
-            type: "setLoggedInUser",
-            data: userDetails.username
-        })
-    }
+    // function loginUser() {
+    //     dispatch({
+    //         type: "setLoggedInUser",
+    //         data: userDetails.username
+    //     })
+    // }
     
     return (
         <div>

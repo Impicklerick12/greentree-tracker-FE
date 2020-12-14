@@ -75,7 +75,7 @@ const QuoteRequest = ({history}) => {
              <Grid container justify="center">
                 <Typography variant="h2">Quote Request</Typography>
             </Grid>
-            { loggedInUser ? (
+            { quotes ? (
                 <Grid container justify="center">
                     <Grid item xs={10} sm={8} md={6} lg={4}>
                         <form className={classes.root} onSubmit={handleSubmit}>
