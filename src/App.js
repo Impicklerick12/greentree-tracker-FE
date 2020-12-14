@@ -60,7 +60,7 @@ const App = () => {
         type: "setError",
         data: true
       })
-      console.log("An error occurred fetching plants from the server:", error) 
+      console.log("An error occurred fetching plants from the server:", error)
     })
   }
 
@@ -121,8 +121,6 @@ const App = () => {
           {/* Navbar Component */}
           <Navbar />
 
-          {error ?  (<NotFound />)
-          : (
             <Container maxWidth="lg">
                 {loggedInUser 
                 ? (<p>{loggedInUser}</p>)
@@ -163,7 +161,6 @@ const App = () => {
                 {/* <Route component={NotFound} /> */}
               </Switch>
             </Container>
-          )}
 
           {/* Footer component */}
           {/* <Footer /> */}
