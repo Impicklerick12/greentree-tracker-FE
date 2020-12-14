@@ -133,7 +133,7 @@ const PlantsShow = ({history, plant}) => {
         special, 
         quantity 
     } = plant
-    
+
 
     return (
         <div>
@@ -152,9 +152,13 @@ const PlantsShow = ({history, plant}) => {
                     <Typography gutterBottom variant="h5" component="h2">
                         {botanical_name}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Date Added: {modified_date.toLocaleString()}
-                    </Typography>
+                    {modified_date ? (
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            Last Updated: {modified_date.toLocaleString()}
+                        </Typography>
+                    ) : (
+                        <div></div>
+                    )}
                     <Typography variant="body2" color="textSecondary" component="p">
                         Category: {category}
                     </Typography>
