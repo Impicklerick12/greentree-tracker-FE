@@ -133,6 +133,7 @@ const PlantsShow = ({history, plant}) => {
         special, 
         quantity 
     } = plant
+    
 
     return (
         <div>

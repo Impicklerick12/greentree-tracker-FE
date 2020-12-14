@@ -47,7 +47,7 @@ const App = () => {
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants, error } = store
+  const { loggedInUser, plants } = store
 
   function fetchAllPlants() {
     getAllPlants().then((plantData) => {
