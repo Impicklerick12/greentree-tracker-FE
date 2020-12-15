@@ -1,4 +1,5 @@
 import React from 'react'
+import { useGlobalState } from '../config/store'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Admin = () => {
+
+    const { store, dispatch } = useGlobalState()
+    const { loggedInUser } = store
 
     const classes = useStyles();
 

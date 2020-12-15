@@ -33,7 +33,8 @@ const Register = ({history}) => {
 
     const [userDetails, setUserDetails] = useState(initialFormState)
     const [errorMessage, setErrorMessage] = useState(null)
-    const { dispatch } = useGlobalState()
+    const { dispatch, store } = useGlobalState()
+    const { loggedInUser } = store
 
     function handleChange(event) {
         const name = event.target.name
@@ -56,7 +57,7 @@ const Register = ({history}) => {
                 type: "setLoggedInUser",
                 data: userDetails.username
             })
-            history.goBack()
+            history.push('/')
         }).catch((error) => {
             const status = error.response ? error.response.status : 500
 			if(status === 409) {
@@ -80,36 +81,40 @@ const Register = ({history}) => {
     // }
  
     return (
-        <>
-            <div>
-                {errorMessage && <p>{errorMessage}</p>}
-                <Grid container justify="center">
-                    <Typography variant="h2">Register</Typography>
-                </Grid>
-                <Grid container justify="center">
-                    <Grid item xs={10} sm={8} md={6} lg={4}>
-                        <form className={classes.root} onSubmit={handleSubmit}>
-                            <div>
-                                <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
-                            </div>
-                            <div>
-                                <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
-                            </div>
-                            <div>
-                                {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField> */}
-                            </div>
-                            <div>
-                                <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
-                            </div>
-                            <div>
-                                {/* <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField> */}
-                            </div>
-                            <Button type="submit" value="Register">Register</Button>
-                        </form>
+        <div>
+            { loggedInUser ? (
+                <div>You are already logged in</div>
+            ) : (
+                <div>
+                    {errorMessage && <p>{errorMessage}</p>}
+                    <Grid container justify="center">
+                        <Typography variant="h2">Register</Typography>
                     </Grid>
-                </Grid>
-            </div>
-        </>
+                    <Grid container justify="center">
+                        <Grid item xs={10} sm={8} md={6} lg={4}>
+                            <form className={classes.root} onSubmit={handleSubmit}>
+                                <div>
+                                    <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
+                                </div>
+                                <div>
+                                    <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
+                                </div>
+                                <div>
+                                    {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField> */}
+                                </div>
+                                <div>
+                                    <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
+                                </div>
+                                <div>
+                                    {/* <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField> */}
+                                </div>
+                                <Button type="submit" value="Register">Register</Button>
+                            </form>
+                        </Grid>
+                    </Grid>
+                </div>
+            )}
+        </div>
     )
 }
 

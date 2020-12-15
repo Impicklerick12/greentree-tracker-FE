@@ -23,7 +23,7 @@ export async function registerUser(userInfo) {
     
 export async function userAuthenticated() {
     try {
-        const response =  await api.get("/auth/user")
+        const response = await api.get("/auth/user")
         return response
     }
     catch(error) {
