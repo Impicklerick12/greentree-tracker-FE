@@ -66,30 +66,58 @@ const App = () => {
     })
   }
 
-  useEffect(() => {
-    // dispatch({
-    //   type: "setPlants",
-    //   data: plantData
-    // })
+  // useEffect(() => {
+  //   // dispatch({
+  //   //   type: "setPlants",
+  //   //   data: plantData
+  //   // })
 
-    // TO USE IN PRODUCION - REPLACE CODE ABOVE
+  //   // TO USE IN PRODUCION - REPLACE CODE ABOVE
+	// 	userAuthenticated().then(() => {			 
+	// 		dispatch({
+	// 			type: "setLoggedInUser",
+	// 			data: getLoggedInUser()
+	// 		})
+	// 	}).catch((error) => {
+	// 		console.log("got an error trying to check authenticated user:", error)
+	// 		setLoggedInUser(null) 
+	// 		dispatch({
+	// 			type: "setLoggedInUser",
+	// 			data: null
+	// 		})
+	// 	})
+  //   // return a function that specifies any actions on component unmount
+  //   return () => {}
+  // },[])
+
+  useEffect(() => {
+    // if not logged in FE
+    if (loggedInUser === null) {
+    // checks to see if there is any logged in user in BE using the cookies
+      userAuthenticated()
+        .then((resp) => {
+            let currentUser = resp.data.user;
+            // if there is a logged in user in the BE, assign it to the state currentUser
+            if (currentUser) {
+                dispatch({
+                    type: "setLoggedInUser",
+                    data: currentUser,
+                });
+            } else {
+                console.log("No user logged in on page reload");
+            }
+        })
+        .catch((error) => {
+            console.log(
+                `An error ocurred on getLoggedInUser: ${error}.`
+            );
+        });
+    }
+  }, []);
+
+  useEffect(() => {
     fetchAllPlants()
-		userAuthenticated().then(() => {			 
-			dispatch({
-				type: "setLoggedInUser",
-				data: getLoggedInUser()
-			})
-		}).catch((error) => {
-			console.log("got an error trying to check authenticated user:", error)
-			setLoggedInUser(null) 
-			dispatch({
-				type: "setLoggedInUser",
-				data: null
-			})
-		})
-    // return a function that specifies any actions on component unmount
-    return () => {}
-  },[])
+  }, [])
 
   // // Register user
   // function registerUser(user) {
