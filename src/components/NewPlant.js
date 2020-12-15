@@ -8,7 +8,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     TextField, 
     Button,
-    Typography
+    Typography,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem
 } from '@material-ui/core';
 
 // NEED TO FIND AWS ACCESS KEY
@@ -32,7 +36,11 @@ const useStyles = makeStyles((theme) => ({
     },
     textArea: {
         width: '75%'
-    }
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
   }));
 
 const NewPlant = ({history}) => {
@@ -52,6 +60,27 @@ const NewPlant = ({history}) => {
             ...formState,
             [name]: value
         })
+        console.log(formState)
+    }
+
+    const handleCategoryChange = (event) => {
+        const name = "category"
+        const value = event.target.value
+        setFormState({
+            ...formState,
+            [name]: value
+        })
+        setCategory(value)
+    }
+
+    const handlePotSizeChange = (event) => {
+        const name = "pot_size"
+        const value = event.target.value
+        setFormState({
+            ...formState,
+            [name]: value
+        })
+        setPotSize(value)
     }
 
     function handleSubmit(event) {
@@ -81,9 +110,9 @@ const NewPlant = ({history}) => {
             botanical_name: formState.botanical_name,
             category: formState.category || "Bush",
             description: formState.description,
-            price: formState.price,
             pot_size: formState.pot_size,
             quantity: formState.quantity,
+            price: formState.price
         }
         addPlant(newPlant).then((newPlant) => {
             dispatch({
@@ -118,13 +147,15 @@ const NewPlant = ({history}) => {
         botanical_name: "",
         category: "",
         description: "",
-        price: 0,
         pot_size: "",
-        quantity: ""
+        quantity: 0,
+        price: 0
     } 
 
     const [formState, setFormState] = useState(initialFormState)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [category, setCategory] = React.useState('');
+    const [potSize, setPotSize] = React.useState('');
     const { store, dispatch } = useGlobalState()
     const { plants } = store
 
@@ -141,15 +172,44 @@ const NewPlant = ({history}) => {
                 <div>
                     <input type="file" name="plant_image" onChange={handleImageUpload}/>
                 </div>
-                <div>
+                {/* <div>
                     <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>
-                </div>
+                </div> */}
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={category}
+                        onChange={handleCategoryChange}
+                        label="Category"
+                    >
+                        <MenuItem value="tree">Tree</MenuItem>
+                        <MenuItem value="shrub">Shrub</MenuItem>
+                        <MenuItem value="grass">Grass</MenuItem>
+                        <MenuItem value="ground cover">Ground Cover</MenuItem>
+                    </Select>
+                </FormControl>
                 <div>
                     <TextField className={classes.textArea} multiline required rows={4} name="description" label="Description" onChange={handleChange}></TextField>
                 </div>
-                <div>
+                {/* <div>
                     <TextField className={classes.textArea} type="text" name="pot_size" label="Pot Size" onChange={handleChange}></TextField>
-                </div>
+                </div> */}
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-outlined-label">Pot Size</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={potSize}
+                        onChange={handlePotSizeChange}
+                        label="Pot Size"
+                    >
+                        <MenuItem value="140mm">140mm</MenuItem>
+                        <MenuItem value="250mm">250mm</MenuItem>
+                        <MenuItem value="350mm">350mm</MenuItem>
+                    </Select>
+                </FormControl>
                 <div>
                     <TextField className={classes.textArea} type="number" name="quantity" label="Quantity" onChange={handleChange}></TextField>
                 </div>
