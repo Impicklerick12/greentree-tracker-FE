@@ -44,12 +44,13 @@ const App = () => {
     loggedInUser: null,
     quotes: [],
     quoteRequestData: [],
-    searchValue: null
+    searchValue: null,
+    userAdmin: false
   }
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants } = store
+  const { loggedInUser, plants, userAdmin } = store
 
   function fetchAllPlants() {
     getAllPlants().then((plantData) => {
@@ -91,10 +92,11 @@ const App = () => {
   // },[])
 
   useEffect(() => {
-    // if not logged in FE
+    // Checking the local storage to see if there is a current user
     const currentUser = getLoggedInUser()
     console.log(currentUser)
 
+    // If current user, set global state again to current user
     if (currentUser) {
       dispatch({
           type: "setLoggedInUser",

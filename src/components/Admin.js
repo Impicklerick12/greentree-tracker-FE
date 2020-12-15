@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useGlobalState } from '../config/store'
+import { userAdmin } from '../services/authServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -21,6 +22,21 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Admin = () => {
+
+    useEffect(() => {
+        userAdmin()
+            .then(() => {
+                dispatch({
+                    type: "setUserAdmin",
+                    data: true
+                })
+            })
+            .catch((error) => {
+                console.log(
+                    `An error ocurred on getLoggedInUser: ${error}.`
+                );
+            });
+    }, [])
 
     const { store, dispatch } = useGlobalState()
     const { loggedInUser } = store

@@ -30,6 +30,12 @@ export default function (state, action) {
                 searchValue: action.data
             }
         }
+        case "setUserAdmin": {
+            return {
+                ...state,
+                userAdmin: action.data
+            }
+        }
         case "setError": {
             return {
                 ...state,

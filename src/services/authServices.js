@@ -20,6 +20,15 @@ export async function registerUser(userInfo) {
     return response.data
 }
 
+export async function userAdmin() {
+    try {
+        const response = await api.get("/admin")
+    }
+    catch(error) {
+        console.log("an error occurred checking for admin user")
+        throw(error)
+    }
+}
     
 export async function userAuthenticated() {
     try {
