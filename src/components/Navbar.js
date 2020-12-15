@@ -86,6 +86,16 @@ const Navbar = ({history}) => {
                         <div>
                             {isMobile ? (
                                 <>
+                                    { quotes.length >= 1 ? (
+                                        <IconButton
+                                            onClick={() => handleMenuClick('/quote')}
+                                            color="inherit"
+                                        >
+                                            <ShoppingCartIcon />
+                                        </IconButton>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
                                         <MenuIcon />
                                     </IconButton>
@@ -108,7 +118,6 @@ const Navbar = ({history}) => {
                                         <>
                                             <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/quote')}>Quote</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
                                             <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                         </>
