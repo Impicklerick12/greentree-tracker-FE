@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { addPlant } from '../services/plantServices'
 import S3 from 'aws-s3';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -130,16 +131,64 @@ const NewPlant = ({history}) => {
         })
     }
 
-    function handleImageUpload(event) {
-        // console.log(event.target.files[0])
-        const plantImage = event.target.files[0]
+    const handleImageChange = (ev) => {
+        setFormState({
+            ...formState,
+            success: false, 
+            url : ""
+        });
+      }
 
-        S3Client
-            .uploadFile(plantImage)
-            .then((res) => {
-                console.log(res.location)
-            })
-            .catch((err) => console.log(err))
+    function handleImageUpload(ev) {
+        // console.log(event.target.files[0])
+        // const plantImage = event.target.files[0]
+
+        // S3Client
+            // .uploadFile(plantImage)
+            // .then((res) => {
+                // console.log(res.location)
+            // })
+            // .catch((err) => console.log(err))
+        // let file = ev.target.files[0];
+        // // Split the filename to get the name and type
+        // let fileParts = ev.target.files[0].name.split('.');
+        // let fileName = fileParts[0];
+        // let fileType = fileParts[1];
+        // console.log("Preparing the upload");
+        // axios.post("http://localhost:3000/sign_s3",{
+        //     fileName : fileName,
+        //     fileType : fileType
+        // })
+        // .then(response => {
+        //     var returnData = response.data.data.returnData;
+        //     var signedRequest = returnData.signedRequest;
+        //     var url = returnData.url;
+        //     setFormState({
+        //         ...formState,
+        //         url: url
+        //     })
+        //     console.log("Recieved a signed request " + signedRequest);
+
+        // var options = {
+        //     headers: {
+        //     'Content-Type': fileType
+        //     }
+        // };
+        // axios.put(signedRequest,file,options)
+        // .then(result => {
+        //     console.log("Response from s3")
+        //     setFormState({
+        //         ...formState,
+        //         success: true
+        //     });
+        // })
+        // .catch(error => {
+        //     alert("ERROR " + JSON.stringify(error));
+        // })
+        // })
+        // .catch(error => {
+        // alert(JSON.stringify(error));
+        // })
     }
 
     const initialFormState = {
@@ -170,7 +219,7 @@ const NewPlant = ({history}) => {
                     <TextField className={classes.textArea} required id="standard-basic" type="text" name="botanical_name" label="Botanical Name" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <input type="file" name="plant_image" onChange={handleImageUpload}/>
+                    <input type="file" name="plant_image" onChange={handleImageChange}/>
                 </div>
                 {/* <div>
                     <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>
@@ -216,7 +265,7 @@ const NewPlant = ({history}) => {
                 <div>
                     <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
                 </div>
-                <Button type="submit" value="Add Plant">Add Plant</Button>
+                <Button type="submit" value="Add Plant" >Add Plant</Button>
             </form>
         </div>
     )
