@@ -23,6 +23,7 @@ export async function registerUser(userInfo) {
 export async function userAdmin() {
     try {
         const response = await api.get("/admin")
+        return response
     }
     catch(error) {
         console.log("an error occurred checking for admin user")

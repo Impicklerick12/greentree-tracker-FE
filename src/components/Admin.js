@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useGlobalState } from '../config/store'
 import { userAdmin } from '../services/authServices'
+import { withRouter } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const Admin = () => {
+const Admin = ({history}) => {
 
     useEffect(() => {
         // userAdmin()
@@ -70,4 +71,4 @@ const Admin = () => {
     )
 }
 
-export default Admin
+export default withRouter(Admin)
