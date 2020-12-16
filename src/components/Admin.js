@@ -24,18 +24,26 @@ const useStyles = makeStyles((theme) => ({
 const Admin = () => {
 
     useEffect(() => {
+        // userAdmin()
+        //     .then(() => {
+        //         dispatch({
+        //             type: "setUserAdmin",
+        //             data: true
+        //         })
+        //     })
+        //     .catch((error) => {
+        //         console.log(
+        //             `An error ocurred on getLoggedInUser: ${error}.`
+        //         );
+        //     });
+
         userAdmin()
-            .then(() => {
-                dispatch({
-                    type: "setUserAdmin",
-                    data: true
-                })
+            .then((res) => {
+                console.log(res)
             })
             .catch((error) => {
-                console.log(
-                    `An error ocurred on getLoggedInUser: ${error}.`
-                );
-            });
+                console.log(error)
+            })
     }, [])
 
     const { store, dispatch } = useGlobalState()

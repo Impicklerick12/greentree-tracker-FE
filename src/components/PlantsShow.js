@@ -73,7 +73,7 @@ const PlantsShow = ({history, plant}) => {
             const status = error.response ? error.response.status : 500
             console.log("caught error on delete", error)
             if(status === 403)
-                setErrorMessage("Oops! It appears we lost your login session. Make sure 3rd party cookies are not blocked by your browser settings.")
+                setErrorMessage("You are not an admin, and unable to delete a plant")
             else
                 setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })

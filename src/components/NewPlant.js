@@ -124,7 +124,7 @@ const NewPlant = ({history}) => {
             const status = error.response ? error.response.status : 500
             console.log("caught error on Add Plant", error)
             if(status === 403)
-                setErrorMessage("Oops! It appears we lost your login session. Make sure 3rd party cookies are not blocked by your browser settings.")
+                setErrorMessage("You are not an admin, and unable to create a plant")
             else
                 setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })
@@ -161,6 +161,7 @@ const NewPlant = ({history}) => {
 
     return (
         <div>
+            {errorMessage && <p>{errorMessage}</p>}
             <Typography variant="h2">New Plant</Typography>
             <form className={classes.root} onSubmit={handleSubmit}>
                 <div>
