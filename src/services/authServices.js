@@ -49,5 +49,26 @@ export function getLoggedInUser() {
 
 // Store loggedInUser username in local storage
 export function setLoggedInUser(user) {
-    user ? localStorage.setItem("loggedInUser", user) : localStorage.removeItem("loggedInUser")
+    localStorage.setItem("loggedInUser", user)
+}
+
+// Remove loggedInUser username from local storage
+export function removeLoggedInUser() {
+    localStorage.removeItem("loggedInUser")
+}
+
+// Store admin boolean in local storage
+export function setAdmin(admin) {
+    localStorage.setItem("admin", admin)
+}
+
+// Remove Admin from local storage
+export function removeAdmin() {
+    localStorage.removeItem("admin")
+}
+
+
+// Get admin from localStorage
+export function getAdmin() {
+    return localStorage.getItem("admin")
 }

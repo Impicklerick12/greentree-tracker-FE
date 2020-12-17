@@ -72,18 +72,14 @@ const Register = ({history}) => {
         })
     }
 
-    // Will not need this in production. Use handleSubmit function
-    // function registerUser() {
-    //     dispatch({
-    //         type: "setLoggedInUser",
-    //         data: userDetails.username
-    //     })
-    // }
+    function loggedInUserRedirect() {
+        history.goBack()
+    }
  
     return (
         <div>
             { loggedInUser ? (
-                <div>You are already logged in</div>
+                loggedInUserRedirect()
             ) : (
                 <div>
                     {errorMessage && <p>{errorMessage}</p>}
