@@ -94,7 +94,6 @@ const App = () => {
   useEffect(() => {
     // Checking the local storage to see if there is a current user
     const currentUser = getLoggedInUser()
-    console.log(currentUser)
 
     // If current user, set global state again to current user
     if (currentUser) {
@@ -185,7 +184,11 @@ const App = () => {
 
             <Container maxWidth="lg">
                 {loggedInUser 
-                ? (<p>{loggedInUser}</p>)
+                ? (
+                  <>
+                    <p>{loggedInUser}</p>
+                  </>
+                )
                 : (<p>Guest</p>)
                 }
               <Switch>

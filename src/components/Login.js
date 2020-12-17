@@ -54,14 +54,17 @@ const Login = ({history}) => {
         // For use when connecting to SERVER
         event.preventDefault()
         // Attempt login on server
-        loginUser(userDetails).then((resp) => {
-            let { email, role, username } = resp.user
+        loginUser(userDetails).then((res) => {
+            // let { email, role, username } = resp.user
 
-            let currentUser = {
-                "username": username,
-                "email": email,
-                "role": role
-            }
+            // let currentUser = {
+            //     "username": username,
+            //     "email": email,
+            //     "role": role
+            // }
+            // console.log(currentUser)
+
+            let currentUser = res.user
             console.log(currentUser)
 
             // if (currentUser.role === "admin") {
@@ -73,7 +76,7 @@ const Login = ({history}) => {
             // }
             // console.log(userAdmin)
 
-            setLoggedInUser(username)
+            setLoggedInUser(currentUser.username)
             dispatch({
                 type: "setLoggedInUser",
                 data: userDetails.username

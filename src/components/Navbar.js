@@ -36,6 +36,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = ({history}) => {
 
+    const menuLinks = {
+        account: "My Account",
+        plants: "Plants",
+        contact: "contact",
+        admin: "Admin",
+        login: "login",
+        logout: "logout",
+        register: "Register"
+    }
+
     // Logout user
     function handleLogout() {
         logoutUser().then((response) => {
@@ -128,22 +138,22 @@ const Navbar = ({history}) => {
                                 </>
                             ) : (
                                 <>
-                                { loggedInUser ? (
-                                    <>
-                                        <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
-                                        <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                        <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
-                                        <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
-                                        <Button onClick={handleLogout}>Logout</Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                        <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
-                                        <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
-                                        <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
-                                    </>
-                                )}
+                                    { loggedInUser ? (
+                                        <>
+                                            <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
+                                            <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
+                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
+                                            <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
+                                            <Button onClick={handleLogout}>Logout</Button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
+                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
+                                            <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
+                                            <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                                        </>
+                                    )}
                                 </>
                             )}
                         </div>

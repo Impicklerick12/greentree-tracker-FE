@@ -44,7 +44,6 @@ const PlantsShow = ({history, plant}) => {
 
     function handleEdit(event) {
         event.preventDefault()
-
         history.push(`/plants/edit/${plant._id}`)
     }
 
