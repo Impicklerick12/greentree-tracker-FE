@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { addPlant } from '../services/plantServices'
@@ -17,16 +17,16 @@ import {
 
 // NEED TO FIND AWS ACCESS KEY
 // BUGS - Need to fix
-const config = {
-    bucketName: 'greentree-tracker-images',
-    region: 'ap-southeast-2',
+// const config = {
+    // bucketName: 'greentree-tracker-images',
+    // region: 'ap-southeast-2',
     // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
-}
+    // accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    // secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
+// }
 
-const S3Client = new S3(config)
+// const S3Client = new S3(config)
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -108,6 +108,7 @@ const NewPlant = ({history}) => {
         const newPlant = {
             common_name: formState.common_name,
             botanical_name: formState.botanical_name,
+            file: formState.fileInput,
             category: formState.category || "Bush",
             description: formState.description,
             pot_size: formState.pot_size,
@@ -130,21 +131,30 @@ const NewPlant = ({history}) => {
         })
     }
 
-    function handleImageUpload(event) {
+    // AWS3 image upload function
+    //function Upload() {
         // console.log(event.target.files[0])
-        const plantImage = event.target.files[0]
+        // const plantImage = event.target.files[0]
 
-        S3Client
-            .uploadFile(plantImage)
-            .then((res) => {
-                console.log(res.location)
-            })
-            .catch((err) => console.log(err))
-    }
+        // S3Client
+            // .uploadFile(plantImage)
+            // .then((res) => {
+                // console.log(res.location)
+            // })
+            // .catch((err) => console.log(err))
+    const fileInput = useRef();
+
+    const handleClick = (event) => {
+        event.preventDefault(); 
+        console.log(fileInput.current)
+        // this will hold the function to upload to aws3
+    }; 
+    //}
 
     const initialFormState = {
         common_name: "",
         botanical_name: "",
+        file: "",
         category: "",
         description: "",
         pot_size: "",
@@ -171,7 +181,7 @@ const NewPlant = ({history}) => {
                     <TextField className={classes.textArea} required id="standard-basic" type="text" name="botanical_name" label="Botanical Name" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <input type="file" name="plant_image" onChange={handleImageUpload}/>
+                    <input type="file" name="plant_image" ref={fileInput}/>
                 </div>
                 {/* <div>
                     <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>
@@ -217,7 +227,7 @@ const NewPlant = ({history}) => {
                 <div>
                     <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
                 </div>
-                <Button type="submit" value="Add Plant">Add Plant</Button>
+                <Button type="submit" value="Add Plant" onClick="handleClick">Add Plant</Button>
             </form>
         </div>
     )
