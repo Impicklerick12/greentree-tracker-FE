@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import plantData from './data/plant_data'
 import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
-import { getPlantFromId, getAllPlants } from './services/plantServices'
+import { getPlantFromId, getAllPlants, getCart } from './services/plantServices'
 import { userAuthenticated, setLoggedInUser, getLoggedInUser } from './services/authServices'
 
 import {
@@ -42,7 +42,7 @@ const App = () => {
   const initialState = {
     plants: [],
     loggedInUser: null,
-    quotes: [],
+    quotePlants: [],
     quoteRequestData: [],
     searchValue: null,
     userAdmin: false
@@ -149,6 +149,21 @@ const App = () => {
   useEffect(() => {
     fetchAllPlants()
   }, [])
+
+  useEffect(() => {
+    getCart().then((cartData) => {
+      dispatch({
+        type: "setQuotePlants",
+        data: cartData
+      })
+    }).catch((error) => {
+      dispatch({
+        type: "setError",
+        data: true
+      })
+      console.log("An error occurred fetching the cart from the server:", error)
+    })
+}, [])
 
   // // Register user
   // function registerUser(user) {

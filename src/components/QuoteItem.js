@@ -4,22 +4,22 @@ import { useGlobalState } from '../config/store'
 import { IconButton } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-const QuoteItem = ({history, quote}) => {
+const QuoteItem = ({history, plant}) => {
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, quotes } = store
+    const { loggedInUser, quotePlants } = store
 
-    if (!quote) return null
+    if (!plant) return null
 
-    const { quantity, item } = quote
+    const { quantity, item } = plant
 
     function handleDelete(event) {
         event.preventDefault()
 
-        const updatedQuotes = quotes.filter((q) => q._id !== quote._id)
+        const updatedQuotes = quotePlants.filter((q) => q._id !== plant._id)
         
         dispatch({
-            type: "setQuotes",
+            type: "setQuotePlants",
             data: updatedQuotes
         })
     }
@@ -36,3 +36,4 @@ const QuoteItem = ({history, quote}) => {
 }
 
 export default QuoteItem
+

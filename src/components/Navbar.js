@@ -62,7 +62,7 @@ const Navbar = ({history}) => {
     }
 
     const {store, dispatch} = useGlobalState()
-    const {loggedInUser, quotes} = store
+    const {loggedInUser, quotePlants} = store
 
     const classes = useStyles()
 
@@ -90,7 +90,7 @@ const Navbar = ({history}) => {
                             Greentree Tracker
                         </Typography>
                         <div>
-                            { quotes.length >= 1 && (
+                            { quotePlants.length >= 1 && (
                                 <IconButton
                                     onClick={() => handleMenuClick('/quote')}
                                     color="inherit"

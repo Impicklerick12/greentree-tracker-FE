@@ -12,10 +12,10 @@ export default function (state, action) {
                 plants: action.data
             }
         }
-        case "setQuotes": {
+        case "setQuotePlants": {
             return {
                 ...state,
-                quotes: action.data
+                quotePlants: action.data
             }
         }
         case "setQuoteRequests": {

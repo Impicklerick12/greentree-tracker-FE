@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import QuoteItem from './QuoteItem'
+import { getCart } from '../services/plantServices'
 
 import { 
     Button,
@@ -27,7 +28,7 @@ const QuoteRequest = ({history}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, quotes, quoteRequestData } = store
+    const { loggedInUser, quotePlants, quoteRequestData } = store
     // console.log(quotes)
 
     const initialFormState = {
@@ -51,7 +52,7 @@ const QuoteRequest = ({history}) => {
     const handleSubmit = (event) => {
         event.preventDefault()
         const newQuoteRequest = {
-            plantQuotes: quotes,
+            plantQuotes: quotePlants,
             user: loggedInUser,
             comment: quoteRequestComment.comment
         }
@@ -63,22 +64,21 @@ const QuoteRequest = ({history}) => {
         // history.push('/plants')
     }
 
+    console.log(quotePlants)
+
     return (
         <div>
              <Grid container justify="center">
                 <Typography variant="h2">Quote Request</Typography>
             </Grid>
-            { quotes ? (
+            { quotePlants ? (
                 <Grid container justify="center">
                     <Grid item xs={10} sm={8} md={6} lg={4}>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <div>
-                                {quotes.map((quote, index) =>
-                                    <QuoteItem key={index} quote={quote} />
+                                {quotePlants.map((plant, index) =>
+                                    <QuoteItem key={index} plant={plant} />
                                 )}
-                            </div>
-                            <div>
-                                <p>{loggedInUser}</p>
                             </div>
                             <div>
                                 <TextField className={classes.textArea} multiline rows={4} type="text" name="comment" label="Comments" onChange={handleChange}></TextField>

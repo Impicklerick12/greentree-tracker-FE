@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import StockPlant from '../images/stock-plant.jpg'
-import { deletePlant } from '../services/plantServices'
+import { deletePlant, addPlantToCart } from '../services/plantServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -40,7 +40,30 @@ const PlantsShow = ({history, plant}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { plants, loggedInUser, quotes } = store
+    const { plants, loggedInUser, quotePlants } = store
+
+    const initialQuoteFormState = {
+        quantity: "",
+        plant: ""
+    }
+
+    const [quoteFormState, setQuoteFormState] = useState(initialQuoteFormState)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    // If we don't have a plant, return null
+    if (!plant) return null
+
+    const { 
+        common_name, 
+        botanical_name, 
+        category, 
+        modified_date, 
+        description, 
+        price, 
+        pot_size, 
+        special, 
+        quantity 
+    } = plant
 
     function handleEdit(event) {
         event.preventDefault()
@@ -83,16 +106,7 @@ const PlantsShow = ({history, plant}) => {
         history.goBack()
     }
 
-    const initialQuoteFormState = {
-        quantity: "",
-        item: "",
-        user: ""
-    }
-
-    const [quoteFormState, setQuoteFormState] = useState(initialQuoteFormState)
-    const [errorMessage, setErrorMessage] = useState(null)
-
-    function handleChange(event) {
+    function handleQuantityChange(event) {
         const name = event.target.name
         const value = event.target.value
 
@@ -102,37 +116,29 @@ const PlantsShow = ({history, plant}) => {
         })
     }
 
-    function handleQuoteSubmit(event) {
+    function handleAddToCart(event) {
         event.preventDefault()
-        const newQuote = {
+        const newPlantToCart = {
             quantity: quoteFormState.quantity,
-            item: `${common_name} - ${pot_size} - $${price}`,
-            user: loggedInUser.email
+            plant: plant._id
         }
         
-        dispatch({
-            type: "setQuotes",
-            data: [...quotes, newQuote]
+        addPlantToCart(newPlantToCart).then((newPlant) => {
+            dispatch({
+                type: "setQuotePlants",
+                data: [...quotePlants, newPlant]
+            })
+            console.log(newPlant)
+            history.push('/quote')
+        }).catch((error) => {
+            const status = error.response ? error.response.status : 500
+            console.log("caught error on Add to cart", error)
+            if(status === 403)
+                setErrorMessage("You are not an admin, and unable to create a plant")
+            else
+                setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })
-
-        history.push('/quote')
     }
-
-    // If we don't have a plant, return null
-    if (!plant) return null
-
-    const { 
-        common_name, 
-        botanical_name, 
-        category, 
-        modified_date, 
-        description, 
-        price, 
-        pot_size, 
-        special, 
-        quantity 
-    } = plant
-
 
     return (
         <div>
@@ -176,7 +182,7 @@ const PlantsShow = ({history, plant}) => {
                 </CardContent>
                 {loggedInUser && (
                     <>
-                        <form className={classes.form} onSubmit={handleQuoteSubmit}>
+                        <form className={classes.form} onSubmit={handleAddToCart}>
                             <TextField 
                                 className={classes.quantity_field} 
                                 size="small" 
@@ -184,7 +190,7 @@ const PlantsShow = ({history, plant}) => {
                                 label="Quantity" 
                                 type="number" 
                                 name="quantity"
-                                onChange={handleChange} 
+                                onChange={handleQuantityChange} 
                             />
                             <p>x</p>
                             <p>{common_name} - {pot_size} - ${price}</p>
