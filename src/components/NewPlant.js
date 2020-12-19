@@ -146,7 +146,8 @@ const NewPlant = ({history}) => {
 
     const handleClick = (event) => {
         event.preventDefault(); 
-        console.log(fileInput.current)
+        // console.log(fileInput.current)
+        console.log(fileInput.current.files[0].name)
         // this will hold the function to upload to aws3
     }; 
     //}
@@ -227,7 +228,7 @@ const NewPlant = ({history}) => {
                 <div>
                     <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
                 </div>
-                <Button type="submit" value="Add Plant" onClick="handleClick">Add Plant</Button>
+                <Button type="submit" value="Add Plant" onClick={handleClick}>Add Plant</Button>
             </form>
         </div>
     )
