@@ -146,9 +146,23 @@ const NewPlant = ({history}) => {
 
     const handleClick = (event) => {
         event.preventDefault(); 
-        // console.log(fileInput.current)
-        console.log(fileInput.current.files[0].name)
-        // this will hold the function to upload to aws3
+        let file = fileInput.current.files[0]); 
+        let newFileName = fileInput.current.files[0].name;
+        const config = {
+            bucketName: "greentree-tracker-images",
+            region: "ap-southeast-2",
+            accessKeyId: "AKIA5ZNAM4KIY2HYGWMM", 
+            secretAccessKey: "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"
+        };
+        const ReactS3Client = new S3(config);
+        ReactS3Client.uploadFile(file, newFileName).then(data) => {
+            console.log(data);
+            if (data.status === 204) {
+                console.log("success");
+            } else {
+                console.log("fail");
+            }
+        }
     }; 
     //}
 
