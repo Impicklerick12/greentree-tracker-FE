@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import plantData from './data/plant_data'
 import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
-import { getPlantFromId, getAllPlants, getCart } from './services/plantServices'
+import { getPlantFromId, getAllPlants } from './services/plantServices'
+import { getCart } from './services/cartServices'
 import { userAuthenticated, setLoggedInUser, getLoggedInUser } from './services/authServices'
 
 import {
@@ -44,13 +45,14 @@ const App = () => {
     loggedInUser: null,
     quotePlants: [],
     quoteRequestData: [],
+    submittedQuotes: [],
     searchValue: null,
     userAdmin: false
   }
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants, userAdmin } = store
+  const { loggedInUser, plants, quotePlants } = store
 
   function fetchAllPlants() {
     getAllPlants().then((plantData) => {
@@ -65,6 +67,22 @@ const App = () => {
       })
       console.log("An error occurred fetching plants from the server:", error)
     })
+  }
+
+  const getCartData = () => {
+    getCart().then((cartData) => {
+      dispatch({
+        type: "setQuotePlants",
+        data: cartData
+      })
+    }).catch((error) => {
+      dispatch({
+        type: "setError",
+        data: true
+      })
+      console.log("An error occurred fetching the cart from the server:", error)
+    })
+    console.log("QuotePlants: ", quotePlants)
   }
 
   // useEffect(() => {
@@ -102,31 +120,8 @@ const App = () => {
           data: currentUser,
       });
     } else {
-        console.log("No user in Local Storage");
+      console.log("No user in Local Storage");
     }
-
-    // if (loggedInUser === null) {
-    //   // checks to see if there is any logged in user in BE
-    //   userAuthenticated()
-    //     .then((res) => {
-    //         let currentUser = res.data.user
-    //         console.log(currentUser)
-
-    //         if (currentUser) {
-    //           dispatch({
-    //               type: "setLoggedInUser",
-    //               data: currentUser,
-    //           });
-    //         } else {
-    //             console.log("No user logged in on page reload");
-    //         }
-    //       })
-    //     .catch((error) => {
-    //         console.log(
-    //             `An error ocurred on getLoggedInUser: ${error}.`
-    //         );
-    //     });
-    // }
   }, []);
 
   // useEffect(() => {
@@ -151,19 +146,8 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    getCart().then((cartData) => {
-      dispatch({
-        type: "setQuotePlants",
-        data: cartData
-      })
-    }).catch((error) => {
-      dispatch({
-        type: "setError",
-        data: true
-      })
-      console.log("An error occurred fetching the cart from the server:", error)
-    })
-}, [])
+    getCartData()
+  }, [])
 
   // // Register user
   // function registerUser(user) {

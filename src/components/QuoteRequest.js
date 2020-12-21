@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
+import { addQuote } from '../services/quoteServices'
 import QuoteItem from './QuoteItem'
-import { getCart } from '../services/plantServices'
 
 import { 
     Button,
@@ -31,55 +31,71 @@ const QuoteRequest = ({history}) => {
     const { loggedInUser, quotePlants, quoteRequestData } = store
     // console.log(quotes)
 
-    const initialFormState = {
-        plantQuotes: [],
-        user: "",
-        comment: ""
-    } 
-
-    const [quoteRequestComment, setQuoteRequestComment] = useState(initialFormState)
+    const [quoteRequestComment, setQuoteRequestComment] = useState("")
+    const [total, setTotal] = useState(0)
 
     const handleChange = (event) => {
-        const name = event.target.name
+        event.preventDefault()
         const value = event.target.value
-
-        setQuoteRequestComment({
-            ...quoteRequestComment,
-            [name]: value
-        })
+        setQuoteRequestComment(value)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        const newQuoteRequest = {
-            plantQuotes: quotePlants,
-            user: loggedInUser,
-            comment: quoteRequestComment.comment
-        }
-        dispatch({
-            type: "setQuoteRequestData",
-            data: [...quoteRequestData, newQuoteRequest]
+
+        let plantInfo = []
+        quotePlants.map((p) => {
+            plantInfo.push({
+                plant_id: p.plant_id,
+                quantity: p.quantity
+            })
         })
-        console.log("Quote request data: ", quoteRequestData)
-        // history.push('/plants')
+
+        const newQuoteRequest = {
+            plants: plantInfo,
+            comment: quoteRequestComment
+        }
+        // console.log(newQuoteRequest)
+
+        addQuote(newQuoteRequest)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((error) => console.log(error))
+
+        // dispatch({
+        //     type: "setQuoteRequestData",
+        //     data: newQuoteRequest
+        // })
+        // console.log("Quote request data: ", quoteRequestData)
+        // // history.push('/plants')
     }
 
-    console.log(quotePlants)
+    const updateTotal = (price, quantity) => {
+        let subtotal
+        subtotal += (price * quantity)
+        setTotal(subtotal)
+    }
+
+    const handleRedirect = () => {
+        history.goBack()
+    }
 
     return (
         <div>
              <Grid container justify="center">
                 <Typography variant="h2">Quote Request</Typography>
             </Grid>
-            { quotePlants ? (
+            { loggedInUser && (quotePlants.length > 0) ? (
                 <Grid container justify="center">
                     <Grid item xs={10} sm={8} md={6} lg={4}>
                         <form className={classes.root} onSubmit={handleSubmit}>
                             <div>
                                 {quotePlants.map((plant, index) =>
-                                    <QuoteItem key={index} plant={plant} />
+                                    <QuoteItem key={index} cartPlants={plant} updateTotal={updateTotal}/>
                                 )}
                             </div>
+                            <p>Total: ${total}</p>
                             <div>
                                 <TextField className={classes.textArea} multiline rows={4} type="text" name="comment" label="Comments" onChange={handleChange}></TextField>
                             </div>
@@ -89,7 +105,8 @@ const QuoteRequest = ({history}) => {
                     </Grid>
                 </Grid>
             ) : (
-                <p>User not logged in</p>
+                // ADD IN NEW COMPONENT _ YOU HAVE NO ITEMS IN YOUR CART YET
+                handleRedirect()
             )}
         </div>
     )

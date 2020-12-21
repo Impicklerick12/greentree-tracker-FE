@@ -24,6 +24,12 @@ export default function (state, action) {
                 quoteRequests: action.data
             }
         }
+        case "setSubmittedQuotes": {
+            return {
+                ...state,
+                submittedQuotes: action.data
+            }
+        }
         case "setSearchValue": {
             return {
                 ...state,

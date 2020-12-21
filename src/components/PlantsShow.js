@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import StockPlant from '../images/stock-plant.jpg'
-import { deletePlant, addPlantToCart } from '../services/plantServices'
+import { deletePlant } from '../services/plantServices'
+import { addPlantToCart } from '../services/cartServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -71,18 +72,8 @@ const PlantsShow = ({history, plant}) => {
     }
 
     function handleDelete(event) {
-        // event.preventDefault()
-
-        // const updatedPlants = plants.filter((p) => p._id !== plant._id)
-        // dispatch({
-        //     type: "setPlants",
-        //     data: updatedPlants
-        // })
-
-        // history.push("/plants")
-
-        // TO USE IN PRODUCTION - REPLACE CODE ABOVE
         event.preventDefault()
+
         deletePlant(plant._id).then(() => {
             console.log("deleted plant")
             const updatedPlants = plants.filter((p) => p._id !== plant._id)
@@ -123,18 +114,17 @@ const PlantsShow = ({history, plant}) => {
             plant: plant._id
         }
         
-        addPlantToCart(newPlantToCart).then((newPlant) => {
+        addPlantToCart(newPlantToCart).then((cartData) => {
             dispatch({
                 type: "setQuotePlants",
-                data: [...quotePlants, newPlant]
+                data: cartData
             })
-            console.log(newPlant)
             history.push('/quote')
         }).catch((error) => {
             const status = error.response ? error.response.status : 500
             console.log("caught error on Add to cart", error)
             if(status === 403)
-                setErrorMessage("You are not an admin, and unable to create a plant")
+                setErrorMessage("There was an error adding the plant to your cart")
             else
                 setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })

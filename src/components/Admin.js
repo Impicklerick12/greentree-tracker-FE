@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useGlobalState } from '../config/store'
 import { userAdmin } from '../services/authServices'
 import { withRouter } from 'react-router-dom'
+import { getAllQuotes } from '../services/quoteServices.js'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -11,6 +12,7 @@ import {
 } from '@material-ui/core';
 
 import NewPlant from './NewPlant'
+import SubmittedQuotes from './SubmittedQuotes'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,32 +25,20 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Admin = ({history}) => {
-
-    // useEffect(() => {
-    //     // userAdmin()
-    //     //     .then(() => {
-    //     //         dispatch({
-    //     //             type: "setUserAdmin",
-    //     //             data: true
-    //     //         })
-    //     //     })
-    //     //     .catch((error) => {
-    //     //         console.log(
-    //     //             `An error ocurred on getLoggedInUser: ${error}.`
-    //     //         );
-    //     //     });
-
-    //     userAdmin()
-    //         .then((res) => {
-    //             console.log(res)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    // }, [])
+    useEffect(() => {
+        getAllQuotes()
+        .then((res) => {
+            dispatch({
+                type: "setSubmittedQuotes",
+                data: res
+            })
+            console.log(submittedQuotes)
+        })
+        .catch((error) => console.log(error))
+    }, [])
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser } = store
+    const { loggedInUser, submittedQuotes } = store
 
     const classes = useStyles();
 
@@ -59,6 +49,7 @@ const Admin = ({history}) => {
                 <Grid item xs={12} sm={6}>
                     <Paper className={classes.paper}>
                         <Typography variant="h2">Quote Requests</Typography>
+                        <SubmittedQuotes />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>

@@ -28,14 +28,3 @@ export async function updatePlant(plant) {
     const response = await api.put(`/plants/${plant._id}`, plant)
     return response.data
 }
-
-export async function addPlantToCart(data) {
-    const response = await api.post(`/cart/${data.plant}/add-to-cart`, data)
-    return response.data
-}
-
-// Returns all cart items from the server
-export async function getCart() {
-    const response = await api.get("/cart")
-    return response.data
-}
