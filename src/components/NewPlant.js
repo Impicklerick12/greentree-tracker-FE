@@ -146,7 +146,7 @@ const NewPlant = ({history}) => {
 
     const handleClick = (event) => {
         event.preventDefault(); 
-        let file = fileInput.current.files[0]); 
+        let file = fileInput.current.files[0]; 
         let newFileName = fileInput.current.files[0].name;
         const config = {
             bucketName: "greentree-tracker-images",
@@ -155,14 +155,14 @@ const NewPlant = ({history}) => {
             secretAccessKey: "6ErEXhdwaPwcPZqEyUdwdVIx5zJXNS7Rjss1UJH6"
         };
         const ReactS3Client = new S3(config);
-        ReactS3Client.uploadFile(file, newFileName).then(data) => {
+        ReactS3Client.uploadFile(file, newFileName).then(data => {
             console.log(data);
             if (data.status === 204) {
                 console.log("success");
             } else {
                 console.log("fail");
             }
-        }
+        });
     }; 
     //}
 
