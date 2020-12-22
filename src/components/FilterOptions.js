@@ -68,14 +68,14 @@ const FilerOptions = () => {
 
     const { dispatch } = useGlobalState()
 
-    const [value, setValue] = useState(null);
-    const [searchValue, setSearchValue] = useState(null)
+    const [value, setValue] = useState("");
+    // const [searchValue, setSearchValue] = useState(null)
 
     const handleChange = (event) => {
         
     };
 
-    const handleSearchChange = (event) => {
+    {/*const handleSearchChange = (event) => {
 
         setSearchValue(event.target.value)
 
@@ -83,8 +83,9 @@ const FilerOptions = () => {
             type: "setSearchValue",
             data: searchValue
         })
-    }
+    }*/}
 
+    // Links to material UI set up
     const classes = useStyles()
 
     return (
@@ -112,10 +113,30 @@ const FilerOptions = () => {
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
                                 <RadioGroup row aria-label="Category" name="category" value={value} onChange={handleChange}>
-                                    <FormControlLabel value="tree" control={<Radio />} label="Tree" />
-                                    <FormControlLabel value="shrub" control={<Radio />} label="Shrub" />
-                                    <FormControlLabel value="grass" control={<Radio />} label="Grass" />
-                                    <FormControlLabel value="ground_cover" control={<Radio />} label="Ground Cover" />
+                                    <FormControlLabel 
+                                        checked={setValue} 
+                                        onClick={this.handleOptionChange}
+                                        value="tree" 
+                                        control={<Radio />} 
+                                        label="Tree" />
+                                    <FormControlLabel 
+                                        checked={setValue}
+                                        onClick={this.handleOptionChange} 
+                                        value="shrub" 
+                                        control={<Radio />} 
+                                        label="Shrub" />
+                                    <FormControlLabel 
+                                        checked={setValue} 
+                                        onClick={this.handleOptionChange}
+                                        value="grass" 
+                                        control={<Radio />} 
+                                        label="Grass" />
+                                    <FormControlLabel 
+                                        checked={setValue}
+                                        onClick={this.handleOptionChange} 
+                                        value="ground_cover" 
+                                        control={<Radio />} 
+                                        label="Ground Cover" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
