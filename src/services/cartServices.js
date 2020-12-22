@@ -20,3 +20,8 @@ export async function updateCart(data) {
     const response = await api.put(`/cart/${data.cartItemId}`, data)
     return response.data
 }
+
+export async function clearCart(data) {
+    const response = await api.delete("/cart/")
+    return response.data
+}

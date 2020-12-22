@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useGlobalState } from '../config/store'
 import { userAdmin } from '../services/authServices'
 import { withRouter } from 'react-router-dom'
@@ -25,6 +25,17 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Admin = ({history}) => {
+
+    useEffect(() => {
+        userAdmin().then((res) => {
+            console.log(res.status)
+        })
+        .catch((error) => {
+            console.log(error)
+            history.push('/plants')
+        })
+    },[])
+
     useEffect(() => {
         getAllQuotes()
         .then((res) => {
@@ -32,7 +43,6 @@ const Admin = ({history}) => {
                 type: "setSubmittedQuotes",
                 data: res
             })
-            console.log(submittedQuotes)
         })
         .catch((error) => console.log(error))
     }, [])
@@ -49,7 +59,9 @@ const Admin = ({history}) => {
                 <Grid item xs={12} sm={6}>
                     <Paper className={classes.paper}>
                         <Typography variant="h2">Quote Requests</Typography>
-                        <SubmittedQuotes />
+                        {submittedQuotes.map((quote) => 
+                            <SubmittedQuotes key={quote._id} quote={quote} />
+                        )}
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>
