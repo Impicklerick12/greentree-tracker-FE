@@ -91,7 +91,7 @@ const FilerOptions = () => {
         <Grid container>
             <Grid item className={classes.container}>
                 <Paper className={classes.paper}>
-                    <div>
+                    {/* <div>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -106,7 +106,7 @@ const FilerOptions = () => {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                    </div>
+                            </div> */}
                     <div className={classes.radioChecks}>
                         <div className={classes.category}>
                             <FormControl component="fieldset">
