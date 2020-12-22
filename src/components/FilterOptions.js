@@ -68,11 +68,12 @@ const FilerOptions = () => {
 
     const { dispatch } = useGlobalState()
 
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState('');
     // const [searchValue, setSearchValue] = useState(null)
 
     const handleChange = (event) => {
-        
+        const selection = event.target.value
+
     };
 
     {/*const handleSearchChange = (event) => {
