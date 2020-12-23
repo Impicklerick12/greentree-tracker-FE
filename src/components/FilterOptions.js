@@ -160,34 +160,6 @@ const FilerOptions = () => {
                                 </RadioGroup>
                             </FormControl>
                         </div>
-                        <div className={classes.potSize}>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">Pot Size</FormLabel>
-                                <RadioGroup row aria-label="Pot Size" name="pot_size" onChange={handleChange}>
-                                    <FormControlLabel 
-                                        checked={smallPotChecked}
-                                        onClick={() => setSmallPotChecked(!smallPotChecked)}
-                                        value="140mm" 
-                                        control={<Radio />} 
-                                        label="140mm" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={mediumPotChecked}
-                                        onClick={() => setMediumPotChecked(!mediumPotChecked)}
-                                        value="250mm" 
-                                        control={<Radio />} 
-                                        label="250mm" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={largePotChecked}
-                                        onClick={() => setLargePotChecked(!largePotChecked)}
-                                        value="350mm" 
-                                        control={<Radio />} 
-                                        label="350mm" 
-                                    />
-                                </RadioGroup>
-                            </FormControl>
-                        </div>
                     </div>
                      <div className={classes.prices}>
                             <FormControl component="fieldset">
@@ -224,13 +196,41 @@ const FilerOptions = () => {
                                     <FormControlLabel 
                                         checked={specialChecked}
                                         onClick={() => setSpecialChecked(!specialChecked)}
-                                        value="current special" 
+                                        value="Seasonal" 
                                         control={<Radio />} 
-                                        label="Current Special" 
+                                        label="Seasonal" 
                                     />
                                 </RadioGroup>
                             </FormControl>
                      </div>  
+                     <div className={classes.potSize}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Pot Size</FormLabel>
+                                <RadioGroup row aria-label="Pot Size" name="pot_size" onChange={handleChange}>
+                                    <FormControlLabel 
+                                        checked={smallPotChecked}
+                                        onClick={() => setSmallPotChecked(!smallPotChecked)}
+                                        value="140mm" 
+                                        control={<Radio />} 
+                                        label="140mm" 
+                                    />
+                                    <FormControlLabel 
+                                        checked={mediumPotChecked}
+                                        onClick={() => setMediumPotChecked(!mediumPotChecked)}
+                                        value="250mm" 
+                                        control={<Radio />} 
+                                        label="250mm" 
+                                    />
+                                    <FormControlLabel 
+                                        checked={largePotChecked}
+                                        onClick={() => setLargePotChecked(!largePotChecked)}
+                                        value="350mm" 
+                                        control={<Radio />} 
+                                        label="350mm" 
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+                        </div>
                 </Paper>
             </Grid>
         </Grid>
