@@ -76,6 +76,13 @@ const FilerOptions = () => {
     const [mediumPotChecked, setMediumPotChecked] = useState(false)
     // Set initial state. Pot size 350mm
     const [largePotChecked, setLargePotChecked] = useState(false)
+    const [specialChecked, setSpecialChecked] = useState(false)
+    // Price range 1
+    const [rangeOneChecked, setRangeOneChecked] = useState(false)
+    // Price range 2
+    const [rangeTwoChecked, setRangeTwoChecked] = useState(false)
+    // Price range 3
+    const [rangeThreeChecked, setRangeThreeChecked] = useState(false)
     // const [value, setValue] = useState('')
     // const [searchValue, setSearchValue] = useState(null)
 
@@ -182,6 +189,48 @@ const FilerOptions = () => {
                             </FormControl>
                         </div>
                     </div>
+                     <div className={classes.prices}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Price</FormLabel>
+                                <RadioGroup row aria-label="Price" name="price" onChange={handleChange}>
+                                    <FormControlLabel 
+                                        checked={rangeOneChecked}
+                                        onClick={() => setRangeOneChecked(!rangeOneChecked)}
+                                        value="$0 to $50" 
+                                        control={<Radio />} 
+                                        label="$0 to $50" 
+                                    />
+                                    <FormControlLabel 
+                                        checked={rangeTwoChecked}
+                                        onClick={() => setRangeTwoChecked(!rangeTwoChecked)}
+                                        value="$50 to $100" 
+                                        control={<Radio />} 
+                                        label="$50 to $100" 
+                                    />
+                                    <FormControlLabel 
+                                        checked={rangeThreeChecked}
+                                        onClick={() => setRangeThreeChecked(!rangeThreeChecked)}
+                                        value="$100 and above" 
+                                        control={<Radio />} 
+                                        label="$100 and above" 
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+                     </div>
+                     <div className={classes.special}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Seasonal</FormLabel>
+                                <RadioGroup row aria-label="Special" name="special" onChange={handleChange}>
+                                    <FormControlLabel 
+                                        checked={specialChecked}
+                                        onClick={() => setSpecialChecked(!specialChecked)}
+                                        value="current special" 
+                                        control={<Radio />} 
+                                        label="Current Special" 
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+                     </div>  
                 </Paper>
             </Grid>
         </Grid>
