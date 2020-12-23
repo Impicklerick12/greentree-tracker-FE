@@ -65,10 +65,12 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const FilerOptions = () => {
-
     const { dispatch } = useGlobalState()
-
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('')
+    const [treeChecked, setTreeChecked] = useState(false)
+    const [shrubChecked, setShrubChecked] = useState(false)
+    const [grassChecked, setGrassChecked] = useState(false)
+    const [groundCoverChecked, setGroundCoverChecked] = useState(false)
     // const [searchValue, setSearchValue] = useState(null)
 
     const handleChange = (event) => {
@@ -115,26 +117,26 @@ const FilerOptions = () => {
                                 <FormLabel component="legend">Category</FormLabel>
                                 <RadioGroup row aria-label="Category" name="category" value={value} onChange={handleChange}>
                                     <FormControlLabel 
-                                        checked={setValue} 
-                                        onClick={this.handleOptionChange}
+                                        checked={treeChecked} 
+                                        onClick={() => setTreeChecked(!treeChecked)}
                                         value="tree" 
                                         control={<Radio />} 
                                         label="Tree" />
                                     <FormControlLabel 
-                                        checked={setValue}
-                                        onClick={this.handleOptionChange} 
+                                        checked={console.log('burp 2')}
+                                        onClick={() => handleOptionChange()} 
                                         value="shrub" 
                                         control={<Radio />} 
                                         label="Shrub" />
                                     <FormControlLabel 
-                                        checked={setValue} 
-                                        onClick={this.handleOptionChange}
+                                        checked={console.log('burp 2')} 
+                                        onClick={() => handleOptionChange()}
                                         value="grass" 
                                         control={<Radio />} 
                                         label="Grass" />
                                     <FormControlLabel 
-                                        checked={setValue}
-                                        onClick={this.handleOptionChange} 
+                                        checked={console.log('burp 2')}
+                                        onClick={() => handleOptionChange()} 
                                         value="ground_cover" 
                                         control={<Radio />} 
                                         label="Ground Cover" />
