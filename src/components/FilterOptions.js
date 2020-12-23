@@ -66,11 +66,17 @@ const useStyles = makeStyles((theme) => ({
 
 const FilerOptions = () => {
     const { dispatch } = useGlobalState()
-    const [value, setValue] = useState('')
     const [treeChecked, setTreeChecked] = useState(false)
     const [shrubChecked, setShrubChecked] = useState(false)
     const [grassChecked, setGrassChecked] = useState(false)
     const [groundCoverChecked, setGroundCoverChecked] = useState(false)
+    // Set initial state. Pot size 140mm
+    const [smallPotChecked, setSmallPotChecked] = useState(false)
+    // Set initial state. Pot size 250mm
+    const [mediumPotChecked, setMediumPotChecked] = useState(false)
+    // Set initial state. Pot size 350mm
+    const [largePotChecked, setLargePotChecked] = useState(false)
+    // const [value, setValue] = useState('')
     // const [searchValue, setSearchValue] = useState(null)
 
     const handleChange = (event) => {
@@ -115,41 +121,63 @@ const FilerOptions = () => {
                         <div className={classes.category}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
-                                <RadioGroup row aria-label="Category" name="category" value={value} onChange={handleChange}>
+                                <RadioGroup row aria-label="Category" name="category" onChange={handleChange}>
                                     <FormControlLabel 
                                         checked={treeChecked} 
                                         onClick={() => setTreeChecked(!treeChecked)}
                                         value="tree" 
                                         control={<Radio />} 
-                                        label="Tree" />
+                                        label="Tree" 
+                                    />
                                     <FormControlLabel 
-                                        checked={console.log('burp 2')}
-                                        onClick={() => handleOptionChange()} 
+                                        checked={shrubChecked}
+                                        onClick={() => setShrubChecked(!shrubChecked)} 
                                         value="shrub" 
                                         control={<Radio />} 
-                                        label="Shrub" />
+                                        label="Shrub" 
+                                    />
                                     <FormControlLabel 
-                                        checked={console.log('burp 2')} 
-                                        onClick={() => handleOptionChange()}
+                                        checked={grassChecked} 
+                                        onClick={() => setGrassChecked(!grassChecked)}
                                         value="grass" 
                                         control={<Radio />} 
-                                        label="Grass" />
+                                        label="Grass" 
+                                    />
                                     <FormControlLabel 
-                                        checked={console.log('burp 2')}
-                                        onClick={() => handleOptionChange()} 
+                                        checked={groundCoverChecked}
+                                        onClick={() => setGroundCoverChecked(!groundCoverChecked)} 
                                         value="ground_cover" 
                                         control={<Radio />} 
-                                        label="Ground Cover" />
+                                        label="Ground Cover" 
+                                    />
                                 </RadioGroup>
                             </FormControl>
                         </div>
                         <div className={classes.potSize}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Pot Size</FormLabel>
-                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={value} onChange={handleChange}>
-                                    <FormControlLabel value="140mm" control={<Radio />} label="140mm" />
-                                    <FormControlLabel value="250mm" control={<Radio />} label="250mm" />
-                                    <FormControlLabel value="350mm" control={<Radio />} label="350mm" />
+                                <RadioGroup row aria-label="Pot Size" name="pot_size" onChange={handleChange}>
+                                    <FormControlLabel 
+                                        checked={smallPotChecked}
+                                        onClick={() => setSmallPotChecked(!smallPotChecked)}
+                                        value="140mm" 
+                                        control={<Radio />} 
+                                        label="140mm" 
+                                    />
+                                    <FormControlLabel 
+                                        checked={mediumPotChecked}
+                                        onClick={() => setMediumPotChecked(!mediumPotChecked)}
+                                        value="250mm" 
+                                        control={<Radio />} 
+                                        label="250mm" 
+                                    />
+                                    <FormControlLabel 
+                                        checked={largePotChecked}
+                                        onClick={() => setLargePotChecked(!largePotChecked)}
+                                        value="350mm" 
+                                        control={<Radio />} 
+                                        label="350mm" 
+                                    />
                                 </RadioGroup>
                             </FormControl>
                         </div>
