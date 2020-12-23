@@ -61,7 +61,11 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     radioChecks: {
-    }
+        '&$checked': {
+            colour: 'green'
+        }
+    },
+    checked: {}
   }));
 
 const FilerOptions = () => {
@@ -159,9 +163,6 @@ const FilerOptions = () => {
                                     />
                                 </RadioGroup>
                             </FormControl>
-                        </div>
-                    </div>
-                     <div className={classes.prices}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Price</FormLabel>
                                 <RadioGroup row aria-label="Price" name="price" onChange={handleChange}>
@@ -188,21 +189,8 @@ const FilerOptions = () => {
                                     />
                                 </RadioGroup>
                             </FormControl>
-                     </div>
-                     <div className={classes.special}>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">Seasonal</FormLabel>
-                                <RadioGroup row aria-label="Special" name="special" onChange={handleChange}>
-                                    <FormControlLabel 
-                                        checked={specialChecked}
-                                        onClick={() => setSpecialChecked(!specialChecked)}
-                                        value="Seasonal" 
-                                        control={<Radio />} 
-                                        label="Seasonal" 
-                                    />
-                                </RadioGroup>
-                            </FormControl>
-                     </div>  
+                        </div>
+                    </div>
                      <div className={classes.potSize}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Pot Size</FormLabel>
@@ -227,6 +215,18 @@ const FilerOptions = () => {
                                         value="350mm" 
                                         control={<Radio />} 
                                         label="350mm" 
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Seasonal</FormLabel>
+                                <RadioGroup row aria-label="Special" name="special" onChange={handleChange}>
+                                    <FormControlLabel 
+                                        checked={specialChecked}
+                                        onClick={() => setSpecialChecked(!specialChecked)}
+                                        value="Seasonal" 
+                                        control={<Radio />} 
+                                        label="Seasonal" 
                                     />
                                 </RadioGroup>
                             </FormControl>
