@@ -81,7 +81,10 @@ const Login = ({history}) => {
                 type: "setLoggedInUser",
                 data: userDetails.username
             })
-            history.goBack()
+
+            if (currentUser.role == "admin") {
+                history.push('/admin')
+            }
 
         }).catch((error) => {
             if (error.response && error.response.status === 401)
