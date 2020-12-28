@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Admin = ({history}) => {
 
+    const { store, dispatch } = useGlobalState()
+    const { loggedInUser, submittedQuotes } = store
+
     useEffect(() => {
         userAdmin().then((res) => {
             console.log(res.status)
@@ -45,10 +48,7 @@ const Admin = ({history}) => {
             })
         })
         .catch((error) => console.log(error))
-    }, [])
-
-    const { store, dispatch } = useGlobalState()
-    const { loggedInUser, submittedQuotes } = store
+    }, [submittedQuotes])
 
     const classes = useStyles();
 
