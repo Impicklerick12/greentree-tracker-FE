@@ -81,11 +81,11 @@ const FilerOptions = () => {
     // Set initial state. Pot size 350mm
     const [largePotChecked, setLargePotChecked] = useState(false)
     const [specialChecked, setSpecialChecked] = useState(false)
-    // Price range 1
+    // Price range $0 to $50
     const [rangeOneChecked, setRangeOneChecked] = useState(false)
-    // Price range 2
+    // Price range $50 to $100
     const [rangeTwoChecked, setRangeTwoChecked] = useState(false)
-    // Price range 3
+    // Price range $100 and over
     const [rangeThreeChecked, setRangeThreeChecked] = useState(false)
     // const [value, setValue] = useState('')
     // const [searchValue, setSearchValue] = useState(null)
