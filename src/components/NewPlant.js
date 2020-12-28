@@ -128,16 +128,17 @@ const NewPlant = ({history}) => {
             // .catch((err) => console.log(err))
  
     const fileInput = useRef();
-    const config = {
-        bucketName: "greentree-tracker-images",
-        region: "ap-southeast-2",
-        accessKeyId: "AKIA5ZNAM4KIY2HYGWMM", 
-        secretAccessKey: "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"
-    };
-    const ReactS3Client = new S3(config);
 
     const handleClick = (event) => {
         event.preventDefault(); 
+
+        const config = {
+            bucketName: "greentree-tracker-images",
+            region: "ap-southeast-2",
+            accessKeyId: "AKIA5ZNAM4KIY2HYGWMM", 
+            secretAccessKey: "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"
+        };
+        const ReactS3Client = new S3(config);
 
         let file = fileInput.current.files[0]; 
         let newFileName = fileInput.current.files[0].name;
