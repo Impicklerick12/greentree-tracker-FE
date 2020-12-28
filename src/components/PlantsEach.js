@@ -37,7 +37,8 @@ const PlantsEach = ({history, plant}) => {
     const { 
         common_name, 
         botanical_name, 
-        price
+        price,
+        plant_image
     } = plant
 
     return (
@@ -51,7 +52,7 @@ const PlantsEach = ({history, plant}) => {
                         title="Stock Image"
                         alt="Photo by Syded Mohammad Ismail"
                         /> */}
-                        <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
+                        <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt="Photo by Syded Mohammad Ismail"/>
                     </Link>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
