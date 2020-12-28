@@ -11,6 +11,7 @@ const useStyles = makeStyles({
       flexGrow: 1,
     },
     gridContainer: {
+        paddingTop: '20px'
     }
   });
   
@@ -27,7 +28,7 @@ const Plants = () => {
     return (
         <>
             <FilterOptions />
-            <Grid container className={classes.gridContainer}>
+            <Grid container spacing={4} className={classes.gridContainer}>
                     { plants
                         .sort((a, b) => a.common_name.localeCompare(b.common_name))
                         .map((plant) => plant.common_name.toLowerCase().includes(searchValue) ?

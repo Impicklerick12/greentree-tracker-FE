@@ -41,32 +41,30 @@ const PlantsEach = ({history, plant}) => {
     } = plant
 
     return (
-        <div className={classes.root}>
-            <Grid item xs={12} sm={6} md={3} lg={3}>
-                <Card className={classes.cardRoot}>
-                    <Link to={`plants/${plant._id}`}>
-                        {/* <CardMedia
-                        className={classes.media}
-                        src="/public/images/stock-plant.jpg"
-                        title="Stock Image"
-                        alt="Photo by Syded Mohammad Ismail"
-                        /> */}
-                        <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
-                    </Link>
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {common_name}
-                        </Typography>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {botanical_name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Price: ${price}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            </Grid>
-        </div>
+        <Grid item xs={12} sm={6} md={3} lg={3}>
+            <Card className={classes.cardRoot}>
+                <Link to={`plants/${plant._id}`}>
+                    {/* <CardMedia
+                    className={classes.media}
+                    src="/public/images/stock-plant.jpg"
+                    title="Stock Image"
+                    alt="Photo by Syded Mohammad Ismail"
+                    /> */}
+                    <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
+                </Link>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {common_name}
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {botanical_name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Price: ${price}
+                    </Typography>
+                </CardContent>
+            </Card>
+        </Grid>
     )
 }
 
