@@ -44,7 +44,6 @@ const PlantsShow = ({history, plant}) => {
 
     function handleEdit(event) {
         event.preventDefault()
-
         history.push(`/plants/edit/${plant._id}`)
     }
 
@@ -129,10 +128,12 @@ const PlantsShow = ({history, plant}) => {
         modified_date, 
         description, 
         price, 
-        pot_size, 
+        pot_size,
+        plant_image, 
         special, 
         quantity 
     } = plant
+    console.log(plant)
 
 
     return (
@@ -144,7 +145,7 @@ const PlantsShow = ({history, plant}) => {
                         image="/src/images/stock-plant.jpg"
                         title="Contemplative Reptile"
                         /> */}
-                <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
+                <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt="Photo by Syded Mohammad Ismail"/>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {common_name}

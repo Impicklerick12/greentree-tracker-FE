@@ -1,7 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
-import { logoutUser } from '../services/authServices'
+import { logoutUser, removeLoggedInUser } from '../services/authServices'
+
 
 import {
     AppBar,
@@ -35,14 +36,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = ({history}) => {
 
+    const menuLinks = {
+        account: "My Account",
+        plants: "Plants",
+        contact: "contact",
+        admin: "Admin",
+        login: "login",
+        logout: "logout",
+        register: "Register"
+    }
+
     // Logout user
     function handleLogout() {
-        // dispatch({
-        // type: "setLoggedInUser",
-        // data: null
-        // })
-
-        // For use when connecting to SERVER
         logoutUser().then((response) => {
             console.log("Got back response on logout", response.status)
         }).catch ((error) => {
@@ -53,6 +58,7 @@ const Navbar = ({history}) => {
             type: "setLoggedInUser",
             data: null
         })
+        removeLoggedInUser()
     }
 
     const {store, dispatch} = useGlobalState()
@@ -84,18 +90,16 @@ const Navbar = ({history}) => {
                             Greentree Tracker
                         </Typography>
                         <div>
+                            { quotes.length >= 1 && (
+                                <IconButton
+                                    onClick={() => handleMenuClick('/quote')}
+                                    color="inherit"
+                                >
+                                    <ShoppingCartIcon />
+                                </IconButton>
+                            )}
                             {isMobile ? (
                                 <>
-                                    { quotes.length >= 1 ? (
-                                        <IconButton
-                                            onClick={() => handleMenuClick('/quote')}
-                                            color="inherit"
-                                        >
-                                            <ShoppingCartIcon />
-                                        </IconButton>
-                                    ) : (
-                                        <div></div>
-                                    )}
                                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
                                         <MenuIcon />
                                     </IconButton>
@@ -119,6 +123,7 @@ const Navbar = ({history}) => {
                                             <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/admin')}>Admin</MenuItem>
                                             <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                         </>
                                     ) : (
@@ -133,26 +138,24 @@ const Navbar = ({history}) => {
                                 </>
                             ) : (
                                 <>
-                                { quotes.length >= 1 ? (
-                                    <IconButton
-                                        onClick={() => handleMenuClick('/quote')}
-                                        color="inherit"
-                                    >
-                                        <ShoppingCartIcon />
-                                    </IconButton>
-                                ) : (
-                                    <div></div>
-                                )}
-                                    <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
-                                    <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                    <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
-                                    <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
-                                    <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
-                                    <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
-                                    <Button onClick={handleLogout}>Logout</Button>
+                                    { loggedInUser ? (
+                                        <>
+                                            <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
+                                            <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
+                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
+                                            <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
+                                            <Button onClick={handleLogout}>Logout</Button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
+                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
+                                            <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
+                                            <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                                        </>
+                                    )}
                                 </>
-                            )
-                            }
+                            )}
                         </div>
                     </Toolbar>
                 </AppBar>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useGlobalState } from '../config/store'
-import { loginUser, setLoggedInUser } from '../services/authServices'
+import { loginUser, setLoggedInUser, setAdmin } from '../services/authServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -54,17 +54,29 @@ const Login = ({history}) => {
         // For use when connecting to SERVER
         event.preventDefault()
         // Attempt login on server
-        loginUser(userDetails).then((resp) => {
-            let { email, role, username } = resp.user
+        loginUser(userDetails).then((res) => {
+            // let { email, role, username } = resp.user
 
-            let currentUser = {
-                "username": username,
-                "email": email,
-                "role": role
-            }
+            // let currentUser = {
+            //     "username": username,
+            //     "email": email,
+            //     "role": role
+            // }
+            // console.log(currentUser)
+
+            let currentUser = res.user
             console.log(currentUser)
 
-            setLoggedInUser(username)
+            // if (currentUser.role === "admin") {
+            //     dispatch({
+            //         type: "setUserAdmin",
+            //         data: true
+            //     })
+            //     setAdmin(true)
+            // }
+            // console.log(userAdmin)
+
+            setLoggedInUser(currentUser.username)
             dispatch({
                 type: "setLoggedInUser",
                 data: userDetails.username
@@ -79,6 +91,10 @@ const Login = ({history}) => {
         })
     }
 
+    function loggedInUserRedirect() {
+        history.goBack()
+    }
+
     // Login User - Will not need in production. Use handleSubmit function
     // function loginUser() {
     //     dispatch({
@@ -90,7 +106,7 @@ const Login = ({history}) => {
     return (
         <div>
             { loggedInUser ? (
-                <div>You are already logged in</div>
+                loggedInUserRedirect()
             ) : (
                 <>
                     {errorMessage && <p>{errorMessage}</p>}

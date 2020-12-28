@@ -56,6 +56,7 @@ const NewPlant = ({history}) => {
     function handleChange(event) {
         const name = event.target.name
         const value = event.target.value
+
         setFormState({
             ...formState,
             [name]: value
@@ -84,37 +85,20 @@ const NewPlant = ({history}) => {
     }
 
     function handleSubmit(event) {
-        // event.preventDefault()
-        // const nextId = getNextId()
-        // const newPlant = {
-        //     _id: nextId,
-        //     common_name: formState.common_name,
-        //     botanical_name: formState.botanical_name,
-        //     category: formState.category || "Bush",
-        //     modified_date: new Date(),
-        //     description: formState.description,
-        //     price: formState.price,
-        //     pot_size: formState.pot_size,
-        //     quantity: formState.quantity,
-        // }
-        // dispatch({
-        //     type: "setPlants",
-        //     data: [...plants, newPlant]
-        // })
-        // history.push(`/plants/${nextId}`)
-
-        // TO USE IN PRODUCTION - REPLACE CODE ABOVE
         event.preventDefault()
+
         const newPlant = {
             common_name: formState.common_name,
             botanical_name: formState.botanical_name,
-            file: formState.fileInput,
-            category: formState.category || "Bush",
+            // file: formState.fileInput,
+            plant_image: formState.plant_image,
+            category: formState.category || "tree",
             description: formState.description,
             pot_size: formState.pot_size,
             quantity: formState.quantity,
             price: formState.price
         }
+        console.log("newPlant: ", newPlant)
         addPlant(newPlant).then((newPlant) => {
             dispatch({
                 type: "setPlants",
@@ -142,11 +126,21 @@ const NewPlant = ({history}) => {
                 // console.log(res.location)
             // })
             // .catch((err) => console.log(err))
+ 
     const fileInput = useRef();
+    const config = {
+        bucketName: "greentree-tracker-images",
+        region: "ap-southeast-2",
+        accessKeyId: "AKIA5ZNAM4KIY2HYGWMM", 
+        secretAccessKey: "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"
+    };
+    const ReactS3Client = new S3(config);
 
     const handleClick = (event) => {
         event.preventDefault(); 
+
         let file = fileInput.current.files[0]; 
+<<<<<<< HEAD
         let newFileName = fileInput.current.files[0].name.replace;
         const config = {
             bucketName: "greentree-tracker-images",
@@ -163,13 +157,35 @@ const NewPlant = ({history}) => {
                 console.log("fail");
             }
         });
+=======
+        let newFileName = fileInput.current.files[0].name;
+        
+        ReactS3Client.uploadFile(file, newFileName)
+            .then(data => {
+                console.log(data);
+
+                setPlantImage(data.location)
+                setFormState({
+                    ...formState,
+                    plant_image: data.location
+                })
+
+
+                if (data.status === 204) {
+                    console.log("success");
+                } else {
+                    console.log("fail");
+                }
+            });
+>>>>>>> f55ff5c7f434a8c6b3b4d80bcc49d5575d97992c
     }; 
     //}
 
     const initialFormState = {
         common_name: "",
         botanical_name: "",
-        file: "",
+        // file: "",
+        plant_image: "",
         category: "",
         description: "",
         pot_size: "",
@@ -181,6 +197,9 @@ const NewPlant = ({history}) => {
     const [errorMessage, setErrorMessage] = useState(null)
     const [category, setCategory] = React.useState('');
     const [potSize, setPotSize] = React.useState('');
+    const [plantImage, setPlantImage] = useState('')
+
+
     const { store, dispatch } = useGlobalState()
     const { plants } = store
 
@@ -196,7 +215,7 @@ const NewPlant = ({history}) => {
                     <TextField className={classes.textArea} required id="standard-basic" type="text" name="botanical_name" label="Botanical Name" onChange={handleChange}></TextField>
                 </div>
                 <div>
-                    <input type="file" name="plant_image" ref={fileInput}/>
+                    <input type="file" name="plant_image" ref={fileInput} onChange={handleClick}/>
                 </div>
                 {/* <div>
                     <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>
@@ -237,12 +256,18 @@ const NewPlant = ({history}) => {
                     </Select>
                 </FormControl>
                 <div>
-                    <TextField className={classes.textArea} type="number" name="quantity" label="Quantity" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea}
+                        onChange={handleChange}
+                        type="number" 
+                        name="quantity" 
+                        label="Quantity" 
+                    />
                 </div>
                 <div>
                     <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
                 </div>
-                <Button type="submit" value="Add Plant" onClick={handleClick}>Add Plant</Button>
+                <Button type="submit" value="Add Plant">Add Plant</Button>
             </form>
         </div>
     )

@@ -94,7 +94,6 @@ const App = () => {
   useEffect(() => {
     // Checking the local storage to see if there is a current user
     const currentUser = getLoggedInUser()
-    console.log(currentUser)
 
     // If current user, set global state again to current user
     if (currentUser) {
@@ -129,6 +128,23 @@ const App = () => {
     //     });
     // }
   }, []);
+
+  // useEffect(() => {
+  //   // Checking the local storage to see if there is a current admin
+  //   // If not, set the admin to false
+  //   const isAdmin = getAdmin()
+  //   console.log(isAdmin)
+
+  //   // If current user, set global state again to current user
+  //   if (isAdmin) {
+  //     dispatch({
+  //         type: "setUserAdmin",
+  //         data: isAdmin,
+  //     });
+  //   } else {
+  //       console.log("No admin in Local Storage");
+  //   }
+  // }, []);
 
   useEffect(() => {
     fetchAllPlants()
@@ -168,7 +184,11 @@ const App = () => {
 
             <Container maxWidth="lg">
                 {loggedInUser 
-                ? (<p>{loggedInUser}</p>)
+                ? (
+                  <>
+                    <p>{loggedInUser}</p>
+                  </>
+                )
                 : (<p>Guest</p>)
                 }
               <Switch>
