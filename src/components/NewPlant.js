@@ -147,7 +147,7 @@ const NewPlant = ({history}) => {
     const handleClick = (event) => {
         event.preventDefault(); 
         let file = fileInput.current.files[0]; 
-        let newFileName = fileInput.current.files[0].name;
+        let newFileName = fileInput.current.files[0].name.replace;
         const config = {
             bucketName: "greentree-tracker-images",
             region: "ap-southeast-2",
