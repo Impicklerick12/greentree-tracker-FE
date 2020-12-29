@@ -59,8 +59,8 @@ const Admin = ({history}) => {
                 <Grid item xs={12} sm={6}>
                     <Paper className={classes.paper}>
                         <Typography variant="h2">Quote Requests</Typography>
-                        {submittedQuotes.map((quote) => 
-                            <SubmittedQuotes key={quote._id} quote={quote} />
+                        {submittedQuotes.map((quote, i) => 
+                            <SubmittedQuotes key={i} quote={quote} />
                         )}
                     </Paper>
                 </Grid>
