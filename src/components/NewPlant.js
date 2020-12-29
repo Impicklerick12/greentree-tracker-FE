@@ -12,7 +12,7 @@ import {
     FormControl,
     InputLabel,
     Select,
-    MenuItem
+    MenuItem,
 } from '@material-ui/core';
 
 // NEED TO FIND AWS ACCESS KEY
@@ -217,7 +217,7 @@ const NewPlant = ({history}) => {
                 <div>
                     <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
                 </div>
-                <Button type="submit" value="Add Plant">Add Plant</Button>
+                <Button type="submit" variant="outlined" color="primary" value="Add Plant">Add Plant</Button>
             </form>
         </div>
     )

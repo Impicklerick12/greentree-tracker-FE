@@ -35,7 +35,7 @@ const Login = ({history}) => {
     const [errorMessage, setErrorMessage] = useState(null)
     const { dispatch, store } = useGlobalState()
 
-    const { loggedInUser } = store
+    const { loggedInUser, userAdmin } = store
 
     function handleChange(event) {
         const name = event.target.name

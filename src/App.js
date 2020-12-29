@@ -26,15 +26,18 @@ import {
 import {
   Container
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
 
-require('dotenv').config()
+import {
+  makeStyles
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "100vh"
   },
 }));
+
+require('dotenv').config()
 
 const App = () => {
 
@@ -149,33 +152,8 @@ const App = () => {
     getCartData()
   }, [])
 
-  // // Register user
-  // function registerUser(user) {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: user.username
-  //   })
-  // }
-
-  // // Login user
-  // function loginUser(user) {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: user.username
-  //   })
-  // }
-
-  // // Logout user
-  // function logoutUser() {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: null
-  //   })
-  // }
-
   return (
-    <div className={classes.root}>
-      <StateContext.Provider value={{store, dispatch}}>
+    <StateContext.Provider value={{store, dispatch}}>
         <BrowserRouter>
 
           {/* Navbar Component */}
@@ -230,8 +208,7 @@ const App = () => {
           {/* <Footer /> */}
 
         </BrowserRouter>
-      </StateContext.Provider>
-    </div>
+    </StateContext.Provider>
   );
 }
 
