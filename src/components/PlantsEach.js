@@ -36,8 +36,7 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
         position: 'absolute',
         zIndex: 2,
-        bottom: 0,
-        width: '100%'
+        bottom: 0
     },
     subtitle: {
         color: '#e0e0e0',
