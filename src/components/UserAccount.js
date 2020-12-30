@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { findUser, updateUser, logoutUser, removeLoggedInUser } from '../services/authServices'
+import Alert from '@material-ui/lab/Alert';
 
 const UserAccount = ({history}) => {
 
@@ -60,11 +61,11 @@ const UserAccount = ({history}) => {
     function handleChange(event) {
         const name = event.target.name
         const value = event.target.value
-
         setFormState({
             ...formState,
             [name]: value
         })
+        setFormChange(true)
     }
 
     const initialFormState = {
@@ -74,6 +75,7 @@ const UserAccount = ({history}) => {
 
     const [formState, setFormState] = useState(initialFormState)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [formChange, setFormChange] = useState(false)
 
     return (
         <div>
@@ -90,8 +92,10 @@ const UserAccount = ({history}) => {
                         <label>Email</label>
                         <input required type="email" name="email" value={formState.email} onChange={handleChange}></input>
                     </div>
+                    { formChange && (
+                        <Alert severity="info">Upon updating your user information, you will be prompted to log in again.</Alert>
+                    )}
                     <input type="submit" value="Update"></input>
-                    
                 </form>
             </>
         ): (
