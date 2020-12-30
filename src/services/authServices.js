@@ -21,14 +21,8 @@ export async function registerUser(userInfo) {
 }
 
 export async function userAdmin() {
-    try {
         const response = await api.get("/admin")
         return response
-    }
-    catch(error) {
-        console.log("an error occurred checking for admin user")
-        throw(error)
-    }
 }
     
 export async function userAuthenticated() {
@@ -38,6 +32,17 @@ export async function userAuthenticated() {
     }
     catch(error) {
         console.log("an error occurred checking for authenticated user")
+        throw(error)
+    }
+}
+
+export async function findUser(user_id) {
+    try {
+        const response = await api.get(`/users/${user_id}`)
+        return response
+    }
+    catch(error) {
+        console.log("an error occurred user")
         throw(error)
     }
 }

@@ -7,24 +7,51 @@ import {
     Card,
     CardContent,
     Typography,
-    Grid
+    Grid,
+    CardActionArea
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-  },
-  media: {
-    width: "100%"
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  cardRoot: {
-      minWidth: 200
-  }
+    root: {
+        margin: theme.spacing(2),
+    },
+    media: {
+        width: "100%"
+    },
+    cardRoot: {
+        borderRadius: "30px",
+        minWidth: 200,
+        minHeight: 300,
+        backgroundImage: `url(${StockPlant})`, // or plant_image from DB
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        filter: "grayscale(20%)",
+        boxShadow: "inset 0 -130px 140px #121212",
+
+        "&:hover": {
+            filter: "none",
+            boxShadow: "none"
+        }
+    },
+    cardContent: {
+        position: 'absolute',
+        zIndex: 2,
+        bottom: 0
+    },
+    subtitle: {
+        color: '#e0e0e0',
+        fontWeight: 100,
+        opacity: "70%"
+    },
+    title: {
+        color: '#e0e0e0',
+        fontWeight: 500,
+    },
+    price: {
+        color: '#e0e0e0',
+        fontWeight: 80,
+        opacity: "70%"
+    }
 }));
 
 const PlantsEach = ({history, plant}) => {
@@ -36,37 +63,24 @@ const PlantsEach = ({history, plant}) => {
 
     const { 
         common_name, 
-        botanical_name, 
-        price
+        botanical_name
     } = plant
 
     return (
-        <div className={classes.root}>
-            <Grid item xs={12} sm={6} md={3} lg={3}>
+        <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Link to={`plants/${plant._id}`} component={CardActionArea}>
                 <Card className={classes.cardRoot}>
-                    <Link to={`plants/${plant._id}`}>
-                        {/* <CardMedia
-                        className={classes.media}
-                        src="/public/images/stock-plant.jpg"
-                        title="Stock Image"
-                        alt="Photo by Syded Mohammad Ismail"
-                        /> */}
-                        <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
-                    </Link>
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {common_name}
-                        </Typography>
-                        <Typography gutterBottom variant="h5" component="h2">
+                    <CardContent className={classes.cardContent}>
+                        <Typography variant="body1" className={classes.subtitle}>
                             {botanical_name}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Price: ${price}
+                        <Typography variant="h5" className={classes.title}>
+                            {common_name}
                         </Typography>
                     </CardContent>
                 </Card>
-            </Grid>
-        </div>
+            </Link>
+        </Grid>
     )
 }
 

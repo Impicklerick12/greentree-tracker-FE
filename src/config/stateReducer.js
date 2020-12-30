@@ -12,16 +12,22 @@ export default function (state, action) {
                 plants: action.data
             }
         }
-        case "setQuotes": {
+        case "setQuotePlants": {
             return {
                 ...state,
-                quotes: action.data
+                quotePlants: action.data
             }
         }
         case "setQuoteRequests": {
             return {
                 ...state,
                 quoteRequests: action.data
+            }
+        }
+        case "setSubmittedQuotes": {
+            return {
+                ...state,
+                submittedQuotes: action.data
             }
         }
         case "setSearchValue": {

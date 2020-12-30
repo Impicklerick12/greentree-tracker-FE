@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
+import { addQuote } from '../services/quoteServices'
+import { clearCart } from '../services/cartServices'
 import QuoteItem from './QuoteItem'
 
 import { 
@@ -27,69 +29,109 @@ const QuoteRequest = ({history}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, quotes, quoteRequestData } = store
+    const { loggedInUser, quotePlants, quoteRequestData } = store
     // console.log(quotes)
 
-    const initialFormState = {
-        plantQuotes: [],
-        user: "",
-        comment: ""
-    } 
-
-    const [quoteRequestComment, setQuoteRequestComment] = useState(initialFormState)
+    const [quoteRequestComment, setQuoteRequestComment] = useState("")
+    const [total, setTotal] = useState(0)
+    const [quoteSent, setQuoteSent] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const handleChange = (event) => {
-        const name = event.target.name
+        event.preventDefault()
         const value = event.target.value
-
-        setQuoteRequestComment({
-            ...quoteRequestComment,
-            [name]: value
-        })
+        setQuoteRequestComment(value)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        const newQuoteRequest = {
-            plantQuotes: quotes,
-            user: loggedInUser,
-            comment: quoteRequestComment.comment
-        }
-        dispatch({
-            type: "setQuoteRequestData",
-            data: [...quoteRequestData, newQuoteRequest]
+
+        let plantInfo = []
+        quotePlants.map((p) => {
+            plantInfo.push({
+                plant_id: p.plant_id,
+                quantity: p.quantity
+            })
         })
-        console.log("Quote request data: ", quoteRequestData)
-        // history.push('/plants')
+
+        const newQuoteRequest = {
+            plants: plantInfo,
+            comment: quoteRequestComment
+        }
+
+        addQuote(newQuoteRequest)
+            .then((res) => {
+                console.log(res)
+                setQuoteSent(true)
+                clearCartItems()
+            })
+            .catch((error) => {
+                const status = error.response ? error.response.status : 500
+                console.log("caught error on Add Quote", error)
+                if(status === 403)
+                    setErrorMessage("You need to sign in first")
+                else
+                    setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+            })
+    }
+
+    const clearCartItems = () => {
+        clearCart().then((res) => {
+            // console.log(res)
+            dispatch({
+                type: "setQuotePlants",
+                data: []
+            })
+        })
+        .catch((error) => console.log(error))
+    }
+
+    const updateTotal = (price, quantity) => {
+        let subtotal
+        subtotal += (price * quantity)
+        setTotal(subtotal)
+    }
+
+    const handleRedirect = () => {
+        history.goBack()
     }
 
     return (
         <div>
-             <Grid container justify="center">
-                <Typography variant="h2">Quote Request</Typography>
-            </Grid>
-            { quotes ? (
-                <Grid container justify="center">
-                    <Grid item xs={10} sm={8} md={6} lg={4}>
-                        <form className={classes.root} onSubmit={handleSubmit}>
-                            <div>
-                                {quotes.map((quote, index) =>
-                                    <QuoteItem key={index} quote={quote} />
-                                )}
-                            </div>
-                            <div>
-                                <p>{loggedInUser}</p>
-                            </div>
-                            <div>
-                                <TextField className={classes.textArea} multiline rows={4} type="text" name="comment" label="Comments" onChange={handleChange}></TextField>
-                            </div>
-                            <Button type="submit" value="Submit Request">Submit Quote Request</Button>
-                        </form>
-                        <Button onClick={() => history.push('/plants')}>Keep Shopping</Button>
-                    </Grid>
-                </Grid>
+            {quoteSent ? (
+                <>
+                    {/* Render a new component with successful message? */}
+                    <p>Your quote was successfully sent!</p>
+                    <Button onClick={() => history.push('/plants')}>Keep Shopping</Button>
+                </>
             ) : (
-                <p>User not logged in</p>
+                <>
+                    <Grid container justify="center">
+                        <Typography variant="h2">Quote Request</Typography>
+                    </Grid>
+                    { loggedInUser && (quotePlants.length > 0) ? (
+                        <Grid container justify="center">
+                            <Grid item xs={10} sm={8} md={6} lg={4}>
+                                <form className={classes.root} onSubmit={handleSubmit}>
+                                    <div>
+                                        {quotePlants.map((plant, index) =>
+                                            <QuoteItem key={index} cartPlants={plant} updateTotal={updateTotal}/>
+                                        )}
+                                    </div>
+                                    <p>Total: ${total}</p>
+                                    <div>
+                                        <TextField className={classes.textArea} multiline rows={4} type="text" name="comment" label="Comments" onChange={handleChange}></TextField>
+                                    </div>
+                                    <Button type="submit" value="Submit Request">Submit Quote Request</Button>
+                                </form>
+                                <Button onClick={() => history.push('/plants')}>Keep Shopping</Button>
+                            </Grid>
+                        </Grid>
+                    ) : (
+                        // ADD IN NEW COMPONENT _ YOU HAVE NO ITEMS IN YOUR CART YET
+                        handleRedirect()
+                    )}
+                </>
             )}
         </div>
     )
