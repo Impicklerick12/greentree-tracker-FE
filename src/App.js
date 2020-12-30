@@ -47,7 +47,7 @@ const App = () => {
     quoteRequestData: [],
     submittedQuotes: [],
     searchValue: null,
-    userAdmin: false
+    userAdmin: null
   }
 
   // Create state reducer store and dispatcher

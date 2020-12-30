@@ -29,15 +29,15 @@ const Admin = ({history}) => {
     const { store, dispatch } = useGlobalState()
     const { loggedInUser, submittedQuotes } = store
 
-    useEffect(() => {
-        userAdmin().then((res) => {
-            console.log(res.status)
-        })
-        .catch((error) => {
-            console.log(error)
-            history.push('/plants')
-        })
-    },[])
+    // useEffect(() => {
+    //     userAdmin().then((res) => {
+    //         console.log(res.status)
+    //     })
+    //     .catch((error) => {
+    //         console.log(error)
+    //         history.push('/plants')
+    //     })
+    // },[])
 
     useEffect(() => {
         getAllQuotes()
