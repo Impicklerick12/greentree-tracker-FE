@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { addPlant } from '../services/plantServices'
+import { config } from '../config/awsConfig'
 import S3 from 'aws-s3';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,19 +15,6 @@ import {
     Select,
     MenuItem
 } from '@material-ui/core';
-
-// NEED TO FIND AWS ACCESS KEY
-// BUGS - Need to fix
-// const config = {
-    // bucketName: 'greentree-tracker-images',
-    // region: 'ap-southeast-2',
-    // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    // accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    // secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
-// }
-
-// const S3Client = new S3(config)
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -114,30 +102,12 @@ const NewPlant = ({history}) => {
                 setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })
     }
-
-    // AWS3 image upload function
-    //function Upload() {
-        // console.log(event.target.files[0])
-        // const plantImage = event.target.files[0]
-
-        // S3Client
-            // .uploadFile(plantImage)
-            // .then((res) => {
-                // console.log(res.location)
-            // })
-            // .catch((err) => console.log(err))
  
     const fileInput = useRef();
 
     const handleClick = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
 
-        const config = {
-            bucketName: "greentree-tracker-images",
-            region: "ap-southeast-2",
-            accessKeyId: "AKIA5ZNAM4KIY2HYGWMM", 
-            secretAccessKey: "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"
-        };
         const ReactS3Client = new S3(config);
 
         let file = fileInput.current.files[0]; 
@@ -145,23 +115,19 @@ const NewPlant = ({history}) => {
         
         ReactS3Client.uploadFile(file, newFileName)
             .then(data => {
-                console.log(data);
-
                 setPlantImage(data.location)
                 setFormState({
                     ...formState,
                     plant_image: data.location
                 })
 
-
                 if (data.status === 204) {
-                    console.log("success");
+                    console.log("Image Upload Successful");
                 } else {
-                    console.log("fail");
+                    console.log("Image Upload fail");
                 }
             });
-    }; 
-    //}
+    };
 
     const initialFormState = {
         common_name: "",
