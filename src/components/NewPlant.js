@@ -23,12 +23,19 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     textArea: {
-        width: '75%'
+        width: '75%',
+        [theme.breakpoints.down('md')]: {
+            width: "100%"
+        }
     },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
     },
+    select: {
+        display: "flex",
+        justifyContent: "space-around",
+    }
   }));
 
 const NewPlant = ({history}) => {
@@ -78,7 +85,6 @@ const NewPlant = ({history}) => {
         const newPlant = {
             common_name: formState.common_name,
             botanical_name: formState.botanical_name,
-            // file: formState.fileInput,
             plant_image: formState.plant_image,
             category: formState.category || "tree",
             description: formState.description,
@@ -115,7 +121,6 @@ const NewPlant = ({history}) => {
         
         ReactS3Client.uploadFile(file, newFileName)
             .then(data => {
-                setPlantImage(data.location)
                 setFormState({
                     ...formState,
                     plant_image: data.location
@@ -132,7 +137,6 @@ const NewPlant = ({history}) => {
     const initialFormState = {
         common_name: "",
         botanical_name: "",
-        // file: "",
         plant_image: "",
         category: "",
         description: "",
@@ -145,7 +149,6 @@ const NewPlant = ({history}) => {
     const [errorMessage, setErrorMessage] = useState(null)
     const [category, setCategory] = React.useState('');
     const [potSize, setPotSize] = React.useState('');
-    const [plantImage, setPlantImage] = useState('')
 
 
     const { store, dispatch } = useGlobalState()
@@ -157,55 +160,91 @@ const NewPlant = ({history}) => {
             <Typography variant="h2">New Plant</Typography>
             <form className={classes.root} onSubmit={handleSubmit}>
                 <div>
-                    <TextField className={classes.textArea} id="standard-basic" required type="text" name="common_name" label="Common Name" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea} 
+                        variant="outlined"
+                        id="outlined" 
+                        required 
+                        type="text" 
+                        name="common_name" 
+                        label="Common Name" 
+                        onChange={handleChange}
+                    />
                 </div>
                 <div>
-                    <TextField className={classes.textArea} required id="standard-basic" type="text" name="botanical_name" label="Botanical Name" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea} 
+                        required 
+                        variant="outlined"
+                        id="outlined" 
+                        type="text" 
+                        name="botanical_name" 
+                        label="Botanical Name" 
+                        onChange={handleChange}
+                    />
                 </div>
                 <div>
-                    <input type="file" name="plant_image" ref={fileInput} onChange={handleClick}/>
+                    <input 
+                        type="file" 
+                        name="plant_image" 
+                        accept="image/*"
+                        ref={fileInput} 
+                        onChange={handleClick}
+                    />
                 </div>
-                {/* <div>
-                    <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>
-                </div> */}
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        value={category}
-                        onChange={handleCategoryChange}
-                        label="Category"
-                    >
-                        <MenuItem value="tree">Tree</MenuItem>
-                        <MenuItem value="shrub">Shrub</MenuItem>
-                        <MenuItem value="grass">Grass</MenuItem>
-                        <MenuItem value="ground cover">Ground Cover</MenuItem>
-                    </Select>
-                </FormControl>
+                <div className={classes.select}>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-outlined-label">
+                            Category
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            label="Category"
+                        >
+                            <MenuItem value="tree">Tree</MenuItem>
+                            <MenuItem value="shrub">Shrub</MenuItem>
+                            <MenuItem value="grass">Grass</MenuItem>
+                            <MenuItem value="ground cover">Ground Cover</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-outlined-label">
+                            Pot Size
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={potSize}
+                            onChange={handlePotSizeChange}
+                            label="Pot Size"
+                        >
+                            <MenuItem value="140mm">140mm</MenuItem>
+                            <MenuItem value="250mm">250mm</MenuItem>
+                            <MenuItem value="350mm">350mm</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
                 <div>
-                    <TextField className={classes.textArea} multiline required rows={4} name="description" label="Description" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea} 
+                        multiline 
+                        required 
+                        variant="outlined"
+                        id="outlined" 
+                        rows={4} 
+                        name="description" 
+                        label="Description" 
+                        onChange={handleChange}
+                    />
                 </div>
-                {/* <div>
-                    <TextField className={classes.textArea} type="text" name="pot_size" label="Pot Size" onChange={handleChange}></TextField>
-                </div> */}
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Pot Size</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        value={potSize}
-                        onChange={handlePotSizeChange}
-                        label="Pot Size"
-                    >
-                        <MenuItem value="140mm">140mm</MenuItem>
-                        <MenuItem value="250mm">250mm</MenuItem>
-                        <MenuItem value="350mm">350mm</MenuItem>
-                    </Select>
-                </FormControl>
                 <div>
                     <TextField 
                         className={classes.textArea}
+                        variant="outlined"
+                        id="outlined" 
                         onChange={handleChange}
                         type="number" 
                         name="quantity" 
@@ -213,9 +252,19 @@ const NewPlant = ({history}) => {
                     />
                 </div>
                 <div>
-                    <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea}
+                        variant="outlined"
+                        id="outlined"  
+                        type="number" 
+                        name="price" 
+                        label="Price" 
+                        onChange={handleChange}
+                    />
                 </div>
-                <Button type="submit" value="Add Plant">Add Plant</Button>
+                <Button type="submit" value="Add Plant">
+                    Add Plant
+                </Button>
             </form>
         </div>
     )
