@@ -49,7 +49,7 @@ const PlantsEdit = ({history, match}) => {
             _id: plant._id,
             common_name: formState.common_name,
             botanical_name: formState.botanical_name,
-            category: formState.category || "Bush",
+            category: formState.category || "tree",
             modified_date: new Date(),
             description: formState.description,
             price: formState.price,

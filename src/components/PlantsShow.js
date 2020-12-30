@@ -63,7 +63,8 @@ const PlantsShow = ({history, plant}) => {
         price, 
         pot_size, 
         special, 
-        quantity 
+        quantity,
+        plant_image
     } = plant
 
     function handleEdit(event) {
@@ -139,7 +140,7 @@ const PlantsShow = ({history, plant}) => {
                         image="/src/images/stock-plant.jpg"
                         title="Contemplative Reptile"
                         /> */}
-                <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
+                <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt="Photo by Syded Mohammad Ismail"/>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {common_name}
