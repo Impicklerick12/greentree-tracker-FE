@@ -47,6 +47,17 @@ export async function findUser(user_id) {
     }
 }
 
+export async function updateUser(user) {
+    try {
+        const response = await api.put(`/users/${user._id}`, user)
+        return response
+    }
+    catch(error) {
+        console.log("an error occurred updating user")
+        throw(error)
+    }
+}
+
 // Get loggedInUser from localStorage
 export function getLoggedInUser() {
     return localStorage.getItem("loggedInUser")

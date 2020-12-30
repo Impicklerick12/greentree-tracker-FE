@@ -1,15 +1,60 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
+import { findUser, updateUser, logoutUser, removeLoggedInUser } from '../services/authServices'
 
-const UserAccount = () => {
+const UserAccount = ({history}) => {
 
     const { store, dispatch } = useGlobalState()
     const { loggedInUser } = store
+    
+    useEffect(() => {
+        findUser(loggedInUser)
+            .then((res) => {
+                let user = res.data
 
-    function handleSubmit() {
+                setFormState({
+                    username: user.username,
+                    email: user.email
+                })
+            })
+            .catch((error) => console.log(error))
+    },[])
 
+    const handleSubmit = (event) => {
+        event.preventDefault()
+
+        const updatedUser = {
+            _id: loggedInUser,
+            username: formState.username,
+            email: formState.email
+        }
+
+        updateUser(updatedUser)
+            .then((res) => {
+
+                logoutUser().then((response) => {
+                    console.log("Got back response on logout", response.status)
+                }).catch ((error) => {
+                    console.log("The server may be down - caught an exception on logout:", error)
+                })
+                // Even if we catch an error, logout the user locally
+                dispatch({
+                    type: "setLoggedInUser",
+                    data: null
+                })
+                removeLoggedInUser()
+
+                history.push('/auth/login')
+            })
+            .catch((error) => {
+                const status = error.response ? error.response.status : 500
+                console.log("caught error on user edit", error)
+                if(status === 403)
+                    setErrorMessage("You are not the user, and unable to edit the details")
+                else
+                    setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+            })
     }
 
     function handleChange(event) {
@@ -25,38 +70,27 @@ const UserAccount = () => {
     const initialFormState = {
         username: "",
         email: "",
-        password: ""
     }
 
     const [formState, setFormState] = useState(initialFormState)
-
-    // useEffect(() => {
-    //     loggedInUser && setFormState({
-    //         username: loggedInUser.username,
-    //         email: loggedInUser.email,
-    //         password: loggedInUser.password,
-    //     }, [loggedInUser])
-    // })
+    const [errorMessage, setErrorMessage] = useState(null)
 
     return (
         <div>
         { loggedInUser ? (
             <>
                 <h1>User Account</h1>
+                {errorMessage && <p>{errorMessage}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Username</label>
-                        <input required type="text" name="username" value={loggedInUser.username} onChange={handleChange}></input>
+                        <input required type="text" name="username" value={formState.username} onChange={handleChange}></input>
                     </div>
                     <div>
                         <label>Email</label>
                         <input required type="email" name="email" value={formState.email} onChange={handleChange}></input>
                     </div>
-                    <div>
-                        <label>Password</label>
-                        <input required type="password" name="password" placeholder="Enter a new password" onChange={handleChange}></input>
-                    </div>
-                    <input type="submit" value="Register"></input>
+                    <input type="submit" value="Update"></input>
                     
                 </form>
             </>

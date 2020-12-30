@@ -73,6 +73,7 @@ const PlantsEdit = ({history, match}) => {
         })
     }
     
+    
     const initialFormState = {
         common_name: "",
         botanical_name: "",

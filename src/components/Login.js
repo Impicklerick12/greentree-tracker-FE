@@ -76,15 +76,16 @@ const Login = ({history}) => {
             // }
             // console.log(userAdmin)
 
-            setLoggedInUser(currentUser.username)
+            setLoggedInUser(currentUser._id)
             dispatch({
                 type: "setLoggedInUser",
-                data: userDetails.username
+                data: currentUser._id
             })
 
             if (currentUser.role == "admin") {
                 history.push('/admin')
             }
+            history.push('/plants')
 
         }).catch((error) => {
             if (error.response && error.response.status === 401)
