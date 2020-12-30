@@ -116,7 +116,7 @@ const NewPlant = ({history}) => {
 
         const ReactS3Client = new S3(config);
 
-        let file = fileInput.current.files[0]; 
+        let file = fileInput.current.files[0];
         let newFileName = fileInput.current.files[0].name;
         
         ReactS3Client.uploadFile(file, newFileName)
