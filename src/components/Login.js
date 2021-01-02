@@ -82,7 +82,7 @@ const Login = ({history}) => {
                 data: userDetails.username
             })
 
-            if (currentUser.role == "admin") {
+            if (currentUser.role === "admin") {
                 history.push('/admin')
             }
 
