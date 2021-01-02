@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import StockPlant from '../images/stock-plant.jpg'
@@ -8,7 +8,6 @@ import { addPlantToCart } from '../services/cartServices'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Card,
-    CardActionArea,
     CardActions,
     CardContent,
     CardMedia,
@@ -22,17 +21,53 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
-  },
-  media: {
-    width: "100%",
-  },
-  form: {
-    margin: theme.spacing(2),
     width: '100%',
   },
+  plant: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: theme.spacing(3),
+    [theme.breakpoints.down('sm')]: {
+        display: 'grid',
+        padding: theme.spacing(1),
+    }
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    width: '50%',
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        height: '50vh',
+        padding: theme.spacing(1),
+    }
+  },
+  options: {
+    width: '100%',
+    display: 'flex'
+    
+  },
+  media: {
+    width: "50%",
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
+    }
+  },
+  form: {
+    padding: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: theme.spacing(2),
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+        flexWrap: 'wrap',
+        justifyContent: 'space-around'
+    }
+  },
   quantity_field: {
-      width: '10%'
+      width: '90px'
   }
 }))
 
@@ -41,7 +76,7 @@ const PlantsShow = ({history, plant}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { plants, loggedInUser, quotePlants } = store
+    const { plants, loggedInUser } = store
 
     const initialQuoteFormState = {
         quantity: "",
@@ -61,8 +96,7 @@ const PlantsShow = ({history, plant}) => {
         modified_date, 
         description, 
         price, 
-        pot_size, 
-        special, 
+        pot_size,
         quantity,
         plant_image
     } = plant
@@ -135,57 +169,61 @@ const PlantsShow = ({history, plant}) => {
         <div>
             {errorMessage && <p>{errorMessage}</p>}
             <Card className={classes.root}>
-                        {/* <CardMedia
-                        className={classes.media}
-                        image="/src/images/stock-plant.jpg"
-                        title="Contemplative Reptile"
-                        /> */}
-                <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt="Photo by Syded Mohammad Ismail"/>
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {common_name}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {botanical_name}
-                    </Typography>
-                    {modified_date ? (
+                <div className={classes.plant}>
+                    <CardContent className={classes.details}>
+                        <div>
+                            <Typography variant="subtitle1" color="textSecondary">
+                                {botanical_name}
+                            </Typography>
+                            <Typography variant="h4">
+                                {common_name}
+                            </Typography>
+                        </div>
+                        {modified_date ? (
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                Last Updated: {modified_date.toLocaleString()}
+                            </Typography>
+                        ) : (
+                            <div></div>
+                        )}
                         <Typography variant="body2" color="textSecondary" component="p">
-                            Last Updated: {modified_date.toLocaleString()}
+                            {description}
                         </Typography>
-                    ) : (
-                        <div></div>
-                    )}
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Category: {category}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {description}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Pot Size: {pot_size}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Price: ${price}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Quantity Available: {quantity}
-                    </Typography>
-                </CardContent>
+                        <div className={classes.options}>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                Category: {category}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                Pot Size: {pot_size}
+                            </Typography>
+                        </div>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            Price: ${price}
+                        </Typography>
+                    </CardContent>
+                    <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt={common_name}/>
+                </div>
                 {loggedInUser && (
                     <>
                         <form className={classes.form} onSubmit={handleAddToCart}>
                             <TextField 
                                 className={classes.quantity_field} 
                                 size="small" 
-                                id="standard-basic" 
+                                variant="outlined"
                                 label="Quantity" 
                                 type="number" 
                                 name="quantity"
                                 onChange={handleQuantityChange} 
                             />
-                            <p>x</p>
-                            <p>{common_name} - {pot_size} - ${price}</p>
-                            <input type="submit" value="Add to quote request"></input>
+                            <Typography variant="body2">x</Typography>
+                            <Typography variant="body2">{common_name} - {pot_size} - ${price}</Typography>
+                            <Button 
+                                type="submit"
+                                variant="outlined"
+                                color="primary"
+                            >
+                                Add to quote request
+                            </Button>
                         </form>
                         <CardActions>
                             <Button size="small" color="primary" onClick={handleEdit}>
