@@ -29,6 +29,7 @@ const Admin = ({history}) => {
     const { store, dispatch } = useGlobalState()
     const { loggedInUser, submittedQuotes } = store
 
+    // ONLY CURRENTLY WORKING IN DEVELOPMENT 
     // useEffect(() => {
     //     userAdmin().then((res) => {
     //         console.log(res.status)

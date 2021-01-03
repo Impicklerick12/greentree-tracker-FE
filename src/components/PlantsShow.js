@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import StockPlant from '../images/stock-plant.jpg'
@@ -8,43 +8,66 @@ import { addPlantToCart } from '../services/cartServices'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Card,
-    CardActionArea,
     CardActions,
-    CardContent,
-    CardMedia,
     Button,
     Typography,
     IconButton,
-    TextField
+    TextField,
+    Grid
 } from '@material-ui/core';
 
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: '100%',
+    marginBottom: theme.spacing(2)
+  },
+  plant: {
+    justifyContent: 'space-between',
+    padding: theme.spacing(3),
+    minHeight: '500px',
+    [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column-reverse',
+        padding: theme.spacing(1),
+    }
+  },
+  titles: {
+    flexDirection: 'column'
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: theme.spacing(3),
+    [theme.breakpoints.down('sm')]: {
+        height: '60vh',
+        padding: theme.spacing(1),
+    }
+  },
+  options: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   media: {
-    width: "100%",
-  },
-  form: {
-    margin: theme.spacing(2),
     width: '100%',
-  },
-  quantity_field: {
-      width: '10%'
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        padding: '1rem 0'
+    }
   }
 }))
 
-const PlantsShow = ({history, plant}) => {
+const PlantsShow = ({history, plant, capitalize}) => {
 
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { plants, loggedInUser, quotePlants } = store
+    const { plants, loggedInUser } = store
 
     const initialQuoteFormState = {
-        quantity: "",
+        quantity: 1,
         plant: ""
     }
 
@@ -61,9 +84,8 @@ const PlantsShow = ({history, plant}) => {
         modified_date, 
         description, 
         price, 
-        pot_size, 
-        special, 
-        quantity 
+        pot_size,
+        plant_image
     } = plant
 
     function handleEdit(event) {
@@ -74,22 +96,25 @@ const PlantsShow = ({history, plant}) => {
     function handleDelete(event) {
         event.preventDefault()
 
-        deletePlant(plant._id).then(() => {
-            console.log("deleted plant")
-            const updatedPlants = plants.filter((p) => p._id !== plant._id)
-            dispatch({
-                type: "setPlants",
-                data: updatedPlants
+        deletePlant(plant._id)
+            .then(() => {
+                console.log("deleted plant")
+                const updatedPlants = plants.filter((p) => p._id !== plant._id)
+                dispatch({
+                    type: "setPlants",
+                    data: updatedPlants
+                })
+                history.push("/plants")
             })
-            history.push("/plants")
-        }).catch((error) => {
-            const status = error.response ? error.response.status : 500
-            console.log("caught error on delete", error)
-            if(status === 403)
-                setErrorMessage("You are not an admin, and unable to delete a plant")
-            else
-                setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
-        })
+            .catch((error) => {
+                const status = error.response ? error.response.status : 500
+                console.log("caught error on delete", error)
+                if(status === 403) {
+                    setErrorMessage("You are not an admin, and unable to delete a plant")
+                } else {
+                    setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+                }
+            })
     }
 
     function handleBack(event) {
@@ -98,13 +123,17 @@ const PlantsShow = ({history, plant}) => {
     }
 
     function handleQuantityChange(event) {
-        const name = event.target.name
-        const value = event.target.value
+        let name = event.target.name
+        let value = event.target.value
 
-        setQuoteFormState({
-            ...quoteFormState,
-            [name]: value
-        })
+        if (value < 1) {
+            value = 1
+        } else {
+            setQuoteFormState({
+                ...quoteFormState,
+                [name]: value
+            })
+        }
     }
 
     function handleAddToCart(event) {
@@ -123,10 +152,11 @@ const PlantsShow = ({history, plant}) => {
         }).catch((error) => {
             const status = error.response ? error.response.status : 500
             console.log("caught error on Add to cart", error)
-            if(status === 403)
+            if(status === 403) {
                 setErrorMessage("There was an error adding the plant to your cart")
-            else
+            } else {
                 setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+            }
         })
     }
 
@@ -134,70 +164,86 @@ const PlantsShow = ({history, plant}) => {
         <div>
             {errorMessage && <p>{errorMessage}</p>}
             <Card className={classes.root}>
-                        {/* <CardMedia
-                        className={classes.media}
-                        image="/src/images/stock-plant.jpg"
-                        title="Contemplative Reptile"
-                        /> */}
-                <img className={classes.media} src={StockPlant} alt="Photo by Syded Mohammad Ismail"/>
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {common_name}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {botanical_name}
-                    </Typography>
-                    {modified_date ? (
+                <Grid container className={classes.plant}>
+                    <Grid item sm={12} md={6} className={classes.details}>
+                        <Grid container spacing={1} className={classes.titles}>
+                            <Typography variant="subtitle1" color="textSecondary">
+                                {botanical_name}
+                            </Typography>
+                            <Typography variant="h4" color="primary">
+                                {common_name}
+                            </Typography>
+                            <Typography variant="h6" color="textSecondary" component="p">
+                                <strong>${price}</strong>
+                            </Typography>
+                        </Grid>
+                        {modified_date ? (
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                <strong>Last Updated:</strong> {modified_date.toLocaleString()}
+                            </Typography>
+                        ) : (
+                            <div></div>
+                        )}
                         <Typography variant="body2" color="textSecondary" component="p">
-                            Last Updated: {modified_date.toLocaleString()}
+                            {description}
                         </Typography>
-                    ) : (
-                        <div></div>
-                    )}
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Category: {category}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {description}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Pot Size: {pot_size}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Price: ${price}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Quantity Available: {quantity}
-                    </Typography>
-                </CardContent>
-                {loggedInUser && (
-                    <>
-                        <form className={classes.form} onSubmit={handleAddToCart}>
-                            <TextField 
-                                className={classes.quantity_field} 
-                                size="small" 
-                                id="standard-basic" 
-                                label="Quantity" 
-                                type="number" 
-                                name="quantity"
-                                onChange={handleQuantityChange} 
-                            />
-                            <p>x</p>
-                            <p>{common_name} - {pot_size} - ${price}</p>
-                            <input type="submit" value="Add to quote request"></input>
-                        </form>
-                        <CardActions>
-                            <Button size="small" color="primary" onClick={handleEdit}>
-                            Edit
-                            </Button>
-                            <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </CardActions>
-                    </>
-                )}
+                        <Grid container className={classes.options}>
+                            <Grid item>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    <strong>Category:</strong> {capitalize(category)}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    <strong>Pot Size:</strong> {pot_size}
+                                </Typography>
+                            </Grid>
+                            {/* NEED TO CHANGE TO ONLY ADMIN ROLE */}
+                            { loggedInUser && (
+                                <Grid item>
+                                    <CardActions>
+                                        <IconButton aria-label="edit" color="primary" onClick={handleEdit}>
+                                            <EditIcon fontSize="large"/>
+                                        </IconButton>
+                                        <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
+                                            <DeleteIcon fontSize="large"/>
+                                        </IconButton>
+                                    </CardActions>
+                                </Grid>
+                            )}
+                        </Grid>
+                        { loggedInUser && (
+                            <form onSubmit={handleAddToCart}>
+                                <Grid container spacing={2}>
+                                    <Grid item>
+                                        <TextField
+                                            size="small" 
+                                            variant="outlined"
+                                            label="Quantity" 
+                                            type="number" 
+                                            name="quantity"
+                                            value={quoteFormState.quantity}
+                                            onChange={handleQuantityChange} 
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Button 
+                                            type="submit"
+                                            color="primary"
+                                            variant="contained"
+                                            size="large"
+                                        >
+                                            Add to quote request
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                        )}
+                    </Grid>
+                    <Grid item sm={12}  md={6}>
+                        <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt={common_name}/>
+                    </Grid>
+                </Grid>
             </Card>
-            <Button onClick={handleBack}>Back</Button>
+            <Button variant="outlined" color="primary" onClick={handleBack}>Back</Button>
         </div>
     )
 }

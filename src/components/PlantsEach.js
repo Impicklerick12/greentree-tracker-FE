@@ -63,19 +63,24 @@ const PlantsEach = ({history, plant}) => {
 
     const { 
         common_name, 
-        botanical_name
+        botanical_name, 
+        price,
+        plant_image
     } = plant
 
     return (
         <Grid item xs={12} sm={6} md={4} lg={4}>
             <Link to={`plants/${plant._id}`} component={CardActionArea}>
-                <Card className={classes.cardRoot}>
+                <Card className={classes.cardRoot} >
                     <CardContent className={classes.cardContent}>
-                        <Typography variant="body1" className={classes.subtitle}>
+                        <Typography variant="subtitle1" className={classes.subtitle}>
                             {botanical_name}
                         </Typography>
                         <Typography variant="h5" className={classes.title}>
                             {common_name}
+                        </Typography>
+                        <Typography variant="subtitle2" className={classes.price}>
+                            ${price}
                         </Typography>
                     </CardContent>
                 </Card>

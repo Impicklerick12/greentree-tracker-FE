@@ -33,7 +33,7 @@ require('dotenv').config()
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
-  },
+  }
 }));
 
 const App = () => {
@@ -149,6 +149,11 @@ const App = () => {
     getCartData()
   }, [])
 
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+
   // // Register user
   // function registerUser(user) {
   //   dispatch({
@@ -207,7 +212,7 @@ const App = () => {
                 <Route exact path="/plants" component={Plants} />
 
                 {/* Show Plant Component */}
-                <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} /> } />
+                <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} capitalize={capitalize} /> } />
 
                 {/* Edit Plant Component */}
                 <Route exact path="/plants/edit/:id" component={PlantsEdit} />
