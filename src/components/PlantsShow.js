@@ -9,69 +9,57 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     Card,
     CardActions,
-    CardContent,
-    CardMedia,
     Button,
     Typography,
     IconButton,
-    TextField
+    TextField,
+    Grid
 } from '@material-ui/core';
 
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    marginBottom: theme.spacing(2)
   },
   plant: {
-    display: 'flex',
     justifyContent: 'space-between',
     padding: theme.spacing(3),
+    minHeight: '500px',
     [theme.breakpoints.down('sm')]: {
-        display: 'grid',
+        flexDirection: 'column-reverse',
         padding: theme.spacing(1),
     }
+  },
+  titles: {
+    flexDirection: 'column'
   },
   details: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    width: '50%',
+    justifyContent: 'space-between',
+    padding: theme.spacing(3),
     [theme.breakpoints.down('sm')]: {
-        width: '100%',
-        height: '50vh',
+        height: '60vh',
         padding: theme.spacing(1),
     }
   },
   options: {
-    width: '100%',
-    display: 'flex'
-    
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   media: {
-    width: "50%",
-    [theme.breakpoints.down('sm')]: {
-        width: '100%',
-    }
-  },
-  form: {
-    padding: theme.spacing(1),
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: theme.spacing(2),
     width: '100%',
     [theme.breakpoints.down('sm')]: {
-        flexWrap: 'wrap',
-        justifyContent: 'space-around'
+        width: '100%',
+        padding: '1rem 0'
     }
-  },
-  quantity_field: {
-      width: '90px'
   }
 }))
 
-const PlantsShow = ({history, plant}) => {
+const PlantsShow = ({history, plant, capitalize}) => {
 
     const classes = useStyles();
 
@@ -79,7 +67,7 @@ const PlantsShow = ({history, plant}) => {
     const { plants, loggedInUser } = store
 
     const initialQuoteFormState = {
-        quantity: "",
+        quantity: 1,
         plant: ""
     }
 
@@ -97,7 +85,6 @@ const PlantsShow = ({history, plant}) => {
         description, 
         price, 
         pot_size,
-        quantity,
         plant_image
     } = plant
 
@@ -109,22 +96,25 @@ const PlantsShow = ({history, plant}) => {
     function handleDelete(event) {
         event.preventDefault()
 
-        deletePlant(plant._id).then(() => {
-            console.log("deleted plant")
-            const updatedPlants = plants.filter((p) => p._id !== plant._id)
-            dispatch({
-                type: "setPlants",
-                data: updatedPlants
+        deletePlant(plant._id)
+            .then(() => {
+                console.log("deleted plant")
+                const updatedPlants = plants.filter((p) => p._id !== plant._id)
+                dispatch({
+                    type: "setPlants",
+                    data: updatedPlants
+                })
+                history.push("/plants")
             })
-            history.push("/plants")
-        }).catch((error) => {
-            const status = error.response ? error.response.status : 500
-            console.log("caught error on delete", error)
-            if(status === 403)
-                setErrorMessage("You are not an admin, and unable to delete a plant")
-            else
-                setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
-        })
+            .catch((error) => {
+                const status = error.response ? error.response.status : 500
+                console.log("caught error on delete", error)
+                if(status === 403) {
+                    setErrorMessage("You are not an admin, and unable to delete a plant")
+                } else {
+                    setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+                }
+            })
     }
 
     function handleBack(event) {
@@ -133,13 +123,17 @@ const PlantsShow = ({history, plant}) => {
     }
 
     function handleQuantityChange(event) {
-        const name = event.target.name
-        const value = event.target.value
+        let name = event.target.name
+        let value = event.target.value
 
-        setQuoteFormState({
-            ...quoteFormState,
-            [name]: value
-        })
+        if (value < 1) {
+            value = 1
+        } else {
+            setQuoteFormState({
+                ...quoteFormState,
+                [name]: value
+            })
+        }
     }
 
     function handleAddToCart(event) {
@@ -158,10 +152,11 @@ const PlantsShow = ({history, plant}) => {
         }).catch((error) => {
             const status = error.response ? error.response.status : 500
             console.log("caught error on Add to cart", error)
-            if(status === 403)
+            if(status === 403) {
                 setErrorMessage("There was an error adding the plant to your cart")
-            else
+            } else {
                 setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+            }
         })
     }
 
@@ -169,19 +164,22 @@ const PlantsShow = ({history, plant}) => {
         <div>
             {errorMessage && <p>{errorMessage}</p>}
             <Card className={classes.root}>
-                <div className={classes.plant}>
-                    <CardContent className={classes.details}>
-                        <div>
+                <Grid container className={classes.plant}>
+                    <Grid item sm={12} md={6} className={classes.details}>
+                        <Grid container spacing={1} className={classes.titles}>
                             <Typography variant="subtitle1" color="textSecondary">
                                 {botanical_name}
                             </Typography>
-                            <Typography variant="h4">
+                            <Typography variant="h4" color="primary">
                                 {common_name}
                             </Typography>
-                        </div>
+                            <Typography variant="h6" color="textSecondary" component="p">
+                                <strong>${price}</strong>
+                            </Typography>
+                        </Grid>
                         {modified_date ? (
                             <Typography variant="body2" color="textSecondary" component="p">
-                                Last Updated: {modified_date.toLocaleString()}
+                                <strong>Last Updated:</strong> {modified_date.toLocaleString()}
                             </Typography>
                         ) : (
                             <div></div>
@@ -189,54 +187,63 @@ const PlantsShow = ({history, plant}) => {
                         <Typography variant="body2" color="textSecondary" component="p">
                             {description}
                         </Typography>
-                        <div className={classes.options}>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Category: {category}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Pot Size: {pot_size}
-                            </Typography>
-                        </div>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            Price: ${price}
-                        </Typography>
-                    </CardContent>
-                    <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt={common_name}/>
-                </div>
-                {loggedInUser && (
-                    <>
-                        <form className={classes.form} onSubmit={handleAddToCart}>
-                            <TextField 
-                                className={classes.quantity_field} 
-                                size="small" 
-                                variant="outlined"
-                                label="Quantity" 
-                                type="number" 
-                                name="quantity"
-                                onChange={handleQuantityChange} 
-                            />
-                            <Typography variant="body2">x</Typography>
-                            <Typography variant="body2">{common_name} - {pot_size} - ${price}</Typography>
-                            <Button 
-                                type="submit"
-                                variant="outlined"
-                                color="primary"
-                            >
-                                Add to quote request
-                            </Button>
-                        </form>
-                        <CardActions>
-                            <Button size="small" color="primary" onClick={handleEdit}>
-                            Edit
-                            </Button>
-                            <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </CardActions>
-                    </>
-                )}
+                        <Grid container className={classes.options}>
+                            <Grid item>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    <strong>Category:</strong> {capitalize(category)}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    <strong>Pot Size:</strong> {pot_size}
+                                </Typography>
+                            </Grid>
+                            {/* NEED TO CHANGE TO ONLY ADMIN ROLE */}
+                            { loggedInUser && (
+                                <Grid item>
+                                    <CardActions>
+                                        <IconButton aria-label="edit" color="primary" onClick={handleEdit}>
+                                            <EditIcon fontSize="large"/>
+                                        </IconButton>
+                                        <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
+                                            <DeleteIcon fontSize="large"/>
+                                        </IconButton>
+                                    </CardActions>
+                                </Grid>
+                            )}
+                        </Grid>
+                        { loggedInUser && (
+                            <form onSubmit={handleAddToCart}>
+                                <Grid container spacing={2}>
+                                    <Grid item>
+                                        <TextField
+                                            size="small" 
+                                            variant="outlined"
+                                            label="Quantity" 
+                                            type="number" 
+                                            name="quantity"
+                                            value={quoteFormState.quantity}
+                                            onChange={handleQuantityChange} 
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Button 
+                                            type="submit"
+                                            color="primary"
+                                            variant="contained"
+                                            size="large"
+                                        >
+                                            Add to quote request
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                        )}
+                    </Grid>
+                    <Grid item sm={12}  md={6}>
+                        <img className={classes.media} src={plant_image ? plant_image : StockPlant} alt={common_name}/>
+                    </Grid>
+                </Grid>
             </Card>
-            <Button onClick={handleBack}>Back</Button>
+            <Button variant="outlined" color="primary" onClick={handleBack}>Back</Button>
         </div>
     )
 }
