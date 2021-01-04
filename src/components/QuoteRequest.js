@@ -15,9 +15,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
+
+    },
+    quotes: {
+        // margin: '1rem'
     },
     textArea: {
         width: '100%'
@@ -86,10 +87,10 @@ const QuoteRequest = ({history}) => {
         .catch((error) => console.log(error))
     }
 
-    const updateTotal = (price, quantity) => {
-        let subtotal
-        subtotal += (price * quantity)
-        setTotal(subtotal)
+    const updateTotal = (plantSubtotal) => {
+        let subtotal = 0
+        subtotal += plantSubtotal
+        console.log("subtotal: ", subtotal)
     }
 
     const handleRedirect = () => {
@@ -111,16 +112,25 @@ const QuoteRequest = ({history}) => {
                     </Grid>
                     { loggedInUser && (quotePlants.length > 0) ? (
                         <Grid container justify="center">
-                            <Grid item xs={10} sm={8} md={6} lg={4}>
+                            <Grid item sm={12} md={6}>
                                 <form className={classes.root} onSubmit={handleSubmit}>
-                                    <div>
+                                    <div className={classes.quotes}>
                                         {quotePlants.map((plant, index) =>
                                             <QuoteItem key={index} cartPlants={plant} updateTotal={updateTotal}/>
                                         )}
                                     </div>
                                     <p>Total: ${total}</p>
                                     <div>
-                                        <TextField className={classes.textArea} multiline rows={4} type="text" name="comment" label="Comments" onChange={handleChange}></TextField>
+                                        <TextField 
+                                            className={classes.textArea} 
+                                            multiline 
+                                            variant="outlined"
+                                            rows={4} 
+                                            type="text" 
+                                            name="comment" 
+                                            label="Comments" 
+                                            onChange={handleChange}
+                                        />
                                     </div>
                                     <Button type="submit" value="Submit Request">Submit Quote Request</Button>
                                 </form>

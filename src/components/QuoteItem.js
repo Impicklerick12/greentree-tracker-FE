@@ -3,11 +3,37 @@ import { useGlobalState } from '../config/store'
 import { getPlantFromId } from '../services/plantServices'
 import { deleteItemFromCart, updateCart } from '../services/cartServices'
 
-import { IconButton } from '@material-ui/core'
+import { 
+    IconButton,
+    Grid,
+    Paper,
+    TextField,
+    Typography
+} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        paddingTop: theme.spacing(1)
+    },
+    plantQuote : {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        padding: theme.spacing(1)
+    },
+    input: {
+        width: '15%'
+    }
+}))
 
 
 const QuoteItem = ({history, cartPlants, updateTotal}) => {
+
+    const classes = useStyles();
 
     const { quantity, plant_id, _id } = cartPlants
 
@@ -30,7 +56,8 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
 
     const {common_name, price, pot_size} = plantInfo
 
-    updateTotal(price, quantity)
+    let total = (quantity * price)
+    updateTotal(total)
 
     if (!cartPlants) return null
 
@@ -55,18 +82,16 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
                 else
                     setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
             })
-        // const updatedQuotes = quotePlants.filter((q) => q._id !== plant_id)
-        
-        // dispatch({
-        //     type: "setQuotePlants",
-        //     data: updatedQuotes
-        // })
     }
 
     const handleQuantityChange = (event) => {
         event.preventDefault()
         
-        const updatedQuantity = event.target.value
+        if (event.target.value < 1) {
+            event.target.value = 1
+        }
+        let updatedQuantity = event.target.value
+
         const data = {
             cartItemId: _id,
             plant: plant_id,
@@ -93,15 +118,33 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
     }
 
     return (
-        <div>
-            <input type="number" name="quantity" placeholder={quantity} onChange={handleQuantityChange}></input>
-            <p>{common_name}</p>
-            <p>Pot Size: {pot_size}</p>
-            <p>Price: ${price}</p>
-            <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
-                <DeleteIcon />
-            </IconButton>
-        </div>
+        <Grid container className={classes.container}>
+            <Paper elevation={3} className={classes.plantQuote}>
+                <TextField 
+                    type="number" 
+                    variant="outlined"
+                    size="small"
+                    name="quantity" 
+                    placeholder={quantity} 
+                    onChange={handleQuantityChange}
+                    className={classes.input}
+                />
+                <Grid>
+                    <Typography>{common_name}</Typography>
+                </Grid>
+                <Grid>
+                    <Typography>Pot Size: {pot_size}</Typography>
+                </Grid>
+                <Grid>
+                    <Typography>Price: ${price}</Typography>
+                </Grid>
+                <Grid>
+                    <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Grid>
+            </Paper>
+        </Grid>
     )
 }
 
