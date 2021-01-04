@@ -23,7 +23,7 @@ const Plants = () => {
     const { store } = useGlobalState()
     const { plants, searchValue } = store
 
-    // console.log(searchValue)
+    console.log(searchValue)
 
     return (
         <>
