@@ -85,7 +85,7 @@ const Navbar = ({history}) => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
+                <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
                     <Toolbar>
                         <Typography variant="h6" className={classes.title}>
                             Greentree Tracker
