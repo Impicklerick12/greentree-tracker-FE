@@ -105,10 +105,6 @@ const QuoteRequest = ({history}) => {
         setTotal(plantSubtotal)
     }
 
-    const handleRedirect = () => {
-        history.goBack()
-    }
-
     return (
         <div>
             {quoteSent ? (
@@ -189,8 +185,11 @@ const QuoteRequest = ({history}) => {
                             </Grid>
                         </Grid>
                     ) : (
-                        // ADD IN NEW COMPONENT _ YOU HAVE NO ITEMS IN YOUR CART YET
-                        handleRedirect()
+                        <Grid container justify="center">
+                            <Grid item>
+                                <Typography variant="h5">Your cart is empty</Typography>
+                            </Grid>
+                        </Grid>
                     )}
                 </>
             )}
