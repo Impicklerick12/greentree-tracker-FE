@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
       flexGrow: 1,
-    },
+      color: "black"
+    }
   }));
 
 const Navbar = ({history}) => {
