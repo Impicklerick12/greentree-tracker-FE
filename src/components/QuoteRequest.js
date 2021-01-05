@@ -187,7 +187,7 @@ const QuoteRequest = ({history}) => {
                     ) : (
                         <Grid container justify="center">
                             <Grid item>
-                                <Typography variant="h5">Your cart is empty</Typography>
+                                <Typography variant="body1" color="textSecondary">Your cart is empty</Typography>
                             </Grid>
                         </Grid>
                     )}
