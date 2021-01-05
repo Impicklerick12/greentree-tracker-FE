@@ -3,18 +3,57 @@ import { useGlobalState } from '../config/store'
 import { getPlantFromId } from '../services/plantServices'
 import { deleteItemFromCart, updateCart } from '../services/cartServices'
 
-import { IconButton } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
+import { 
+    IconButton,
+    Grid,
+    Paper,
+    TextField,
+    Typography
+} from '@material-ui/core'
+import ClearIcon from '@material-ui/icons/Clear';
+import grey from '@material-ui/core/colors/grey';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        paddingTop: theme.spacing(1)
+    },
+    plantQuote : {
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '100%',
+        padding: theme.spacing(1),
+        backgroundColor: grey[100],
+        [theme.breakpoints.down('xs')]: {
+            flexWrap: 'wrap',
+            justifyContent: 'space-between'
+        }
+    },
+    input: {
+        width: '15%',
+        [theme.breakpoints.down('xs')]: {
+            width: '20%'
+        },
+    },
+    commonName: {
+        [theme.breakpoints.down('xs')]: {
+           padding: theme.spacing(1)
+        },
+    }
+}))
 
 
-const QuoteItem = ({history, cartPlants, updateTotal}) => {
+const QuoteItem = ({ cartPlants }) => {
+
+    const classes = useStyles();
 
     const { quantity, plant_id, _id } = cartPlants
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, plants, quotePlants } = store
+    const { plants, quotePlants } = store
     const [plantInfo, setPlantInfo] = useState([])
-    const [formQuantity, setFormQuantity] = useState(quantity)
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
@@ -22,15 +61,12 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
         if (cartPlants) {
             const plantData = getPlantFromId(plants, plant_id)
             setPlantInfo(plantData)
-            // console.log("plantInfo: ", plantInfo)
         } else {
             console.log("No cartPlants")
         }
-    }, [quotePlants])
+    }, [quantity])
 
     const {common_name, price, pot_size} = plantInfo
-
-    updateTotal(price, quantity)
 
     if (!cartPlants) return null
 
@@ -55,18 +91,16 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
                 else
                     setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
             })
-        // const updatedQuotes = quotePlants.filter((q) => q._id !== plant_id)
-        
-        // dispatch({
-        //     type: "setQuotePlants",
-        //     data: updatedQuotes
-        // })
     }
 
     const handleQuantityChange = (event) => {
         event.preventDefault()
         
-        const updatedQuantity = event.target.value
+        if (event.target.value < 1) {
+            event.target.value = 1
+        }
+        let updatedQuantity = event.target.value
+
         const data = {
             cartItemId: _id,
             plant: plant_id,
@@ -86,22 +120,41 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
                 const status = error.response ? error.response.status : 500
                 console.log("caught error on quantity edit", error)
                 if(status === 403)
-                    setErrorMessage("You are not an admin, and unable to edit a plant")
+                    setErrorMessage("Sorry there was an error")
                 else
                     setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
             })
     }
 
     return (
-        <div>
-            <input type="number" name="quantity" placeholder={quantity} onChange={handleQuantityChange}></input>
-            <p>{common_name}</p>
-            <p>Pot Size: {pot_size}</p>
-            <p>Price: ${price}</p>
-            <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
-                <DeleteIcon />
-            </IconButton>
-        </div>
+        <Grid container className={classes.container}>
+            { errorMessage && (<Typography>{errorMessage}</Typography>)}
+            <Paper className={classes.plantQuote}>
+                <TextField 
+                    type="number" 
+                    variant="outlined"
+                    size="small"
+                    name="quantity" 
+                    placeholder={quantity} 
+                    onChange={handleQuantityChange}
+                    className={classes.input}
+                />
+                <Grid className={classes.commonName}>
+                    <Typography variant="body2"><strong>{common_name}</strong></Typography>
+                </Grid>
+                <Grid>
+                    <Typography variant="body2" color="textSecondary">Pot Size: <strong>{pot_size}</strong></Typography>
+                </Grid>
+                <Grid>
+                    <Typography variant="body2" color="textSecondary">Price: <strong>${price}</strong></Typography>
+                </Grid>
+                <Grid>
+                    <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
+                        <ClearIcon />
+                    </IconButton>
+                </Grid>
+            </Paper>
+        </Grid>
     )
 }
 
