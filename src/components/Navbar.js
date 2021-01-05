@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { green } from '@material-ui/core/colors';
 
 import { 
     makeStyles,
@@ -102,7 +103,7 @@ const Navbar = ({history}) => {
                             {isMobile ? (
                                 <>
                                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                        <MenuIcon />
+                                        <MenuIcon style={{ color: 'black' }} />
                                     </IconButton>
                                     <Menu
                                         id="menu-appbar"
