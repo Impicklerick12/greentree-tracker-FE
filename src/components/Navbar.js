@@ -62,7 +62,7 @@ const Navbar = ({history}) => {
     }
 
     const {store, dispatch} = useGlobalState()
-    const {loggedInUser, quotePlants} = store
+    const {loggedInUser, quotePlants, admin } = store
 
     const classes = useStyles()
 
@@ -123,7 +123,9 @@ const Navbar = ({history}) => {
                                             <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/admin')}>Admin</MenuItem>
+                                            { admin && (
+                                                <MenuItem onClick={() => handleMenuClick('/admin')}>Admin</MenuItem>
+                                            )}
                                             <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                         </>
                                     ) : (
@@ -143,7 +145,9 @@ const Navbar = ({history}) => {
                                             <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
                                             <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
                                             <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
-                                            <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
+                                            { admin && (
+                                                <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
+                                            )}
                                             <Button onClick={handleLogout}>Logout</Button>
                                         </>
                                     ) : (
