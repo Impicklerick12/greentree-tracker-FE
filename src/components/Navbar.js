@@ -45,7 +45,7 @@ const Navbar = ({history}) => {
         logout: "logout",
         register: "Register"
     }
-
+    
     // Logout user
     function handleLogout() {
         logoutUser().then((response) => {
@@ -59,6 +59,8 @@ const Navbar = ({history}) => {
             data: null
         })
         removeLoggedInUser()
+        
+        history.push('/auth/login')
     }
 
     const {store, dispatch} = useGlobalState()

@@ -47,9 +47,6 @@ const Login = ({history}) => {
     }
 
     function handleSubmit(event) {
-        // event.preventDefault()
-        // loginUser()
-        // history.goBack()
 
         // For use when connecting to SERVER
         event.preventDefault()
@@ -67,25 +64,15 @@ const Login = ({history}) => {
             let currentUser = res.user
             console.log(currentUser)
 
-            // if (currentUser.role === "admin") {
-            //     dispatch({
-            //         type: "setUserAdmin",
-            //         data: true
-            //     })
-            //     setAdmin(true)
-            // }
-            // console.log(userAdmin)
+            if (currentUser.role === "admin") {
+                history.push('/admin')
+            }
 
             setLoggedInUser(currentUser.username)
             dispatch({
                 type: "setLoggedInUser",
                 data: userDetails.username
             })
-
-            if (currentUser.role === "admin") {
-                history.push('/admin')
-            }
-
         }).catch((error) => {
             if (error.response && error.response.status === 401)
                 setErrorMessage("Authentication failed. Please check your username and password.")

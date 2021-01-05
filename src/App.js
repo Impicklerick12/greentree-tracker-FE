@@ -125,34 +125,17 @@ const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // Checking the local storage to see if there is a current admin
-  //   // If not, set the admin to false
-  //   const isAdmin = getAdmin()
-  //   console.log(isAdmin)
-
-  //   // If current user, set global state again to current user
-  //   if (isAdmin) {
-  //     dispatch({
-  //         type: "setUserAdmin",
-  //         data: isAdmin,
-  //     });
-  //   } else {
-  //       console.log("No admin in Local Storage");
-  //   }
-  // }, []);
-
   // ONLY CURRENTLY WORKING IN DEVELOPMENT 
   useEffect(() => {
     userAdmin().then((res) => {
-        console.log(res.status)
-        dispatch({
-            type:'setAdmin',
-            data: true
-        })
+      console.log(res.status)
+      dispatch({
+        type:'setAdmin',
+        data: true
+      })
     })
     .catch((error) => {
-        console.log(error)
+      console.log(error)
     })
 },[])
 
