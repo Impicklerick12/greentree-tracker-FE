@@ -16,7 +16,6 @@ import {
 } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { green } from '@material-ui/core/colors';
 
 import { 
     makeStyles,
@@ -86,7 +85,7 @@ const Navbar = ({history}) => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none'}}>
                     <Toolbar>
                         <Typography variant="h6" className={classes.title}>
                             Greentree Tracker
