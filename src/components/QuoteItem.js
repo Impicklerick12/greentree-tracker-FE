@@ -10,7 +10,8 @@ import {
     TextField,
     Typography
 } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
+import ClearIcon from '@material-ui/icons/Clear';
+import grey from '@material-ui/core/colors/grey';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -20,27 +21,39 @@ const useStyles = makeStyles((theme) => ({
     },
     plantQuote : {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+        backgroundColor: grey[100],
+        [theme.breakpoints.down('xs')]: {
+            flexWrap: 'wrap',
+            justifyContent: 'space-between'
+        }
     },
     input: {
-        width: '15%'
+        width: '15%',
+        [theme.breakpoints.down('xs')]: {
+            width: '20%'
+        },
+    },
+    commonName: {
+        [theme.breakpoints.down('xs')]: {
+           padding: theme.spacing(1)
+        },
     }
 }))
 
 
-const QuoteItem = ({history, cartPlants, updateTotal}) => {
+const QuoteItem = ({ cartPlants }) => {
 
     const classes = useStyles();
 
     const { quantity, plant_id, _id } = cartPlants
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, plants, quotePlants } = store
+    const { plants, quotePlants } = store
     const [plantInfo, setPlantInfo] = useState([])
-    const [formQuantity, setFormQuantity] = useState(quantity)
     const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
@@ -48,16 +61,12 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
         if (cartPlants) {
             const plantData = getPlantFromId(plants, plant_id)
             setPlantInfo(plantData)
-            // console.log("plantInfo: ", plantInfo)
         } else {
             console.log("No cartPlants")
         }
-    }, [quotePlants])
+    }, [quantity])
 
     const {common_name, price, pot_size} = plantInfo
-
-    let total = (quantity * price)
-    updateTotal(total)
 
     if (!cartPlants) return null
 
@@ -111,7 +120,7 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
                 const status = error.response ? error.response.status : 500
                 console.log("caught error on quantity edit", error)
                 if(status === 403)
-                    setErrorMessage("You are not an admin, and unable to edit a plant")
+                    setErrorMessage("Sorry there was an error")
                 else
                     setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
             })
@@ -119,7 +128,8 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
 
     return (
         <Grid container className={classes.container}>
-            <Paper elevation={3} className={classes.plantQuote}>
+            { errorMessage && (<Typography>{errorMessage}</Typography>)}
+            <Paper className={classes.plantQuote}>
                 <TextField 
                     type="number" 
                     variant="outlined"
@@ -129,18 +139,18 @@ const QuoteItem = ({history, cartPlants, updateTotal}) => {
                     onChange={handleQuantityChange}
                     className={classes.input}
                 />
-                <Grid>
-                    <Typography>{common_name}</Typography>
+                <Grid className={classes.commonName}>
+                    <Typography variant="body2"><strong>{common_name}</strong></Typography>
                 </Grid>
                 <Grid>
-                    <Typography>Pot Size: {pot_size}</Typography>
+                    <Typography variant="body2" color="textSecondary">Pot Size: <strong>{pot_size}</strong></Typography>
                 </Grid>
                 <Grid>
-                    <Typography>Price: ${price}</Typography>
+                    <Typography variant="body2" color="textSecondary">Price: <strong>${price}</strong></Typography>
                 </Grid>
                 <Grid>
                     <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
-                        <DeleteIcon />
+                        <ClearIcon />
                     </IconButton>
                 </Grid>
             </Paper>

@@ -15,13 +15,27 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-
+    },
+    successful: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     },
     quotes: {
-        // margin: '1rem'
+        paddingTop: theme.spacing(2)
+    },
+    total: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2)
     },
     textArea: {
-        width: '100%'
+        width: '100%',
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+    },
+    keepShopping : {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2)
     }
   }));
 
@@ -30,11 +44,11 @@ const QuoteRequest = ({history}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, quotePlants, quoteRequestData } = store
+    const { loggedInUser, quotePlants } = store
     // console.log(quotes)
 
     const [quoteRequestComment, setQuoteRequestComment] = useState("")
-    const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState([])
     const [quoteSent, setQuoteSent] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
 
@@ -78,7 +92,6 @@ const QuoteRequest = ({history}) => {
 
     const clearCartItems = () => {
         clearCart().then((res) => {
-            // console.log(res)
             dispatch({
                 type: "setQuotePlants",
                 data: []
@@ -88,9 +101,8 @@ const QuoteRequest = ({history}) => {
     }
 
     const updateTotal = (plantSubtotal) => {
-        let subtotal = 0
-        subtotal += plantSubtotal
-        console.log("subtotal: ", subtotal)
+        console.log("plant subtotal: ", plantSubtotal)
+        setTotal(plantSubtotal)
     }
 
     const handleRedirect = () => {
@@ -102,25 +114,46 @@ const QuoteRequest = ({history}) => {
             {quoteSent ? (
                 <>
                     {/* Render a new component with successful message? */}
-                    <p>Your quote was successfully sent!</p>
-                    <Button onClick={() => history.push('/plants')}>Keep Shopping</Button>
+                    <Grid container justify="center">
+                        <Grid item className={classes.successful}>
+                            <Typography variant="h5">Your quote was successfully sent!</Typography>
+                            <Typography variant="body2">
+                                We will get back to you within 48 hours with a response. Due to stock availability and the changing nature of plants, some items may not be available.
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid container justify="center" className={classes.keepShopping}>
+                        <Button 
+                            onClick={() => history.push('/plants')}
+                            variant="outlined"
+                            color="secondary"
+                            size="small"
+                        >
+                            Keep Shopping
+                        </Button>
+                    </Grid>
                 </>
             ) : (
                 <>
                     <Grid container justify="center">
                         <Typography variant="h2">Quote Request</Typography>
+                        { errorMessage && <p>{errorMessage}</p>}
                     </Grid>
                     { loggedInUser && (quotePlants.length > 0) ? (
                         <Grid container justify="center">
                             <Grid item sm={12} md={6}>
+                                <Grid item>
+                                    <Typography variant="body1" color="textSecondary">To change the quantity value, simply select the text box and type your new quantity</Typography>
+                                </Grid>
                                 <form className={classes.root} onSubmit={handleSubmit}>
-                                    <div className={classes.quotes}>
+                                    <Grid className={classes.quotes}>
                                         {quotePlants.map((plant, index) =>
                                             <QuoteItem key={index} cartPlants={plant} updateTotal={updateTotal}/>
                                         )}
-                                    </div>
-                                    <p>Total: ${total}</p>
-                                    <div>
+                                    </Grid>
+                                    {/* NEED TO ADD IN TOTAL HERE  */}
+                                    {/* <Typography className={classes.total} variant="subtitle1">Total: ${total}</Typography> */}
+                                    <Grid>
                                         <TextField 
                                             className={classes.textArea} 
                                             multiline 
@@ -128,13 +161,31 @@ const QuoteRequest = ({history}) => {
                                             rows={4} 
                                             type="text" 
                                             name="comment" 
-                                            label="Comments" 
+                                            label="Add a comment" 
                                             onChange={handleChange}
                                         />
-                                    </div>
-                                    <Button type="submit" value="Submit Request">Submit Quote Request</Button>
+                                    </Grid>
+                                    <Grid container justify="center">
+                                        <Button 
+                                            type="submit" 
+                                            value="Submit Request"
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            Submit Quote Request
+                                        </Button>
+                                    </Grid>
                                 </form>
-                                <Button onClick={() => history.push('/plants')}>Keep Shopping</Button>
+                                <Grid container justify="center" className={classes.keepShopping}>
+                                    <Button 
+                                        onClick={() => history.push('/plants')}
+                                        variant="outlined"
+                                        color="secondary"
+                                        size="small"
+                                    >
+                                        Keep Shopping
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     ) : (
