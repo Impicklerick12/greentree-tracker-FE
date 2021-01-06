@@ -23,7 +23,7 @@ const Plants = () => {
     const { store } = useGlobalState()
     const { plants, searchValue } = store
 
-    // console.log(searchValue)
+    console.log(searchValue)
 
     return (
         <>
@@ -31,11 +31,9 @@ const Plants = () => {
             <Grid container spacing={2} className={classes.gridContainer}>
                     { plants
                         .sort((a, b) => a.common_name.localeCompare(b.common_name))
-                        .map((plant) => plant.common_name.toLowerCase().includes(searchValue) ?
-                            (<PlantsEach key={plant._id} plant={plant} />)
-                            :
-                            (<PlantsEach key={plant._id} plant={plant} />)
-                        )
+                        .map((plant) => {
+                            return <PlantsEach key={plant._id} plant={plant} />
+                        })
                     }
             </Grid>
         </>
