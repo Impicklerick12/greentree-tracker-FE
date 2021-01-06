@@ -23,16 +23,34 @@ const Plants = () => {
     const { store } = useGlobalState()
     const { plants, searchValue } = store
 
-    console.log(searchValue)
+    // console.log(searchValue)
+
+    let showingPlants
+
+    const filterCategory = (category) => {
+        console.log("category in plants: ", category)
+    }
+
+    const filterPotSize = (potSize) => {
+        console.log("potSize in plants: ", potSize)
+    }
+
+    const filterPrice = (price) => {
+        console.log("price in plants: ", price)
+    }
 
     return (
         <>
-            <FilterOptions />
+            <FilterOptions 
+                filterCategory={filterCategory} 
+                filterPrice={filterPrice} 
+                filterPotSize={filterPotSize}
+            />
             <Grid container spacing={2} className={classes.gridContainer}>
                     { plants
                         .sort((a, b) => a.common_name.localeCompare(b.common_name))
                         .map((plant) => {
-                            return <PlantsEach key={plant._id} plant={plant} />
+                            return <PlantsEach key={plant._id} plant={plant}/>
                         })
                     }
             </Grid>

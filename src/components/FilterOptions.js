@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     checked: {}
   }));
 
-const FilerOptions = () => {
+const FilerOptions = ({filterCategory, filterPotSize, filterPrice}) => {
     const { dispatch } = useGlobalState()
     
     // const [treeChecked, setTreeChecked] = useState(false)
@@ -89,12 +89,25 @@ const FilerOptions = () => {
     // // Price range $100 and over
     // const [rangeThreeChecked, setRangeThreeChecked] = useState(false)
 
-    const [value, setValue] = useState(null);
-    const [searchValue, setSearchValue] = useState(null)
+    const [categoryValue, setCategoryValue] = useState(null);
+    const [potSizeValue, setPotSizeValue] = useState(null);
+    const [priceValue, setPriceValue] = useState(null);
+    // const [searchValue, setSearchValue] = useState(null)
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
+    const handleCategoryChange = (event) => {
+        setCategoryValue(event.target.value);
     };
+    filterCategory(categoryValue)
+    
+    const handlePotSizeChange = (event) => {
+        setPotSizeValue(event.target.value);
+    };
+    filterPotSize(potSizeValue)
+
+    const handlePriceChange = (event) => {
+        setPriceValue(event.target.value);
+    };
+    filterPrice(priceValue)
 
     {/*const handleSearchChange = (event) => {
 
@@ -223,7 +236,7 @@ const FilerOptions = () => {
         <Grid container>
             <Grid item className={classes.container}>
                 <Paper className={classes.paper}>
-                    <div>
+                    {/* <div>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -237,12 +250,12 @@ const FilerOptions = () => {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     <div className={classes.radioChecks}>
                         <div className={classes.category}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
-                                <RadioGroup row aria-label="Category" name="category" value={value} onChange={handleChange}>
+                                <RadioGroup row aria-label="Category" name="category" value={categoryValue} onChange={handleCategoryChange}>
                                     <FormControlLabel value="tree" control={<Radio />} label="Tree" />
                                     <FormControlLabel value="shrub" control={<Radio />} label="Shrub" />
                                     <FormControlLabel value="grass" control={<Radio />} label="Grass" />
@@ -253,10 +266,20 @@ const FilerOptions = () => {
                         <div className={classes.potSize}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Pot Size</FormLabel>
-                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={value} onChange={handleChange}>
+                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={potSizeValue} onChange={handlePotSizeChange}>
                                     <FormControlLabel value="140mm" control={<Radio />} label="140mm" />
                                     <FormControlLabel value="250mm" control={<Radio />} label="250mm" />
                                     <FormControlLabel value="350mm" control={<Radio />} label="350mm" />
+                                </RadioGroup>
+                            </FormControl>
+                        </div>
+                        <div className={classes.price}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Price</FormLabel>
+                                <RadioGroup row aria-label="price" name="price" value={priceValue} onChange={handlePriceChange}>
+                                    <FormControlLabel value="50" control={<Radio />} label="$0 - $50" />
+                                    <FormControlLabel value="100" control={<Radio />} label="$50 - $100" />
+                                    <FormControlLabel value="above100" control={<Radio />} label="$100 +" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
