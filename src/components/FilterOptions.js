@@ -70,25 +70,31 @@ const useStyles = makeStyles((theme) => ({
 
 const FilerOptions = () => {
     const { dispatch } = useGlobalState()
-    const [treeChecked, setTreeChecked] = useState(false)
-    const [shrubChecked, setShrubChecked] = useState(false)
-    const [grassChecked, setGrassChecked] = useState(false)
-    const [groundCoverChecked, setGroundCoverChecked] = useState(false)
-    // Set initial state. Pot size 140mm
-    const [smallPotChecked, setSmallPotChecked] = useState(false)
-    // Set initial state. Pot size 250mm
-    const [mediumPotChecked, setMediumPotChecked] = useState(false)
-    // Set initial state. Pot size 350mm
-    const [largePotChecked, setLargePotChecked] = useState(false)
-    const [specialChecked, setSpecialChecked] = useState(false)
-    // Price range $0 to $50
-    const [rangeOneChecked, setRangeOneChecked] = useState(false)
-    // Price range $50 to $100
-    const [rangeTwoChecked, setRangeTwoChecked] = useState(false)
-    // Price range $100 and over
-    const [rangeThreeChecked, setRangeThreeChecked] = useState(false)
-    // const [value, setValue] = useState('')
-    // const [searchValue, setSearchValue] = useState(null)
+    
+    // const [treeChecked, setTreeChecked] = useState(false)
+    // const [shrubChecked, setShrubChecked] = useState(false)
+    // const [grassChecked, setGrassChecked] = useState(false)
+    // const [groundCoverChecked, setGroundCoverChecked] = useState(false)
+    // // Set initial state. Pot size 140mm
+    // const [smallPotChecked, setSmallPotChecked] = useState(false)
+    // // Set initial state. Pot size 250mm
+    // const [mediumPotChecked, setMediumPotChecked] = useState(false)
+    // // Set initial state. Pot size 350mm
+    // const [largePotChecked, setLargePotChecked] = useState(false)
+    // const [specialChecked, setSpecialChecked] = useState(false)
+    // // Price range $0 to $50
+    // const [rangeOneChecked, setRangeOneChecked] = useState(false)
+    // // Price range $50 to $100
+    // const [rangeTwoChecked, setRangeTwoChecked] = useState(false)
+    // // Price range $100 and over
+    // const [rangeThreeChecked, setRangeThreeChecked] = useState(false)
+
+    const [value, setValue] = useState(null);
+    const [searchValue, setSearchValue] = useState(null)
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
 
     const handleChange = (event) => {
         // Selection will equal the value radio button selected
@@ -109,116 +115,160 @@ const FilerOptions = () => {
     const classes = useStyles()
 
     return (
+        // <Grid container>
+        //     <Grid item className={classes.container}>
+        //         <Paper className={classes.paper}>
+        //             <div className={classes.radioChecks}>
+        //                 <div className={classes.category}>
+        //                     <FormControl component="fieldset">
+        //                         <FormLabel component="legend">Category</FormLabel>
+        //                         <RadioGroup row aria-label="Category" name="category" onChange={handleChange}>
+        //                             <FormControlLabel 
+        //                                 checked={treeChecked} 
+        //                                 onClick={() => setTreeChecked(!treeChecked)}
+        //                                 value="tree" 
+        //                                 control={<Radio />} 
+        //                                 label="Tree" 
+        //                             />
+        //                             <FormControlLabel 
+        //                                 checked={shrubChecked}
+        //                                 onClick={() => setShrubChecked(!shrubChecked)} 
+        //                                 value="shrub" 
+        //                                 control={<Radio />} 
+        //                                 label="Shrub" 
+        //                             />
+        //                             <FormControlLabel 
+        //                                 checked={grassChecked} 
+        //                                 onClick={() => setGrassChecked(!grassChecked)}
+        //                                 value="grass" 
+        //                                 control={<Radio />} 
+        //                                 label="Grass" 
+        //                             />
+        //                             <FormControlLabel 
+        //                                 checked={groundCoverChecked}
+        //                                 onClick={() => setGroundCoverChecked(!groundCoverChecked)} 
+        //                                 value="ground_cover" 
+        //                                 control={<Radio />} 
+        //                                 label="Ground Cover" 
+        //                             />
+        //                         </RadioGroup>
+        //                     </FormControl>
+        //                     <FormControl component="fieldset">
+        //                         <FormLabel component="legend">Price</FormLabel>
+        //                         <RadioGroup row aria-label="Price" name="price" onChange={handleChange}>
+        //                             <FormControlLabel 
+        //                                 checked={rangeOneChecked}
+        //                                 onClick={() => setRangeOneChecked(!rangeOneChecked)}
+        //                                 value="$0 to $50" 
+        //                                 control={<Radio />} 
+        //                                 label="$0 to $50" 
+        //                             />
+        //                             <FormControlLabel 
+        //                                 checked={rangeTwoChecked}
+        //                                 onClick={() => setRangeTwoChecked(!rangeTwoChecked)}
+        //                                 value="$50 to $100" 
+        //                                 control={<Radio />} 
+        //                                 label="$50 to $100" 
+        //                             />
+        //                             <FormControlLabel 
+        //                                 checked={rangeThreeChecked}
+        //                                 onClick={() => setRangeThreeChecked(!rangeThreeChecked)}
+        //                                 value="$100 and above" 
+        //                                 control={<Radio />} 
+        //                                 label="$100 and above" 
+        //                             />
+        //                         </RadioGroup>
+        //                     </FormControl>
+        //                 </div>
+        //             </div>
+        //              <div className={classes.potSize}>
+        //                     <FormControl component="fieldset">
+        //                         <FormLabel component="legend">Pot Size</FormLabel>
+        //                         <RadioGroup row aria-label="Pot Size" name="pot_size" onChange={handleChange}>
+        //                             <FormControlLabel 
+        //                                 checked={smallPotChecked}
+        //                                 onClick={() => setSmallPotChecked(!smallPotChecked)}
+        //                                 value="140mm" 
+        //                                 control={<Radio />} 
+        //                                 label="140mm" 
+        //                             />
+        //                             <FormControlLabel 
+        //                                 checked={mediumPotChecked}
+        //                                 onClick={() => setMediumPotChecked(!mediumPotChecked)}
+        //                                 value="250mm" 
+        //                                 control={<Radio />} 
+        //                                 label="250mm" 
+        //                             />
+        //                             <FormControlLabel 
+        //                                 checked={largePotChecked}
+        //                                 onClick={() => setLargePotChecked(!largePotChecked)}
+        //                                 value="350mm" 
+        //                                 control={<Radio />} 
+        //                                 label="350mm" 
+        //                             />
+        //                         </RadioGroup>
+        //                     </FormControl>
+        //                     <FormControl component="fieldset">
+        //                         <FormLabel component="legend">Seasonal</FormLabel>
+        //                         <RadioGroup row aria-label="Special" name="special" onChange={handleChange}>
+        //                             <FormControlLabel 
+        //                                 checked={specialChecked}
+        //                                 onClick={() => setSpecialChecked(!specialChecked)}
+        //                                 value="Seasonal" 
+        //                                 control={<Radio />} 
+        //                                 label="Seasonal" 
+        //                             />
+        //                         </RadioGroup>
+        //                     </FormControl>
+        //                 </div>
+        //         </Paper>
+        //     </Grid>
+        // </Grid>
+
         <Grid container>
             <Grid item className={classes.container}>
                 <Paper className={classes.paper}>
+                    <div>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                onChange={handleSearchChange}
+                                placeholder="Search Plants…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                    </div>
                     <div className={classes.radioChecks}>
                         <div className={classes.category}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
-                                <RadioGroup row aria-label="Category" name="category" onChange={handleChange}>
-                                    <FormControlLabel 
-                                        checked={treeChecked} 
-                                        onClick={() => setTreeChecked(!treeChecked)}
-                                        value="tree" 
-                                        control={<Radio />} 
-                                        label="Tree" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={shrubChecked}
-                                        onClick={() => setShrubChecked(!shrubChecked)} 
-                                        value="shrub" 
-                                        control={<Radio />} 
-                                        label="Shrub" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={grassChecked} 
-                                        onClick={() => setGrassChecked(!grassChecked)}
-                                        value="grass" 
-                                        control={<Radio />} 
-                                        label="Grass" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={groundCoverChecked}
-                                        onClick={() => setGroundCoverChecked(!groundCoverChecked)} 
-                                        value="ground_cover" 
-                                        control={<Radio />} 
-                                        label="Ground Cover" 
-                                    />
+                                <RadioGroup row aria-label="Category" name="category" value={value} onChange={handleChange}>
+                                    <FormControlLabel value="tree" control={<Radio />} label="Tree" />
+                                    <FormControlLabel value="shrub" control={<Radio />} label="Shrub" />
+                                    <FormControlLabel value="grass" control={<Radio />} label="Grass" />
+                                    <FormControlLabel value="ground_cover" control={<Radio />} label="Ground Cover" />
                                 </RadioGroup>
                             </FormControl>
+                        </div>
+                        <div className={classes.potSize}>
                             <FormControl component="fieldset">
-                                <FormLabel component="legend">Price</FormLabel>
-                                <RadioGroup row aria-label="Price" name="price" onChange={handleChange}>
-                                    <FormControlLabel 
-                                        checked={rangeOneChecked}
-                                        onClick={() => setRangeOneChecked(!rangeOneChecked)}
-                                        value="$0 to $50" 
-                                        control={<Radio />} 
-                                        label="$0 to $50" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={rangeTwoChecked}
-                                        onClick={() => setRangeTwoChecked(!rangeTwoChecked)}
-                                        value="$50 to $100" 
-                                        control={<Radio />} 
-                                        label="$50 to $100" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={rangeThreeChecked}
-                                        onClick={() => setRangeThreeChecked(!rangeThreeChecked)}
-                                        value="$100 and above" 
-                                        control={<Radio />} 
-                                        label="$100 and above" 
-                                    />
+                                <FormLabel component="legend">Pot Size</FormLabel>
+                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={value} onChange={handleChange}>
+                                    <FormControlLabel value="140mm" control={<Radio />} label="140mm" />
+                                    <FormControlLabel value="250mm" control={<Radio />} label="250mm" />
+                                    <FormControlLabel value="350mm" control={<Radio />} label="350mm" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
                     </div>
-                     <div className={classes.potSize}>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">Pot Size</FormLabel>
-                                <RadioGroup row aria-label="Pot Size" name="pot_size" onChange={handleChange}>
-                                    <FormControlLabel 
-                                        checked={smallPotChecked}
-                                        onClick={() => setSmallPotChecked(!smallPotChecked)}
-                                        value="140mm" 
-                                        control={<Radio />} 
-                                        label="140mm" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={mediumPotChecked}
-                                        onClick={() => setMediumPotChecked(!mediumPotChecked)}
-                                        value="250mm" 
-                                        control={<Radio />} 
-                                        label="250mm" 
-                                    />
-                                    <FormControlLabel 
-                                        checked={largePotChecked}
-                                        onClick={() => setLargePotChecked(!largePotChecked)}
-                                        value="350mm" 
-                                        control={<Radio />} 
-                                        label="350mm" 
-                                    />
-                                </RadioGroup>
-                            </FormControl>
-                            <FormControl component="fieldset">
-                                <FormLabel component="legend">Seasonal</FormLabel>
-                                <RadioGroup row aria-label="Special" name="special" onChange={handleChange}>
-                                    <FormControlLabel 
-                                        checked={specialChecked}
-                                        onClick={() => setSpecialChecked(!specialChecked)}
-                                        value="Seasonal" 
-                                        control={<Radio />} 
-                                        label="Seasonal" 
-                                    />
-                                </RadioGroup>
-                            </FormControl>
-                        </div>
                 </Paper>
             </Grid>
         </Grid>
     )
 }
-
-export default FilerOptions
