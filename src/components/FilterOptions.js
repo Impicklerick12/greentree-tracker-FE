@@ -96,11 +96,6 @@ const FilerOptions = () => {
         setValue(event.target.value);
     };
 
-    const handleChange = (event) => {
-        // Selection will equal the value radio button selected
-        let selection = event.target.value;
-    };
-
     {/*const handleSearchChange = (event) => {
 
         setSearchValue(event.target.value)
