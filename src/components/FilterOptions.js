@@ -72,7 +72,7 @@ const FilerOptions = () => {
     const [searchValue, setSearchValue] = useState(null)
 
     const handleChange = (event) => {
-        
+        setValue(event.target.value);
     };
 
     const handleSearchChange = (event) => {
