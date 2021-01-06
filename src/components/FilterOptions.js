@@ -8,7 +8,8 @@ import {
     RadioGroup,
     FormControlLabel,
     FormControl,
-    FormLabel
+    FormLabel,
+    Button
 } from '@material-ui/core'
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     checked: {}
   }));
 
-const FilerOptions = ({filterCategory, filterPotSize, filterPrice}) => {
+const FilerOptions = ({filterOptions}) => {
     const { dispatch } = useGlobalState()
     
     // const [treeChecked, setTreeChecked] = useState(false)
@@ -94,20 +95,53 @@ const FilerOptions = ({filterCategory, filterPotSize, filterPrice}) => {
     const [priceValue, setPriceValue] = useState(null);
     // const [searchValue, setSearchValue] = useState(null)
 
-    const handleCategoryChange = (event) => {
-        setCategoryValue(event.target.value);
-    };
-    filterCategory(categoryValue)
-    
-    const handlePotSizeChange = (event) => {
-        setPotSizeValue(event.target.value);
-    };
-    filterPotSize(potSizeValue)
+    const initialFilterState = {
+        category: null,
+        pot_size: null,
+        price: null
+    }
+    const [filters, setFilters] = useState(initialFilterState)
+    // console.log("Filters: ", filters)
 
-    const handlePriceChange = (event) => {
-        setPriceValue(event.target.value);
-    };
-    filterPrice(priceValue)
+    const handleFilterChange = (event) => {
+        let filterType = event.target.name
+        let filterValue = event.target.value
+
+        setFilters({
+            ...filters,
+            [filterType]: filterValue
+        })
+
+        // if (filterValue == 50) {
+        //     filterValue = { $lt: 50 }
+        // } else if (filterValue == 100) {
+        //     filterValue = { $lt: 100 }
+        // } else if (filterValue == "100+") {
+        //     filterValue = { $gte: 100}
+        // } else {
+        //     filterValue = filterValue
+        // }
+    }
+    
+    const submitFilters = () => {
+        function clean(obj) {
+            for (var propName in obj) {
+              if (obj[propName] === null || obj[propName] === undefined) {
+                delete obj[propName];
+              }
+            }
+            return obj
+        }
+
+        let filteredOptions = clean(filters)
+        // console.log(filteredOptions)
+        filterOptions(filteredOptions)
+    }
+
+    const handleReset = () => {
+        setFilters(initialFilterState)
+        filterOptions(null)
+    }
 
     {/*const handleSearchChange = (event) => {
 
@@ -255,18 +289,18 @@ const FilerOptions = ({filterCategory, filterPotSize, filterPrice}) => {
                         <div className={classes.category}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
-                                <RadioGroup row aria-label="Category" name="category" value={categoryValue} onChange={handleCategoryChange}>
+                                <RadioGroup row aria-label="Category" name="category" value={filters.category} onChange={handleFilterChange}>
                                     <FormControlLabel value="tree" control={<Radio />} label="Tree" />
                                     <FormControlLabel value="shrub" control={<Radio />} label="Shrub" />
                                     <FormControlLabel value="grass" control={<Radio />} label="Grass" />
-                                    <FormControlLabel value="ground_cover" control={<Radio />} label="Ground Cover" />
+                                    <FormControlLabel value="ground cover" control={<Radio />} label="Ground Cover" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
                         <div className={classes.potSize}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Pot Size</FormLabel>
-                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={potSizeValue} onChange={handlePotSizeChange}>
+                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={filters.pot_size} onChange={handleFilterChange}>
                                     <FormControlLabel value="140mm" control={<Radio />} label="140mm" />
                                     <FormControlLabel value="250mm" control={<Radio />} label="250mm" />
                                     <FormControlLabel value="350mm" control={<Radio />} label="350mm" />
@@ -276,12 +310,28 @@ const FilerOptions = ({filterCategory, filterPotSize, filterPrice}) => {
                         <div className={classes.price}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Price</FormLabel>
-                                <RadioGroup row aria-label="price" name="price" value={priceValue} onChange={handlePriceChange}>
-                                    <FormControlLabel value="50" control={<Radio />} label="$0 - $50" />
-                                    <FormControlLabel value="100" control={<Radio />} label="$50 - $100" />
-                                    <FormControlLabel value="above100" control={<Radio />} label="$100 +" />
+                                <RadioGroup row aria-label="price" name="price" value={filters.price} onChange={handleFilterChange}>
+                                    <FormControlLabel value="50" control={<Radio />} label="Less than $50" />
+                                    <FormControlLabel value="100" control={<Radio />} label="Less than $100" />
+                                    <FormControlLabel value="100+" control={<Radio />} label="$100 +" />
                                 </RadioGroup>
                             </FormControl>
+                        </div>
+                        <div>
+                            <Button 
+                                variant="contained" 
+                                color="primary"
+                                onClick={submitFilters}
+                            >
+                                Filter
+                            </Button>
+                            <Button 
+                                variant="contained" 
+                                color="secondary"
+                                onClick={handleReset}
+                            >
+                                Reset
+                            </Button>
                         </div>
                     </div>
                 </Paper>
