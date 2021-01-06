@@ -229,7 +229,6 @@ const FilerOptions = () => {
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                onChange={handleSearchChange}
                                 placeholder="Search Plants…"
                                 classes={{
                                     root: classes.inputRoot,
@@ -267,3 +266,5 @@ const FilerOptions = () => {
         </Grid>
     )
 }
+
+export default FilerOptions
