@@ -23,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: theme.spacing(3)
+        padding: theme.spacing(3),
+        [theme.breakpoints.down('sm')]: {
+            flexWrap: 'wrap'
+        },
     },
     search: {
         position: 'relative',
@@ -69,7 +72,10 @@ const useStyles = makeStyles((theme) => ({
     },
     filterButtons: {
         display: 'flex',
-        flexDirection: 'column'
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            justifyContent: 'space-between'
+        },
     },
     checked: {}
   }));
@@ -160,6 +166,29 @@ const FilerOptions = ({filterOptions}) => {
 
     // Links to material UI set up
     const classes = useStyles()
+
+    const categoryRadio = {
+        "Tree": 'tree',
+        "Shrub": 'shrub',
+        "Grass": 'grass',
+        'Ground Cover': 'ground cover'
+    }
+
+    const potSizeRadio = ["140mm", "250mm", "350mm"]
+
+    const priceRadio = {
+        "Less than $50": "50",
+        "Less than $100": "99",
+        "More than $100": "100"
+    }
+
+    const createRadio = (obj) => {
+        let array = []
+        for (let x in obj) {
+           array.push(<FormControlLabel value={obj[x]} control={<Radio />} label={x} />)
+        }
+        return array
+    }
 
     return (
         // <Grid container>
@@ -275,7 +304,7 @@ const FilerOptions = ({filterOptions}) => {
         <Grid container>
             <Grid item className={classes.container}>
                 <Paper className={classes.paper}>
-                    {/* <div>
+                    <div>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -289,16 +318,19 @@ const FilerOptions = ({filterOptions}) => {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                    </div> */}
+                    </div>
                     <div className={classes.radioChecks}>
                         <div className={classes.category}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
                                 <RadioGroup row aria-label="Category" name="category" value={filters.category} onChange={handleFilterChange}>
-                                    <FormControlLabel value="tree" control={<Radio />} label="Tree" />
+                                    
+                                    { createRadio(categoryRadio) }
+
+                                    {/* <FormControlLabel value="tree" control={<Radio />} label="Tree" />
                                     <FormControlLabel value="shrub" control={<Radio />} label="Shrub" />
                                     <FormControlLabel value="grass" control={<Radio />} label="Grass" />
-                                    <FormControlLabel value="ground cover" control={<Radio />} label="Ground Cover" />
+                                    <FormControlLabel value="ground cover" control={<Radio />} label="Ground Cover" /> */}
                                 </RadioGroup>
                             </FormControl>
                         </div>
@@ -306,39 +338,43 @@ const FilerOptions = ({filterOptions}) => {
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Pot Size</FormLabel>
                                 <RadioGroup row aria-label="Pot Size" name="pot_size" value={filters.pot_size} onChange={handleFilterChange}>
-                                    <FormControlLabel value="140mm" control={<Radio />} label="140mm" />
+                                    
+                                    { potSizeRadio.map( pot => {
+                                        return <FormControlLabel value={pot} control={<Radio />} label={pot} />
+                                    })}
+                                    
+                                    {/* <FormControlLabel value="140mm" control={<Radio />} label="140mm" />
                                     <FormControlLabel value="250mm" control={<Radio />} label="250mm" />
-                                    <FormControlLabel value="350mm" control={<Radio />} label="350mm" />
+                                    <FormControlLabel value="350mm" control={<Radio />} label="350mm" /> */}
                                 </RadioGroup>
                             </FormControl>
                         </div>
-                        <div className={classes.price}>
+                        {/* PRICE RADIO BUTTONS */}
+                        {/* <div className={classes.price}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Price</FormLabel>
                                 <RadioGroup row aria-label="price" name="price" value={filters.price} onChange={handleFilterChange}>
-                                    <FormControlLabel value="50" control={<Radio />} label="Less than $50" />
-                                    <FormControlLabel value="100" control={<Radio />} label="Less than $100" />
-                                    <FormControlLabel value="99" control={<Radio />} label="Above $100" />
+                                    { createRadio(priceRadio) }
                                 </RadioGroup>
                             </FormControl>
-                        </div>
+                        </div> */}
                     </div>
-                    <div className={classes.filterButtons}>
-                            <Button 
-                                variant="contained" 
-                                color="primary"
-                                onClick={submitFilters}
-                            >
-                                Filter
-                            </Button>
-                            <Button 
-                                variant="contained" 
-                                color="secondary"
-                                onClick={handleReset}
-                            >
-                                Reset
-                            </Button>
-                        </div>
+                    <Grid className={classes.filterButtons}>
+                        <Button 
+                            variant="contained" 
+                            color="primary"
+                            onClick={submitFilters}
+                        >
+                            Filter
+                        </Button>
+                        <Button 
+                            variant="outlined" 
+                            color="secondary"
+                            onClick={handleReset}
+                        >
+                            Reset
+                        </Button>
+                    </Grid>
                 </Paper>
             </Grid>
         </Grid>
