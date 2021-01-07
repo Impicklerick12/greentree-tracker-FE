@@ -33,6 +33,7 @@ require('dotenv').config()
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
+    fontFamily: "Arial",
   }
 }));
 
@@ -190,10 +191,10 @@ const App = () => {
                 {loggedInUser 
                 ? (
                   <>
-                    <p>{loggedInUser}</p>
+                    <p>Welcome back {loggedInUser}</p>
                   </>
                 )
-                : (<p>Guest</p>)
+                : (<p>Welcome Guest</p>)
                 }
               <Switch>
                 {/* Home Component */}
