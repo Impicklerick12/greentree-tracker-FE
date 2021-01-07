@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        padding: theme.spacing(3)
     },
     search: {
         position: 'relative',
@@ -65,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
         '&$checked': {
             colour: 'green'
         }
+    },
+    filterButtons: {
+        display: 'flex',
+        flexDirection: 'column'
     },
     checked: {}
   }));
@@ -313,11 +318,12 @@ const FilerOptions = ({filterOptions}) => {
                                 <RadioGroup row aria-label="price" name="price" value={filters.price} onChange={handleFilterChange}>
                                     <FormControlLabel value="50" control={<Radio />} label="Less than $50" />
                                     <FormControlLabel value="100" control={<Radio />} label="Less than $100" />
-                                    <FormControlLabel value="100+" control={<Radio />} label="$100 +" />
+                                    <FormControlLabel value="99" control={<Radio />} label="Above $100" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
-                        <div>
+                    </div>
+                    <div className={classes.filterButtons}>
                             <Button 
                                 variant="contained" 
                                 color="primary"
@@ -333,7 +339,6 @@ const FilerOptions = ({filterOptions}) => {
                                 Reset
                             </Button>
                         </div>
-                    </div>
                 </Paper>
             </Grid>
         </Grid>
