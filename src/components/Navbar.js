@@ -121,6 +121,7 @@ const Navbar = ({history}) => {
                                     >
                                     {loggedInUser ? (
                                         <>
+                                            <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
@@ -129,6 +130,7 @@ const Navbar = ({history}) => {
                                         </>
                                     ) : (
                                         <>
+                                            <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/auth/login')}>Login</MenuItem>
@@ -141,6 +143,7 @@ const Navbar = ({history}) => {
                                 <>
                                     { loggedInUser ? (
                                         <>
+                                            <Button onClick={() => handleMenuClick('/')}>Home</Button>
                                             <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
                                             <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
                                             <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
@@ -149,6 +152,7 @@ const Navbar = ({history}) => {
                                         </>
                                     ) : (
                                         <>
+                                            <Button onClick={() => handleMenuClick('/')}>Home</Button>
                                             <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
                                             <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
                                             <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
