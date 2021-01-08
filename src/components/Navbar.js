@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { logoutUser, removeLoggedInUser } from '../services/authServices'
 
-
 import {
     AppBar,
     Toolbar,
