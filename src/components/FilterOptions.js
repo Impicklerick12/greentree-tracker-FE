@@ -1,17 +1,17 @@
 import react, { useState } from 'react';
-import { useGlobalState } from '../config/store'
+
 import {
     Grid,
     Paper,
-    InputBase,
     Radio,
     RadioGroup,
     FormControlLabel,
     FormControl,
     FormLabel,
     Button,
-    Typography
+    useMediaQuery
 } from '@material-ui/core'
+import grey from '@material-ui/core/colors/grey'
 
 import SearchIcon from '@material-ui/icons/Search';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: theme.spacing(3),
+        backgroundColor: grey[100],
+        border: `2px solid ${grey[600]}`,
+        borderRadius: '4px',
         [theme.breakpoints.down('sm')]: {
             flexWrap: 'wrap'
         },
@@ -77,13 +80,11 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             width: '100%',
             flexDirection: 'row',
-            justifyContent: 'space-between'
         },
     },
     buttons: {
         margin: theme.spacing(0.5)
-    },
-    checked: {}
+    }
   }));
 
 const FilerOptions = ({filterOptions}) => {
@@ -182,18 +183,30 @@ const FilerOptions = ({filterOptions}) => {
                         </div>
                     </div> */}
                     <Grid container className={classes.paper}>
-                        <Grid className={`${classes.category} ${classes.radioChecks}`}>
+                        <Grid className={classes.radioChecks}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
-                                <RadioGroup row aria-label="Category" name="category" value={filters.category} onChange={handleFilterChange}>
+                                <RadioGroup 
+                                    row
+                                    aria-label="Category" 
+                                    name="category" 
+                                    value={filters.category} 
+                                    onChange={handleFilterChange}
+                                >
                                     { createRadio(categoryRadio) }
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
-                        <Grid className={`${classes.potSize} ${classes.radioChecks}`}>
+                        <Grid className={classes.radioChecks}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Pot Size</FormLabel>
-                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={filters.pot_size} onChange={handleFilterChange}>
+                                <RadioGroup 
+                                    row
+                                    aria-label="Pot Size" 
+                                    name="pot_size" 
+                                    value={filters.pot_size} 
+                                    onChange={handleFilterChange}
+                                >
                                     { potSizeRadio.map( pot => {
                                         return <FormControlLabel value={pot} control={<Radio />} label={pot} />
                                     })}
