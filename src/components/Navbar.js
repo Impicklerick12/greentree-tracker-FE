@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { logoutUser, removeLoggedInUser } from '../services/authServices'
 
-
 import {
     AppBar,
     Toolbar,
@@ -15,6 +14,9 @@ import {
     useMediaQuery
 } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu'
+import EcoIcon from '@material-ui/icons/Eco';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PhoneIcon from '@material-ui/icons/Phone';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import { 
@@ -144,9 +146,18 @@ const Navbar = ({history}) => {
                                 <>
                                     { loggedInUser ? (
                                         <>
-                                            <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
+                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                                <EcoIcon onClick={() => handleMenuClick('/plants')} fontSize="large"/>
+                                            </IconButton>
+                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                                <AccountCircleIcon onClick={() => handleMenuClick('/account')} fontSize="large"/>
+                                            </IconButton>
+                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                                <PhoneIcon onClick={() => handleMenuClick('/contact')} fontSize="large"/>
+                                            </IconButton>
+                                            {/* <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
                                             <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
+                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button> */}
                                             { admin && (
                                                 <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
                                             )}
