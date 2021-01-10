@@ -2,9 +2,13 @@ import React, { useState } from 'react'
 import PlantsEach from './PlantsEach'
 import FilterOptions from './FilterOptions'
 import { useGlobalState } from '../config/store'
+import { getAllFilteredPlants } from '../services/plantServices'
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core'
+import { 
+    Grid,
+    Typography
+} from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +20,13 @@ const useStyles = makeStyles((theme) => ({
     },
     gridContainer: {
         paddingTop: '20px'
+    },
+    filterError: {
+        marginTop: theme.spacing(2),
+    },
+    pagination : {
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(3),
     }
   }));
   
@@ -26,17 +37,42 @@ const Plants = () => {
 
     const { store } = useGlobalState()
     const { plants, searchValue } = store
+    // console.log("Plants: ", plants)
+
+    const [filteredPlants, setFilteredPlants] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1)
     const [plantsPerPage, setPlantsPerPage] = useState(12)
+    const [noFilteredPlants, setNoFilteredPlants] = useState(false)
 
     // Get current plant
     const indexOfLastPlant = currentPage * plantsPerPage
     const indexOfFirstPlant = indexOfLastPlant - plantsPerPage
-    const currentPlants = plants.slice(indexOfFirstPlant, indexOfLastPlant)
+    const currentPlants = filteredPlants.slice(indexOfFirstPlant, indexOfLastPlant)
+    const currentPlantsNoFilters = plants.slice(indexOfFirstPlant, indexOfLastPlant)
     // console.log(searchValue)
+    console.log("filtered plants: ", filteredPlants)
 
-    let pageNumbers = Math.ceil(plants.length / plantsPerPage)
+    const filterOptions = (filteredOptions) => {
+        if (filteredOptions !== null) {
+            getAllFilteredPlants(filteredOptions)
+                .then((res) => {
+                    console.log(res)
+                    if (res.length < 1) {
+                        setNoFilteredPlants(true)
+                    } else {
+                        setFilteredPlants(res)
+                        setNoFilteredPlants(false)
+                    }
+                })
+                .catch((error) => console.log(error))
+        } else {
+            setFilteredPlants([])
+            setNoFilteredPlants(false)
+        }
+    }
+
+    let pageNumbers = Math.ceil((filteredPlants.length > 0) ? (filteredPlants.length / plantsPerPage) : (plants.length / plantsPerPage))
     console.log("pageNumbers: ", pageNumbers)
 
     const paginate = (pageNumber) => {
@@ -45,23 +81,38 @@ const Plants = () => {
 
     return (
         <>
-            <FilterOptions />
-            <Grid container spacing={2} className={classes.gridContainer}>
-                    { currentPlants
-                        .sort((a, b) => a.common_name.localeCompare(b.common_name))
-                        .map((plant) => plant.common_name.toLowerCase().includes(searchValue) ?
-                            (<PlantsEach key={plant._id} plant={plant} />)
-                            :
-                            (<PlantsEach key={plant._id} plant={plant} />)
-                        )
-                    }
-            </Grid>
-            <Pagination 
-                count={pageNumbers} 
-                color="primary" 
-                size="large"
-                onClick={(event) => paginate(event.target.innerText)}
+            <FilterOptions 
+                filterOptions={filterOptions}
             />
+            { noFilteredPlants && (
+                <Grid container justify="center">
+                    <Typography variant="h4" className={classes.filterError}>No results found</Typography>
+                </Grid>
+            )}
+            <Grid container spacing={2} className={classes.gridContainer}>
+                { currentPlants.length > 0 ? (
+                    currentPlants
+                        .sort((a, b) => a.common_name.localeCompare(b.common_name))
+                        .map((plant) => {
+                            return <PlantsEach key={plant._id} plant={plant}/>
+                        })
+                ) : (
+                    currentPlantsNoFilters
+                        .sort((a, b) => a.common_name.localeCompare(b.common_name))
+                        .map((plant) => {
+                            return <PlantsEach key={plant._id} plant={plant}/>
+                        })
+                )}
+            </Grid>
+            <Grid container justify="center">
+                <Pagination 
+                    count={pageNumbers} 
+                    color="primary" 
+                    size="large"
+                    onClick={(event) => paginate(event.target.innerText)}
+                    className={classes.pagination}
+                />
+            </Grid>
         </>
     )
 }
