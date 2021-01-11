@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     },
+    container : {
+        [theme.breakpoints.down('md')]: {
+            flexDirection: 'column-reverse'
+        }
+    },
     paper: {
       padding: theme.spacing(2),
       textAlign: 'center'

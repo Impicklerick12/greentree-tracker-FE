@@ -93,8 +93,8 @@ const SubmittedQuotes = ({quote}) => {
                         <Typography variant="body2" component="p">
                             User: {userInfo.username} email: {userInfo.email}
                         </Typography>
-                        {quote.plants.map((plant) =>
-                            <p>Plant Id: {plant._id} Quantity: {plant.quantity}</p>
+                        {quote.plants.map((plant, i) =>
+                            <p key={i}>Plant Id: {plant._id} Quantity: {plant.quantity}</p>
                         )}
                         <Typography variant="body2" color="textSecondary" component="p">
                             {comment}

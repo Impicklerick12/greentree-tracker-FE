@@ -6,9 +6,17 @@ export function getPlantFromId(plants, id) {
     return plant
 }
 
-// Returns all blog plants from the server
+// Returns all plants from the server
 export async function getAllPlants() {
     const response = await api.get("/plants")
+    return response.data
+}
+
+// Returns all plants with filters from the server
+export async function getAllFilteredPlants(filters) {
+    const response = await api.get("/plants/filtered", {
+        params: filters
+    })
     return response.data
 }
 

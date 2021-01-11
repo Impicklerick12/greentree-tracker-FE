@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
       flexGrow: 1,
-    },
+      color: "black"
+    }
   }));
 
 const Navbar = ({history}) => {
@@ -88,7 +89,7 @@ const Navbar = ({history}) => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
                     <Toolbar>
                         <Typography variant="h6" className={classes.title}>
                             Greentree Tracker
@@ -105,7 +106,7 @@ const Navbar = ({history}) => {
                             {isMobile ? (
                                 <>
                                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                        <MenuIcon />
+                                        <MenuIcon style={{ color: 'black' }} />
                                     </IconButton>
                                     <Menu
                                         id="menu-appbar"
@@ -124,6 +125,7 @@ const Navbar = ({history}) => {
                                     >
                                     {loggedInUser ? (
                                         <>
+                                            <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
@@ -134,6 +136,7 @@ const Navbar = ({history}) => {
                                         </>
                                     ) : (
                                         <>
+                                            <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
                                             <MenuItem onClick={() => handleMenuClick('/auth/login')}>Login</MenuItem>
@@ -146,18 +149,9 @@ const Navbar = ({history}) => {
                                 <>
                                     { loggedInUser ? (
                                         <>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                                <EcoIcon onClick={() => handleMenuClick('/plants')} fontSize="large"/>
-                                            </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                                <AccountCircleIcon onClick={() => handleMenuClick('/account')} fontSize="large"/>
-                                            </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                                <PhoneIcon onClick={() => handleMenuClick('/contact')} fontSize="large"/>
-                                            </IconButton>
-                                            {/* <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
+                                            <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
                                             <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button> */}
+                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
                                             { admin && (
                                                 <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
                                             )}
@@ -165,6 +159,7 @@ const Navbar = ({history}) => {
                                         </>
                                     ) : (
                                         <>
+                                            <Button onClick={() => handleMenuClick('/')}>Home</Button>
                                             <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
                                             <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
                                             <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
@@ -176,6 +171,7 @@ const Navbar = ({history}) => {
                         </div>
                     </Toolbar>
                 </AppBar>
+            <hr></hr>
             </div>
         </>
     )
