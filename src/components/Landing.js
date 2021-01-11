@@ -12,7 +12,9 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+    text: {
 
+    }
 }));
 
 const Landing = () => {
@@ -20,7 +22,7 @@ const Landing = () => {
     const classes = useStyles();
 
     return (
-        <div>
+        <div >
             <AliceCarousel 
                 autoPlay 
                 autoPlayInterval="3000"
@@ -32,14 +34,14 @@ const Landing = () => {
             <br />
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Typography variant="h6" align="center" display="block">
+                    <Typography classes={classes.text} variant="h6" align="center" display="block">
                         <p>Who are we?</p>
                         <ul>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                         </ul>
-                    </Typography> 
+                    </Typography>
                 </Grid>
                 <Grid item xs={6}>
                     <img src={image3} width="90%" height="90%" alt="plant image"/>
@@ -48,7 +50,7 @@ const Landing = () => {
                     <img src={image3} width="90%" height="90%" alt="plant image"/>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant="h6" align="center" display="block">
+                    <Typography classes={classes.text} variant="h6" align="center" display="block">
                         <p>What we offer?</p>
                         <ul>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
