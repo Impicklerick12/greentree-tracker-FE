@@ -211,7 +211,7 @@ const Navbar = ({history}) => {
                         </div>
                     </Toolbar>
                 </AppBar>
-            <hr></hr>
+            <hr />
             </div>
         </>
     )
