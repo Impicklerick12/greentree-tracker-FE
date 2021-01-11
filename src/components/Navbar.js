@@ -12,8 +12,7 @@ import {
     Button,
     MenuItem,
     Menu,
-    useMediaQuery,
-    Grid
+    useMediaQuery
 } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -23,7 +22,6 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-
 
 import { 
     makeStyles,
@@ -93,17 +91,6 @@ const Navbar = ({history}) => {
 
     return (
         <>
-            {/* <div className={classes.root}>
-                <Grid container spacing={1}>
-                    <Grid item xs={4} style={{backgroundColor:"black"}}>
-                    </Grid>
-                    <Grid item xs={4} style={{backgroundColor:"skyblue"}}>
-                        <img src={logo} width="90%" height="90%" alt="greentree-tracker-logo"></img>
-                    </Grid>
-                    <Grid item xs={4} style={{backgroundColor:"black"}}>
-                    </Grid>
-                </Grid>
-            </div> */}
             <div className={classes.root}>
                 <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
                     <Toolbar>
