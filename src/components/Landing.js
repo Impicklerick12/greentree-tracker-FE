@@ -4,7 +4,13 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import image1 from "../images/artem-kniaz-03Dhzux8mCI-unsplash.jpg";
 import image2 from "../images/george-bakos-SEFaaIjrjZA-unsplash.jpg";
 
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles
+
 const Landing = () => {
+    const classes = useStyles();
+
     return (
         <div className="imageCarousel">
             <AliceCarousel 
