@@ -120,10 +120,10 @@ const Login = ({history}) => {
                         <Grid item xs={10} sm={8} md={6} lg={4}>
                             <form className={classes.root} onSubmit={handleSubmit}>
                                 <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
+                                    <TextField className={classes.textArea} required type="text" name="username" label="Username" onChange={handleChange}></TextField>
                                 </div>
                                 <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
+                                    <TextField className={classes.textArea} required type="password" name="password" label="Password" onChange={handleChange}></TextField>
                                 </div>
                                 <Button type="submit" value="Sign In">Sign In</Button>
                             </form>
