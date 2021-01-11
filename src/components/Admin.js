@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     },
+    container : {
+        [theme.breakpoints.down('md')]: {
+            flexDirection: 'column-reverse'
+        }
+    },
     paper: {
       padding: theme.spacing(2),
       textAlign: 'center'
@@ -55,8 +60,7 @@ const Admin = ({history}) => {
 
     return (
         <div className={classes.root}>
-            {/* <Typography variant="h2">Admin Dashboard</Typography> */}
-            <Grid container spacing={2}>
+            <Grid container spacing={2} className={classes.container}>
                 <Grid item xs={12} sm={6}>
                     <Paper className={classes.paper}>
                         <Typography variant="h2">Quote Requests</Typography>

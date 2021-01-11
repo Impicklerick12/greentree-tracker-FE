@@ -13,8 +13,11 @@ import {
     FormControl,
     InputLabel,
     Select,
-    MenuItem
+    MenuItem,
+    LinearProgress,
+    Grid
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     select: {
         display: "flex",
         justifyContent: "space-around",
+    },
+    loadingBar : {
+        width: '100%'
     }
   }));
 
@@ -118,6 +124,8 @@ const NewPlant = ({history}) => {
 
         let file = fileInput.current.files[0];
         let newFileName = fileInput.current.files[0].name;
+        setUpload(false)
+        setLoading(true)
         
         ReactS3Client.uploadFile(file, newFileName)
             .then(data => {
@@ -128,6 +136,7 @@ const NewPlant = ({history}) => {
 
                 if (data.status === 204) {
                     console.log("Image Upload Successful");
+                    setLoading(false)
                 } else {
                     console.log("Image Upload fail");
                 }
@@ -149,7 +158,8 @@ const NewPlant = ({history}) => {
     const [errorMessage, setErrorMessage] = useState(null);
     const [category, setCategory] = useState('');
     const [potSize, setPotSize] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [upload, setUpload] = useState(true)
+    const [loading, setLoading] = useState(null);
 
 
     const { store, dispatch } = useGlobalState()
@@ -184,15 +194,25 @@ const NewPlant = ({history}) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div>
-                    <input 
-                        type="file" 
-                        name="plant_image" 
-                        accept="image/*"
-                        ref={fileInput} 
-                        onChange={handleClick}
-                    />
-                </div>
+                { upload ? (
+                    <div>
+                        <input 
+                            type="file" 
+                            name="plant_image" 
+                            accept="image/*"
+                            ref={fileInput} 
+                            onChange={handleClick}
+                        />
+                    </div>
+                ) : (
+                    <Grid container justify="center" className={classes.loadingBar}>
+                        { loading ? (
+                            <LinearProgress color="secondary"/>
+                        ) : (
+                            <Alert severity="success">Image upload Successful!</Alert>
+                        )}
+                    </Grid>
+                )}
                 <div className={classes.select}>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel id="demo-simple-select-outlined-label">
