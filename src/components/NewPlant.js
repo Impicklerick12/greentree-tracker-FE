@@ -145,10 +145,11 @@ const NewPlant = ({history}) => {
         price: 0
     } 
 
-    const [formState, setFormState] = useState(initialFormState)
-    const [errorMessage, setErrorMessage] = useState(null)
-    const [category, setCategory] = React.useState('');
-    const [potSize, setPotSize] = React.useState('');
+    const [formState, setFormState] = useState(initialFormState);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [category, setCategory] = useState('');
+    const [potSize, setPotSize] = useState('');
+    const [loading, setLoading] = useState(false);
 
 
     const { store, dispatch } = useGlobalState()
