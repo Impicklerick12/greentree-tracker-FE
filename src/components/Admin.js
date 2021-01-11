@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { 
     Paper, 
     Grid,
-    Typography
+    Typography,
+    CircularProgress
 } from '@material-ui/core';
 
 import NewPlant from './NewPlant'
@@ -27,35 +28,27 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
       textAlign: 'center'
     },
+    loading: {
+        marginTop: theme.spacing(20),
+        marginBottom: theme.spacing(20),
+    }
   }));
 
 const Admin = ({history}) => {
 
     const { store, dispatch } = useGlobalState()
     const { loggedInUser, submittedQuotes, admin } = store
-
-    // // ONLY CURRENTLY WORKING IN DEVELOPMENT 
-    // useEffect(() => {
-    //     userAdmin().then((res) => {
-    //         console.log(res.status)
-    //         dispatch({
-    //             type:'setUserAdmin',
-    //             data: true
-    //         })
-    //     })
-    //     .catch((error) => {
-    //         console.log(error)
-    //         history.push('/plants')
-    //     })
-    // },[])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         getAllQuotes()
         .then((res) => {
             dispatch({
                 type: "setSubmittedQuotes",
                 data: res
             })
+            setLoading(false)
         })
         .catch((error) => console.log(error))
     }, [])
@@ -75,8 +68,16 @@ const Admin = ({history}) => {
                         <Grid item xs={12} sm={6}>
                             <Paper className={classes.paper}>
                                 <Typography variant="h2">Quote Requests</Typography>
-                                {submittedQuotes.map((quote, i) => 
-                                    <SubmittedQuotes key={i} quote={quote} />
+                                { loading ? (
+                                    <Grid container justify="center">
+                                        <CircularProgress color="secondary" size={100} className={classes.loading}/>
+                                    </Grid>
+                                ) : (
+                                    <>
+                                        { submittedQuotes.map((quote, i) => 
+                                            <SubmittedQuotes key={i} quote={quote} />
+                                        )}
+                                    </>
                                 )}
                             </Paper>
                         </Grid>

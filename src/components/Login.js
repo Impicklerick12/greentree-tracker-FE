@@ -56,6 +56,10 @@ const Login = ({history}) => {
             console.log(currentUser)
 
             if (currentUser.role === "admin") {
+                dispatch({
+                    type:'setAdmin',
+                    data: true
+                })
                 history.push('/admin')
             }
 
