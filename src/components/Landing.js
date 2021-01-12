@@ -12,6 +12,9 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+    color: {
+        color: "skyblue"
+    },
     text: {
 
     }
@@ -34,8 +37,10 @@ const Landing = () => {
             <br />
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Typography classes={classes.text} variant="h6" align="center" display="block">
+                    <Typography classes={classes.text} variant="h4" align="center" display="block">
                         <p>Who are we?</p>
+                    </Typography>
+                    <Typography classes={classes.text} variant="h6" align="center" display="block">
                         <ul>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
@@ -50,14 +55,32 @@ const Landing = () => {
                     <img src={image3} width="90%" height="90%" alt="plant image"/>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography classes={classes.text} variant="h6" align="center" display="block">
+                    <Typography classes={classes.text} variant="h4" align="center" display="block">
                         <p>What we offer?</p>
+                    </Typography> 
+                    <Typography classes={classes.text} variant="h6" align="center" display="block">
                         <ul>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                         </ul>
-                    </Typography> 
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} classes={classes.color}>
+                    <Typography classes={classes.text} variant="h4" align="center" display="block">
+                        Where to find us
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography classes={classes.text} variant="h6" align="center" display="block">
+                        Google map here
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography classes={classes.text} variant="h6" align="center" display="block">
+                        <p>14 Adelaide Street</p>
+                        <p>Brisbane City QLD 4000</p>
+                    </Typography>
                 </Grid>
             </Grid>
         </div>
