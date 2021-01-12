@@ -21,7 +21,9 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow
+    TableRow,
+    CircularProgress,
+    LinearProgress
 } from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
@@ -65,12 +67,14 @@ const SubmittedQuotes = ({quote}) => {
     useEffect(() => {
         // Find the data of each user
         if (user_id) {
+            setUserDataLoading(true)
             findUser(user_id).then((res) => {
                 let user = res.data
                 setUserInfo({
                     username: user.username,
                     email: user.email
                 })
+                setUserDataLoading(false)
             })
             .catch((error) => console.log(error))  
         }
@@ -97,6 +101,7 @@ const SubmittedQuotes = ({quote}) => {
     const [errorMessage, setErrorMessage] = useState(null)
     const [plantInfo, setPlantInfo] = useState([])
     const [completed, setCompleted] = useState(false)
+    const [userDataLoading, setUserDataLoading] = useState(false)
 
     function handleQuoteDelete() {
         deleteQuote(_id).then(() => {
@@ -138,14 +143,18 @@ const SubmittedQuotes = ({quote}) => {
                     <Typography gutterBottom variant="h6" component="h2" color="textSecondary">
                         Quote No. <strong>{_id}</strong>
                     </Typography>
-                    <Grid container className={classes.userInfo}>
-                        <Typography variant="body1" component="p">
-                            <strong>User: </strong>{userInfo.username}
-                        </Typography>
-                        <Typography variant="body1" component="p">
-                            <strong>email: </strong>{userInfo.email}
-                        </Typography>
-                    </Grid>
+                    { userDataLoading ? (
+                        <LinearProgress color="secondary" />
+                    ) : (
+                        <Grid container className={classes.userInfo}>
+                            <Typography variant="body1" component="p">
+                                <strong>User: </strong>{userInfo.username}
+                            </Typography>
+                            <Typography variant="body1" component="p">
+                                <strong>email: </strong>{userInfo.email}
+                            </Typography>
+                        </Grid>
+                    )}
                     <TableContainer component={Paper} className={classes.table}>
                         <Table aria-label="Quote Plant Table">
                             <TableHead className={classes.tableHead}>
