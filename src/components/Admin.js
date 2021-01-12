@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useGlobalState } from '../config/store'
 import { withRouter } from 'react-router-dom'
 import { getAllQuotes } from '../services/quoteServices.js'
+import { findAllUsers } from '../services/authServices.js'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -37,17 +38,29 @@ const Admin = ({history}) => {
 
     const { store, dispatch } = useGlobalState()
     const { loggedInUser, submittedQuotes, admin } = store
-    const [loading, setLoading] = useState(false)
+    const [quoteLoading, setQuoteLoading] = useState(false)
+    const [userLoading, setUserLoading] = useState(false)
+    const [users, setUsers] = useState([])
 
     useEffect(() => {
-        setLoading(true)
+        setQuoteLoading(true)
         getAllQuotes()
             .then((res) => {
                 dispatch({
                     type: "setSubmittedQuotes",
                     data: res
                 })
-                setLoading(false)
+                setQuoteLoading(false)
+            })
+            .catch((error) => console.log(error))
+    }, [])
+
+    useEffect(() => {
+        setUserLoading(true)
+        findAllUsers()
+            .then((res) => {
+                setUserLoading(false)
+                setUsers(res.data)
             })
             .catch((error) => console.log(error))
     }, [])
@@ -66,7 +79,7 @@ const Admin = ({history}) => {
                         <Grid item xs={12} sm={6}>
                             <Paper className={classes.paper}>
                                 <Typography variant="h2">Quote Requests</Typography>
-                                { loading ? (
+                                { quoteLoading ? (
                                     <Grid container justify="center">
                                         <CircularProgress color="secondary" size={100} className={classes.loading}/>
                                     </Grid>

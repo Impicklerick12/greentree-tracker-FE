@@ -47,6 +47,17 @@ export async function findUser(user_id) {
     }
 }
 
+export async function findAllUsers() {
+    try {
+        const response = await api.get(`/users`)
+        return response
+    }
+    catch(error) {
+        console.log("an error occurred finding all users")
+        throw(error)
+    }
+}
+
 // Get loggedInUser from localStorage
 export function getLoggedInUser() {
     return localStorage.getItem("loggedInUser")
