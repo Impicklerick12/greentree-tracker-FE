@@ -64,7 +64,7 @@ const PlantsShow = ({history, plant, capitalize}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { plants, loggedInUser } = store
+    const { plants, loggedInUser, admin } = store
 
     const initialQuoteFormState = {
         quantity: 1,
@@ -197,7 +197,7 @@ const PlantsShow = ({history, plant, capitalize}) => {
                                 </Typography>
                             </Grid>
                             {/* NEED TO CHANGE TO ONLY ADMIN ROLE */}
-                            { loggedInUser && (
+                            { admin && (
                                 <Grid item>
                                     <CardActions>
                                         <IconButton aria-label="edit" color="primary" onClick={handleEdit}>

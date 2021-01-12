@@ -13,20 +13,46 @@ import {
     CardMedia,
     Button,
     Typography,
-    IconButton
+    IconButton,
+    Grid,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
-        marginBottom: "1em"
+        marginBottom: "1em",
+        marginTop: "1em",
     },
     links: {
-        justifyContent: "center"
+        display: 'flex',
+        justifyContent: 'space-around'
+    },
+    userInfo: {
+        justifyContent: 'space-around'
+    },
+    container: {
+        paddingTop: theme.spacing(1)
+    },
+    table: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2)
+    },
+    tableHead: {
+        backgroundColor: grey[300],
     }
-  });
+  }));
 
 const SubmittedQuotes = ({quote}) => {
 
@@ -40,14 +66,37 @@ const SubmittedQuotes = ({quote}) => {
         // Find the data of each user
         if (user_id) {
             findUser(user_id).then((res) => {
-                setUserInfo(res.data)
+                let user = res.data
+                setUserInfo({
+                    username: user.username,
+                    email: user.email
+                })
             })
             .catch((error) => console.log(error))  
         }
-    },[])
+    }, [])
 
-    const [userInfo, setUserInfo] = useState([])
-    const[errorMessage, setErrorMessage] = useState(null)
+    useEffect(() => {
+        // Find the data of each plant in quote request
+        if (quote.plants) {
+            let x = []
+            quote.plants.map((p) => {
+                let plant = getPlantFromId(plants, p.plant_id)
+                x.push({
+                    common_name: plant.common_name,
+                    price: plant.price,
+                    id: plant._id,
+                    quantity: p.quantity
+                })
+            })
+            setPlantInfo(x)
+        }
+    }, [])
+
+    const [userInfo, setUserInfo] = useState({})
+    const [errorMessage, setErrorMessage] = useState(null)
+    const [plantInfo, setPlantInfo] = useState([])
+    const [completed, setCompleted] = useState(false)
 
     function handleQuoteDelete() {
         deleteQuote(_id).then(() => {
@@ -69,48 +118,80 @@ const SubmittedQuotes = ({quote}) => {
 
     const handleQuoteUpdate = (event) => {
         event.preventDefault()
-        quote.completed = true
-
+        quote.completed = !quote.completed
+        setCompleted(true)
         updateQuote(quote)
             .then((res) => {
-                console.log("response data for updated quote: ", res)
+                setCompleted(false)
             })
             .catch((error) => console.log(error))
         
-        return quote.completed
+        // return quote.completed
     }
 
     const {comment, modified_date, user_id, _id} = quote
 
     return (
         <>
-            <Card className={classes.root}>
+            <Card className={classes.root} raised>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        Quote # {_id}
+                    <Typography gutterBottom variant="h6" component="h2" color="textSecondary">
+                        Quote No. <strong>{_id}</strong>
                     </Typography>
-                    <CardActionArea>
-                        <Typography variant="body2" component="p">
-                            User: {userInfo.username} email: {userInfo.email}
+                    <Grid container className={classes.userInfo}>
+                        <Typography variant="body1" component="p">
+                            <strong>User: </strong>{userInfo.username}
                         </Typography>
-                        {quote.plants.map((plant) =>
-                            <p>Plant Id: {plant._id} Quantity: {plant.quantity}</p>
-                        )}
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {comment}
+                        <Typography variant="body1" component="p">
+                            <strong>email: </strong>{userInfo.email}
                         </Typography>
-                    </CardActionArea>
+                    </Grid>
+                    <TableContainer component={Paper} className={classes.table}>
+                        <Table aria-label="Quote Plant Table">
+                            <TableHead className={classes.tableHead}>
+                                <TableRow>
+                                    <TableCell align="left"><strong>Plant ID</strong></TableCell>
+                                    <TableCell align="left"><strong>Common Name</strong></TableCell>
+                                    <TableCell align="left"><strong>Price</strong></TableCell>
+                                    <TableCell align="left"><strong>Quantity</strong></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                { plantInfo.map((p, i) => (
+                                    <TableRow key={i}>
+                                        <TableCell align="left">{p.id}</TableCell>
+                                        <TableCell align="left">{p.common_name}</TableCell>
+                                        <TableCell align="left">${p.price}</TableCell>
+                                        <TableCell align="left">{p.quantity}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {comment}
+                    </Typography>
                 </CardContent>
-                <CardActions className={classes.links}>
-                    {!quote.completed && (
-                        <IconButton size="small" onClick={handleQuoteUpdate} style={{ color: green[300] }} title="Mark as Completed" alt="Mark as completed">
-                           <DoneOutlineIcon />
-                        </IconButton>
-                    )}
-                    <IconButton aria-label="delete" color="secondary" onClick={handleQuoteDelete} title="Delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </CardActions>
+                <Grid container className={classes.links}>
+                    <Grid item>
+                            {quote.completed ? (
+                                <IconButton size="small" onClick={handleQuoteUpdate} style={{ color: green[300] }} title="Quote is complete" alt="Mark as completed">
+                                    <Typography variant="h6">Quote Completed</Typography>
+                                    <DoneOutlineIcon />
+                                </IconButton>
+                            ) : (
+                                <IconButton size="small" onClick={handleQuoteUpdate} style={{ color: red[600] }} title="Mark as Completed" alt="Mark as completed">
+                                    <Typography variant="h6">Mark as complete</Typography>
+                                    <ClearIcon />
+                                </IconButton>
+                            )}
+                    </Grid>
+                    <Grid item>
+                            <IconButton aria-label="delete" color="secondary" onClick={handleQuoteDelete} title="Delete">
+                                <DeleteIcon />
+                            </IconButton>
+                    </Grid>
+                </Grid>
             </Card>
         </>
   );

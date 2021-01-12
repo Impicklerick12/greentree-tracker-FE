@@ -5,7 +5,7 @@ import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
 import { getPlantFromId, getAllPlants } from './services/plantServices'
 import { getCart } from './services/cartServices'
-import { userAuthenticated, setLoggedInUser, getLoggedInUser } from './services/authServices'
+import { userAuthenticated, setLoggedInUser, getLoggedInUser, userAdmin } from './services/authServices'
 
 import {
   Navbar,
@@ -48,12 +48,13 @@ const App = () => {
     quoteRequestData: [],
     submittedQuotes: [],
     searchValue: null,
-    userAdmin: false
+    admin: null
   }
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants, quotePlants } = store
+  const { loggedInUser, plants, quotePlants, admin } = store
+  console.log("userAdmin: ", admin)
 
   function fetchAllPlants() {
     getAllPlants().then((plantData) => {
@@ -125,22 +126,19 @@ const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // Checking the local storage to see if there is a current admin
-  //   // If not, set the admin to false
-  //   const isAdmin = getAdmin()
-  //   console.log(isAdmin)
-
-  //   // If current user, set global state again to current user
-  //   if (isAdmin) {
-  //     dispatch({
-  //         type: "setUserAdmin",
-  //         data: isAdmin,
-  //     });
-  //   } else {
-  //       console.log("No admin in Local Storage");
-  //   }
-  // }, []);
+  // ONLY CURRENTLY WORKING IN DEVELOPMENT 
+  useEffect(() => {
+    userAdmin().then((res) => {
+      console.log(res.status)
+      dispatch({
+        type:'setAdmin',
+        data: true
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+},[])
 
   useEffect(() => {
     fetchAllPlants()

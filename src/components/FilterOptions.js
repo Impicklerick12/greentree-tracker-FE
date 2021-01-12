@@ -157,7 +157,7 @@ const FilerOptions = ({filterOptions}) => {
     const createRadio = (obj) => {
         let array = []
         for (let x in obj) {
-           array.push(<FormControlLabel value={obj[x]} control={<Radio />} label={x} />)
+           array.push(<FormControlLabel value={obj[x]} control={<Radio />} label={x} key={obj[x]}/>)
         }
         return array
     }
@@ -178,7 +178,7 @@ const FilerOptions = ({filterOptions}) => {
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
-                                inputProps={{ 'aria-label': 'search' }}
+                                inputProps={{ 'key': 'search' }}
                             />
                         </div>
                     </div> */}
@@ -188,7 +188,7 @@ const FilerOptions = ({filterOptions}) => {
                                 <FormLabel component="legend">Category</FormLabel>
                                 <RadioGroup 
                                     row
-                                    aria-label="Category" 
+                                    key="Category" 
                                     name="category" 
                                     value={filters.category} 
                                     onChange={handleFilterChange}
@@ -202,13 +202,13 @@ const FilerOptions = ({filterOptions}) => {
                                 <FormLabel component="legend">Pot Size</FormLabel>
                                 <RadioGroup 
                                     row
-                                    aria-label="Pot Size" 
+                                    key="Pot Size" 
                                     name="pot_size" 
                                     value={filters.pot_size} 
                                     onChange={handleFilterChange}
                                 >
-                                    { potSizeRadio.map( pot => {
-                                        return <FormControlLabel value={pot} control={<Radio />} label={pot} />
+                                    { potSizeRadio.map( (pot, i) => {
+                                        return <FormControlLabel value={pot} control={<Radio />} label={pot} key={i.toString()}/>
                                     })}
                                 </RadioGroup>
                             </FormControl>
@@ -217,7 +217,7 @@ const FilerOptions = ({filterOptions}) => {
                         {/* <div className={classes.price}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Price</FormLabel>
-                                <RadioGroup row aria-label="price" name="price" value={filters.price} onChange={handleFilterChange}>
+                                <RadioGroup row key="price" name="price" value={filters.price} onChange={handleFilterChange}>
                                     { createRadio(priceRadio) }
                                 </RadioGroup>
                             </FormControl>

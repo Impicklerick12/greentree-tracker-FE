@@ -7,7 +7,8 @@ import { getAllFilteredPlants } from '../services/plantServices'
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid,
-    Typography
+    Typography,
+    CircularProgress
 } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination';
 
@@ -27,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     pagination : {
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(3),
+    },
+    loading: {
+        marginTop: theme.spacing(20)
     }
   }));
   
@@ -44,6 +48,7 @@ const Plants = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [plantsPerPage, setPlantsPerPage] = useState(12)
     const [noFilteredPlants, setNoFilteredPlants] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     // Get current plant
     const indexOfLastPlant = currentPage * plantsPerPage
@@ -55,8 +60,10 @@ const Plants = () => {
 
     const filterOptions = (filteredOptions) => {
         if (filteredOptions !== null) {
+            setLoading(true)
             getAllFilteredPlants(filteredOptions)
                 .then((res) => {
+                    setLoading(false)
                     console.log(res)
                     if (res.length < 1) {
                         setNoFilteredPlants(true)
@@ -84,35 +91,43 @@ const Plants = () => {
             <FilterOptions 
                 filterOptions={filterOptions}
             />
-            { noFilteredPlants && (
+            { loading ? (
                 <Grid container justify="center">
-                    <Typography variant="h4" className={classes.filterError}>No results found</Typography>
+                    <CircularProgress color="secondary" size={100} className={classes.loading}/>
                 </Grid>
+            ) : (
+                <>
+                    { noFilteredPlants && (
+                        <Grid container justify="center">
+                            <Typography variant="h4" className={classes.filterError}>No results found</Typography>
+                        </Grid>
+                    )}
+                    <Grid container spacing={2} className={classes.gridContainer}>
+                        { currentPlants.length > 0 ? (
+                            currentPlants
+                                .sort((a, b) => a.common_name.localeCompare(b.common_name))
+                                .map((plant) => {
+                                    return <PlantsEach key={plant._id} plant={plant}/>
+                                })
+                        ) : (
+                            currentPlantsNoFilters
+                                .sort((a, b) => a.common_name.localeCompare(b.common_name))
+                                .map((plant) => {
+                                    return <PlantsEach key={plant._id} plant={plant}/>
+                                })
+                        )}
+                    </Grid>
+                    <Grid container justify="center">
+                        <Pagination 
+                            count={pageNumbers} 
+                            color="primary" 
+                            size="large"
+                            onClick={(event) => paginate(event.target.innerText)}
+                            className={classes.pagination}
+                        />
+                    </Grid>
+                </>
             )}
-            <Grid container spacing={2} className={classes.gridContainer}>
-                { currentPlants.length > 0 ? (
-                    currentPlants
-                        .sort((a, b) => a.common_name.localeCompare(b.common_name))
-                        .map((plant) => {
-                            return <PlantsEach key={plant._id} plant={plant}/>
-                        })
-                ) : (
-                    currentPlantsNoFilters
-                        .sort((a, b) => a.common_name.localeCompare(b.common_name))
-                        .map((plant) => {
-                            return <PlantsEach key={plant._id} plant={plant}/>
-                        })
-                )}
-            </Grid>
-            <Grid container justify="center">
-                <Pagination 
-                    count={pageNumbers} 
-                    color="primary" 
-                    size="large"
-                    onClick={(event) => paginate(event.target.innerText)}
-                    className={classes.pagination}
-                />
-            </Grid>
         </>
     )
 }
