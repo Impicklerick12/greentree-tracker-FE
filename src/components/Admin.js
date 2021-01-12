@@ -55,15 +55,15 @@ const Admin = ({history}) => {
             .catch((error) => console.log(error))
     }, [])
 
-    useEffect(() => {
-        setUserLoading(true)
-        findAllUsers()
-            .then((res) => {
-                setUserLoading(false)
-                setUsers(res.data)
-            })
-            .catch((error) => console.log(error))
-    }, [])
+    // useEffect(() => {
+    //     setUserLoading(true)
+    //     findAllUsers()
+    //         .then((res) => {
+    //             setUserLoading(false)
+    //             setUsers(res.data)
+    //         })
+    //         .catch((error) => console.log(error))
+    // }, [])
 
     const handleRedirect = () => {
         history.goBack()
