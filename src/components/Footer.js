@@ -56,7 +56,7 @@ const Footer = () => {
                     </Grid>
                     <Grid item xs={4} align="center">
                         <Typography variant="body2" display="block">
-                            <b>Pages</b>
+                            <p><b>Pages</b></p>
                         </Typography>
                         <p>
                             <Link component="button" variant="body2" onClick={() => {console.log('home clicked');
