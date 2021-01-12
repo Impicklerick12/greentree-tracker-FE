@@ -50,24 +50,30 @@ const Footer = () => {
                         <Typography variant="body2" align="center" display="block">
                             <p><b>Contact</b></p>
                         </Typography>
-                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <PhoneRoundedIcon fontSize="small" />
-                            <Typography variant="body2" align="center" display="block">
-                                (07) 3800 1983
-                            </Typography>
-                        </IconButton>
-                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <EmailRoundedIcon fontSize="small" />
-                            <Typography variant="body2" align="center" display="block">
-                                nursery@nurserywholesale.com.au
-                            </Typography>
-                        </IconButton>
-                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <BusinessRoundedIcon fontSize="small" />
-                            <Typography variant="body2" align="center" display="block">
-                                14 Adelaide Street, Brisbane QLD 4000
-                            </Typography>
-                        </IconButton>
+                        <p>
+                            <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <PhoneRoundedIcon fontSize="small" />
+                                <Typography variant="body2" align="center" display="block">
+                                    (07) 3800 1983
+                                </Typography>
+                            </IconButton>
+                        </p>
+                        <p>
+                            <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <EmailRoundedIcon fontSize="small" />
+                                <Typography variant="body2" align="center" display="block">
+                                    nursery@nurserywholesale.com.au
+                                </Typography>
+                            </IconButton>   
+                        </p>
+                        <p>
+                            <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <BusinessRoundedIcon fontSize="small" />
+                                <Typography variant="body2" align="center" display="block">
+                                    14 Adelaide Street, Brisbane QLD 4000
+                                </Typography>
+                            </IconButton>
+                        </p>
                     </Grid>
                     <Grid item xs={4} align="center">
                         <Typography variant="body2" display="block">
