@@ -3,8 +3,13 @@ import {
     Grid,
     BottomNavigation,
     Typography,
-    Link
+    Link,
+    IconButton
 } from '@material-ui/core'
+
+import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
+import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
+import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -41,13 +46,28 @@ const Footer = () => {
                             </p>
                         </Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} align="center">
                         <Typography variant="body2" align="center" display="block">
                             <p><b>Contact</b></p>
-                            <p><b>Telephone:</b> (07) 3800 1983</p>
-                            <p><b>Email:</b> nursery@nurserywholesale.com.au</p>
-                            <p><b>Address:</b> 14 Adelaide Street, Brisbane City QLD 4000</p>
                         </Typography>
+                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <PhoneRoundedIcon fontSize="small" />
+                            <Typography variant="body2" align="center" display="block">
+                                (07) 3800 1983
+                            </Typography>
+                        </IconButton>
+                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <EmailRoundedIcon fontSize="small" />
+                            <Typography variant="body2" align="center" display="block">
+                                nursery@nurserywholesale.com.au
+                            </Typography>
+                        </IconButton>
+                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <BusinessRoundedIcon fontSize="small" />
+                            <Typography variant="body2" align="center" display="block">
+                            14 Adelaide Street, Brisbane QLD 4000
+                            </Typography>
+                        </IconButton>
                     </Grid>
                     <Grid item xs={4} align="center">
                         <Typography variant="body2" display="block">
