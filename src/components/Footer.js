@@ -65,7 +65,7 @@ const Footer = () => {
                         <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <BusinessRoundedIcon fontSize="small" />
                             <Typography variant="body2" align="center" display="block">
-                            14 Adelaide Street, Brisbane QLD 4000
+                                14 Adelaide Street, Brisbane QLD 4000
                             </Typography>
                         </IconButton>
                     </Grid>
