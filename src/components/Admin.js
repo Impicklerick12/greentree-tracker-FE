@@ -14,6 +14,7 @@ import {
 
 import NewPlant from './NewPlant'
 import SubmittedQuotes from './SubmittedQuotes'
+import Users from './Users'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             flexDirection: 'column-reverse'
         }
+    },
+    left: {
+        flexDirection: 'column'
+    },
+    newPlant: {
+        marginBottom: theme.spacing(3)
     },
     paper: {
       padding: theme.spacing(2),
@@ -95,9 +102,18 @@ const Admin = ({history}) => {
                             </Paper>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Paper className={classes.paper}>
-                                <NewPlant />
-                            </Paper>
+                            <Grid item xs={12} className={classes.left}>
+                                <Grid item className={classes.newPlant}>
+                                    <Paper className={classes.paper}>
+                                        <NewPlant />
+                                    </Paper>
+                                </Grid>
+                                <Grid item>
+                                    <Paper className={classes.paper}>
+                                        <Users users={users}/>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </div>
