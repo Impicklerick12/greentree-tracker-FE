@@ -3,7 +3,8 @@ import {
     Grid,
     Box,
     BottomNavigation,
-    Typography
+    Typography,
+    Link
 } from '@material-ui/core'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -53,13 +54,34 @@ const Footer = () => {
                             <p><b>Address:</b> 14 Adelaide Street, Brisbane City QLD 4000</p>
                         </Typography>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Typography variant="body2" align="center" display="block">
-                            <p><b>Links</b></p>
-                            <p>1</p>
-                            <p>2</p>
-                            <p>3</p>
+                    <Grid item xs={4} align="center">
+                        <Typography variant="body2" display="block">
+                            <b>Pages</b>
                         </Typography>
+                        <p>
+                            <Link component="button" variant="body2" onClick={() => {console.log('home clicked');
+                            }}>
+                                Home
+                            </Link>
+                        </p>
+                        <p>
+                            <Link component="button" variant="body2" onClick={() => {console.log('plants clicked');
+                            }}>
+                                Plants
+                            </Link>
+                        </p>
+                        <p>
+                            <Link component="button" variant="body2" onClick={() => {console.log('contact us clicked');
+                            }}>
+                                Contact Us
+                            </Link>
+                        </p>
+                        <p>
+                            <Link component="button" variant="body2" onClick={() => {console.log('account clicked');
+                            }}>
+                                Login to Account
+                            </Link>
+                        </p>
                     </Grid>
                 </Grid>
             </BottomNavigation>
