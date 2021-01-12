@@ -37,7 +37,7 @@ const Landing = () => {
             <br />
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Typography classes={classes.text} variant="h4" align="center" display="block">
+                    <Typography classes={classes.text} variant="h5" align="center" display="block">
                         <p>Who are we?</p>
                     </Typography>
                     <Typography classes={classes.text} variant="h6" align="center" display="block">
@@ -55,7 +55,7 @@ const Landing = () => {
                     <img src={image3} width="90%" height="90%" alt="plant image"/>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography classes={classes.text} variant="h4" align="center" display="block">
+                    <Typography classes={classes.text} variant="h5" align="center" display="block">
                         <p>What we offer?</p>
                     </Typography> 
                     <Typography classes={classes.text} variant="h6" align="center" display="block">
@@ -67,10 +67,11 @@ const Landing = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} classes={classes.color}>
-                    <Typography classes={classes.text} variant="h4" align="center" display="block">
+                    <Typography classes={classes.text} variant="h5" align="center" display="block">
                         Where to find us
                     </Typography>
                 </Grid>
+                <br />
                 <Grid item xs={6}>
                     <Typography classes={classes.text} variant="h6" align="center" display="block">
                         Google map here
