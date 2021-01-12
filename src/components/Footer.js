@@ -74,26 +74,22 @@ const Footer = () => {
                             <p><b>Pages</b></p>
                         </Typography>
                         <p>
-                            <Link variant="body2" onClick={() => {console.log('home clicked');
-                            }}>
+                            <Link variant="body2" onClick={() => {console.log('home clicked')}}>
                                 Home
                             </Link>
                         </p>
                         <p>
-                            <Link variant="body2" onClick={() => {console.log('plants clicked');
-                            }}>
+                            <Link variant="body2" onClick={() => {console.log('plants clicked')}}>
                                 Plants
                             </Link>
                         </p>
                         <p>
-                            <Link variant="body2" onClick={() => {console.log('contact us clicked');
-                            }}>
+                            <Link variant="body2" onClick={() => {console.log('contact us clicked')}}>
                                 Contact Us
                             </Link>
                         </p>
                         <p>
-                            <Link variant="body2" onClick={() => {console.log('account clicked');
-                            }}>
+                            <Link variant="body2" onClick={() => {console.log('account clicked')}}>
                                 Login to Account
                             </Link>
                         </p>
