@@ -13,8 +13,7 @@ import {
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
-        //margin: theme.spacing(1)
-        margin: "10px"
+        margin: theme.spacing(1)
     },
     },
     textArea: {
