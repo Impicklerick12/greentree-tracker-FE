@@ -143,6 +143,9 @@ const SubmittedQuotes = ({quote}) => {
                     <Typography gutterBottom variant="h6" component="h2" color="textSecondary">
                         Quote No. <strong>{_id}</strong>
                     </Typography>
+                    <Typography gutterBottom variant="body1" component="p">
+                        Date: <strong>{modified_date}</strong>
+                    </Typography>
                     { userDataLoading ? (
                         <LinearProgress color="secondary" />
                     ) : (
