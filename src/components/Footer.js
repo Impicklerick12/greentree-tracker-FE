@@ -76,16 +76,15 @@ const Footer = () => {
                         </p>
                     </Grid>
                     <Grid item xs={4} align="center">
-                        <Typography variant="body2" display="block">
-                            <p><b>Pages</b></p>
-                        </Typography>
-                        <p>
+                            <Typography variant="body2" display="block">
+                                <p><b>Pages</b></p>
+                            </Typography>
                             <Link variant="body2" onClick={() => {console.log('home clicked')}}>
                                 Home
                             </Link>
-                        </p>
+                        
                         <p>
-                            <Link variant="body2" onClick={() => {console.log('plants clicked')}}>
+                            <Link variant="body2" onClick={() => {console.log('plants clicked')}>
                                 Plants
                             </Link>
                         </p>
