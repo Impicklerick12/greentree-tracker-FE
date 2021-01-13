@@ -5,7 +5,7 @@ import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
 import { getPlantFromId, getAllPlants } from './services/plantServices'
 import { getCart } from './services/cartServices'
-import { userAuthenticated, setLoggedInUser, getLoggedInUser } from './services/authServices'
+import { userAuthenticated, setLoggedInUser, getLoggedInUser, userAdmin } from './services/authServices'
 
 import {
   Navbar,
@@ -33,7 +33,8 @@ require('dotenv').config()
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
-  },
+    fontFamily: "Arial",
+  }
 }));
 
 const App = () => {
@@ -47,12 +48,13 @@ const App = () => {
     quoteRequestData: [],
     submittedQuotes: [],
     searchValue: null,
-    userAdmin: false
+    admin: null
   }
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants, quotePlants } = store
+  const { loggedInUser, plants, quotePlants, admin } = store
+  console.log("userAdmin: ", admin)
 
   function fetchAllPlants() {
     getAllPlants().then((plantData) => {
@@ -124,22 +126,19 @@ const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // Checking the local storage to see if there is a current admin
-  //   // If not, set the admin to false
-  //   const isAdmin = getAdmin()
-  //   console.log(isAdmin)
-
-  //   // If current user, set global state again to current user
-  //   if (isAdmin) {
-  //     dispatch({
-  //         type: "setUserAdmin",
-  //         data: isAdmin,
-  //     });
-  //   } else {
-  //       console.log("No admin in Local Storage");
-  //   }
-  // }, []);
+  // ONLY CURRENTLY WORKING IN DEVELOPMENT 
+  useEffect(() => {
+    userAdmin().then((res) => {
+      console.log(res.status)
+      dispatch({
+        type:'setAdmin',
+        data: true
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+},[])
 
   useEffect(() => {
     fetchAllPlants()
@@ -148,6 +147,11 @@ const App = () => {
   useEffect(() => {
     getCartData()
   }, [])
+
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
 
   // // Register user
   // function registerUser(user) {
@@ -185,10 +189,10 @@ const App = () => {
                 {loggedInUser 
                 ? (
                   <>
-                    <p>{loggedInUser}</p>
+                    <p>Welcome back {loggedInUser}</p>
                   </>
                 )
-                : (<p>Guest</p>)
+                : (<p>Welcome Guest</p>)
                 }
               <Switch>
                 {/* Home Component */}
@@ -207,7 +211,7 @@ const App = () => {
                 <Route exact path="/plants" component={Plants} />
 
                 {/* Show Plant Component */}
-                <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} /> } />
+                <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} capitalize={capitalize} /> } />
 
                 {/* Edit Plant Component */}
                 <Route exact path="/plants/edit/:id" component={PlantsEdit} />
@@ -230,6 +234,7 @@ const App = () => {
           {/* <Footer /> */}
 
         </BrowserRouter>
+        <Footer />
       </StateContext.Provider>
     </div>
   );

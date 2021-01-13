@@ -1,76 +1,126 @@
 import React, { useState, useEffect } from 'react'
 import { useGlobalState } from '../config/store'
-import { userAdmin } from '../services/authServices'
 import { withRouter } from 'react-router-dom'
 import { getAllQuotes } from '../services/quoteServices.js'
+import { findAllUsers } from '../services/authServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Paper, 
     Grid,
-    Typography
+    Typography,
+    CircularProgress
 } from '@material-ui/core';
 
 import NewPlant from './NewPlant'
 import SubmittedQuotes from './SubmittedQuotes'
+import Users from './Users'
 
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     },
+    container : {
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column-reverse'
+        }
+    },
+    left: {
+        flexDirection: 'column'
+    },
+    newPlant: {
+        marginBottom: theme.spacing(3)
+    },
     paper: {
       padding: theme.spacing(2),
       textAlign: 'center'
     },
+    loading: {
+        marginTop: theme.spacing(20),
+        marginBottom: theme.spacing(20),
+    }
   }));
 
 const Admin = ({history}) => {
 
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser, submittedQuotes } = store
+    const { loggedInUser, submittedQuotes, admin } = store
+    const [quoteLoading, setQuoteLoading] = useState(false)
+    const [userLoading, setUserLoading] = useState(false)
+    const [users, setUsers] = useState([])
 
     useEffect(() => {
-        userAdmin().then((res) => {
-            console.log(res.status)
-        })
-        .catch((error) => {
-            console.log(error)
-            history.push('/plants')
-        })
-    },[])
-
-    useEffect(() => {
+        setQuoteLoading(true)
         getAllQuotes()
-        .then((res) => {
-            dispatch({
-                type: "setSubmittedQuotes",
-                data: res
+            .then((res) => {
+                dispatch({
+                    type: "setSubmittedQuotes",
+                    data: res
+                })
+                setQuoteLoading(false)
             })
-        })
-        .catch((error) => console.log(error))
-    }, [submittedQuotes])
+            .catch((error) => console.log(error))
+    }, [])
+
+    useEffect(() => {
+        setUserLoading(true)
+        findAllUsers()
+            .then((res) => {
+                setUserLoading(false)
+                setUsers(res.data)
+            })
+            .catch((error) => console.log(error))
+    }, [])
+
+    const handleRedirect = () => {
+        history.goBack()
+    }
 
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            {/* <Typography variant="h2">Admin Dashboard</Typography> */}
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                        <Typography variant="h2">Quote Requests</Typography>
-                        {submittedQuotes.map((quote) => 
-                            <SubmittedQuotes key={quote._id} quote={quote} />
-                        )}
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                        <NewPlant />
-                    </Paper>
-                </Grid>
-            </Grid>
-        </div>
+        <>
+            { loggedInUser && admin ? (
+                <div className={classes.root}>
+                    <Grid className={classes.container} container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <Paper className={classes.paper}>
+                                <Typography variant="h2">Quote Requests</Typography>
+                                { quoteLoading ? (
+                                    <Grid container justify="center">
+                                        <CircularProgress color="secondary" size={100} className={classes.loading}/>
+                                    </Grid>
+                                ) : (
+                                    <>
+                                        { submittedQuotes
+                                            .sort((a, b) => a.completed - b.completed)
+                                            .sort((a,b) => b.modified_date - a.modified_date)
+                                            .map((quote, i) => <SubmittedQuotes key={i} quote={quote} />)
+                                        }
+                                    </>
+                                )}
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Grid item xs={12} className={classes.left}>
+                                <Grid item className={classes.newPlant}>
+                                    <Paper className={classes.paper}>
+                                        <NewPlant />
+                                    </Paper>
+                                </Grid>
+                                <Grid item>
+                                    <Paper className={classes.paper}>
+                                        <Users users={users} loading={userLoading} />
+                                    </Paper>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </div>
+            ) : (
+                handleRedirect()
+            )}
+        </>
     )
 }
 

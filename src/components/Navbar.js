@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { logoutUser, removeLoggedInUser } from '../services/authServices'
-
+import logo from '../images/logo.png';
 
 import {
     AppBar,
@@ -12,10 +12,22 @@ import {
     Button,
     MenuItem,
     Menu,
-    useMediaQuery
+    useMediaQuery,
+    ListItemIcon,
+    ListItemText
 } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu'
+import EcoIcon from '@material-ui/icons/Eco';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import PhoneIcon from '@material-ui/icons/Phone';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+import EcoRoundedIcon from '@material-ui/icons/EcoRounded';
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
+import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import { 
     makeStyles,
@@ -24,14 +36,16 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     menuButton: {
       marginRight: theme.spacing(2),
+      color: "black",
     },
     title: {
       flexGrow: 1,
-    },
+      color: "black"
+    }
   }));
 
 const Navbar = ({history}) => {
@@ -45,7 +59,7 @@ const Navbar = ({history}) => {
         logout: "logout",
         register: "Register"
     }
-
+    
     // Logout user
     function handleLogout() {
         logoutUser().then((response) => {
@@ -59,10 +73,12 @@ const Navbar = ({history}) => {
             data: null
         })
         removeLoggedInUser()
+        
+        history.push('/auth/login')
     }
 
     const {store, dispatch} = useGlobalState()
-    const {loggedInUser, quotePlants} = store
+    const {loggedInUser, quotePlants, admin } = store
 
     const classes = useStyles()
 
@@ -84,9 +100,9 @@ const Navbar = ({history}) => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
                     <Toolbar>
-                        <Typography variant="h6" className={classes.title}>
+                        <Typography variant="h5" className={classes.title}>
                             Greentree Tracker
                         </Typography>
                         <div>
@@ -98,10 +114,10 @@ const Navbar = ({history}) => {
                                     <ShoppingCartIcon />
                                 </IconButton>
                             )}
-                            {isMobile ? (
+                            { isMobile ? (
                                 <>
-                                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                        <MenuIcon />
+                                    <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenu}>
+                                        <MenuIcon style={{ color: 'black' }} />
                                     </IconButton>
                                     <Menu
                                         id="menu-appbar"
@@ -120,18 +136,77 @@ const Navbar = ({history}) => {
                                     >
                                     {loggedInUser ? (
                                         <>
-                                            <MenuItem onClick={() => handleMenuClick('/account')}>My Account</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/admin')}>Admin</MenuItem>
-                                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/')} edge="start" color="inherit" aria-label="menu" title="Home">
+                                                <ListItemIcon>
+                                                    <HomeRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Home" />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/account')} edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <AccountCircleRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Account" />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/plants')} edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <EcoRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Plants" />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/contact')}edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <PhoneRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Contact" />
+                                            </MenuItem>
+                                            { admin && (
+                                                <MenuItem onClick={() => handleMenuClick('/admin')} edge="start" color="inherit" aria-label="menu">
+                                                    <ListItemIcon>
+                                                        <SupervisorAccountRoundedIcon fontSize="large" color="secondary"/>
+                                                    </ListItemIcon>
+                                                    <ListItemText primary="Admin" />
+                                                </MenuItem>
+                                            )}
+                                            <MenuItem onClick={handleLogout} edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <ExitToAppRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Logout" />
+                                            </MenuItem>
                                         </>
                                     ) : (
                                         <>
-                                            <MenuItem onClick={() => handleMenuClick('/plants')}>Plants</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/auth/login')}>Login</MenuItem>
-                                            <MenuItem onClick={() => handleMenuClick('/auth/register')}>Register</MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/')} edge="start" color="inherit" aria-label="menu" title="Home">
+                                                <ListItemIcon>
+                                                    <HomeRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Home" />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/plants')} edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <EcoRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Plants" />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/contact')}edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <PhoneRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Contact" />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/auth/login')}edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <AccountCircleRoundedIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Login" />
+                                            </MenuItem>
+                                            <MenuItem onClick={() => handleMenuClick('/auth/register')} edge="start" color="inherit" aria-label="menu">
+                                                <ListItemIcon>
+                                                    <CheckBoxOutlineBlankIcon fontSize="large" className={classes.menuButton}/>
+                                                </ListItemIcon>
+                                                <ListItemText primary="Register" />
+                                            </MenuItem>
                                         </>
                                     )}
                                     </Menu>
@@ -140,17 +215,41 @@ const Navbar = ({history}) => {
                                 <>
                                     { loggedInUser ? (
                                         <>
-                                            <Button onClick={() => handleMenuClick('/account')}>My Account</Button>
-                                            <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
-                                            <Button onClick={() => handleMenuClick('/admin')}>Admin</Button>
-                                            <Button onClick={handleLogout}>Logout</Button>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Home" className={classes.menuButton}>
+                                                <HomeRoundedIcon onClick={() => handleMenuClick('/')} fontSize="large"/>
+                                            </IconButton>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Account" className={classes.menuButton}>
+                                                <AccountCircleRoundedIcon onClick={() => handleMenuClick('/account')} fontSize="large" />
+                                            </IconButton>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Plants" className={classes.menuButton}>
+                                                <EcoRoundedIcon onClick={() => handleMenuClick('/plants')} fontSize="large" />
+                                            </IconButton>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Contact Us" className={classes.menuButton}>
+                                                <PhoneRoundedIcon onClick={() => handleMenuClick('/contact')} fontSize="large" />
+                                            </IconButton>
+                                            { admin && (
+                                                <IconButton edge="start" color="inherit" aria-label="menu" title="Admin" className={classes.menuButton}>
+                                                    <SupervisorAccountRoundedIcon onClick={() => handleMenuClick('/admin')} fontSize="large" color="secondary"/>
+                                                </IconButton>
+                                            )}
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Logout" className={classes.menuButton}>
+                                                <ExitToAppRoundedIcon onClick={handleLogout} fontSize="large" />
+                                            </IconButton>
                                         </>
                                     ) : (
                                         <>
-                                            <Button onClick={() => handleMenuClick('/plants')}>Plants</Button>
-                                            <Button onClick={() => handleMenuClick('/contact')}>Contact</Button>
-                                            <Button onClick={() => handleMenuClick('/auth/login')}>Login</Button>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Home" className={classes.menuButton}>
+                                                <HomeRoundedIcon onClick={() => handleMenuClick('/')} fontSize="large" />
+                                            </IconButton>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Plants" className={classes.menuButton}>
+                                                <EcoRoundedIcon onClick={() => handleMenuClick('/plants')} fontSize="large" />
+                                            </IconButton>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Contact Us" className={classes.menuButton}>
+                                                <PhoneRoundedIcon onClick={() => handleMenuClick('/contact')} fontSize="large" />
+                                            </IconButton>
+                                            <IconButton edge="start" color="inherit" aria-label="menu" title="Login" className={classes.menuButton}>
+                                                <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
+                                            </IconButton>
                                             <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
                                         </>
                                     )}
@@ -159,6 +258,7 @@ const Navbar = ({history}) => {
                         </div>
                     </Toolbar>
                 </AppBar>
+            <hr />
             </div>
         </>
     )

@@ -54,6 +54,15 @@ export async function updateUser(user) {
     }
     catch(error) {
         console.log("an error occurred updating user")
+
+        
+export async function findAllUsers() {
+    try {
+        const response = await api.get(`/users`)
+        return response
+    }
+    catch(error) {
+        console.log("an error occurred finding all users")
         throw(error)
     }
 }

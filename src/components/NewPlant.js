@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { addPlant } from '../services/plantServices'
+import { config } from '../config/awsConfig'
 import S3 from 'aws-s3';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,21 +13,11 @@ import {
     FormControl,
     InputLabel,
     Select,
-    MenuItem
+    MenuItem,
+    LinearProgress,
+    Grid
 } from '@material-ui/core';
-
-// NEED TO FIND AWS ACCESS KEY
-// BUGS - Need to fix
-const config = {
-    bucketName: 'greentree-tracker-images',
-    region: 'ap-southeast-2',
-    // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
-}
-
-const S3Client = new S3(config)
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,12 +26,22 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     textArea: {
-        width: '75%'
+        width: '75%',
+        [theme.breakpoints.down('md')]: {
+            width: "100%"
+        }
     },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
     },
+    select: {
+        display: "flex",
+        justifyContent: "space-around",
+    },
+    loadingBar : {
+        width: '100%'
+    }
   }));
 
 const NewPlant = ({history}) => {
@@ -56,6 +57,7 @@ const NewPlant = ({history}) => {
     function handleChange(event) {
         const name = event.target.name
         const value = event.target.value
+
         setFormState({
             ...formState,
             [name]: value
@@ -84,36 +86,19 @@ const NewPlant = ({history}) => {
     }
 
     function handleSubmit(event) {
-        // event.preventDefault()
-        // const nextId = getNextId()
-        // const newPlant = {
-        //     _id: nextId,
-        //     common_name: formState.common_name,
-        //     botanical_name: formState.botanical_name,
-        //     category: formState.category || "Bush",
-        //     modified_date: new Date(),
-        //     description: formState.description,
-        //     price: formState.price,
-        //     pot_size: formState.pot_size,
-        //     quantity: formState.quantity,
-        // }
-        // dispatch({
-        //     type: "setPlants",
-        //     data: [...plants, newPlant]
-        // })
-        // history.push(`/plants/${nextId}`)
-
-        // TO USE IN PRODUCTION - REPLACE CODE ABOVE
         event.preventDefault()
+
         const newPlant = {
             common_name: formState.common_name,
             botanical_name: formState.botanical_name,
-            category: formState.category || "Bush",
+            plant_image: formState.plant_image,
+            category: formState.category || "tree",
             description: formState.description,
             pot_size: formState.pot_size,
             quantity: formState.quantity,
             price: formState.price
         }
+        console.log("newPlant: ", newPlant)
         addPlant(newPlant).then((newPlant) => {
             dispatch({
                 type: "setPlants",
@@ -129,22 +114,39 @@ const NewPlant = ({history}) => {
                 setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
         })
     }
+ 
+    const fileInput = useRef();
 
-    function handleImageUpload(event) {
-        // console.log(event.target.files[0])
-        const plantImage = event.target.files[0]
+    const handleClick = (event) => {
+        event.preventDefault();
 
-        S3Client
-            .uploadFile(plantImage)
-            .then((res) => {
-                console.log(res.location)
-            })
-            .catch((err) => console.log(err))
-    }
+        const ReactS3Client = new S3(config);
+
+        let file = fileInput.current.files[0];
+        let newFileName = fileInput.current.files[0].name;
+        setUpload(false)
+        setLoading(true)
+        
+        ReactS3Client.uploadFile(file, newFileName)
+            .then(data => {
+                setFormState({
+                    ...formState,
+                    plant_image: data.location
+                })
+
+                if (data.status === 204) {
+                    console.log("Image Upload Successful");
+                    setLoading(false)
+                } else {
+                    console.log("Image Upload fail");
+                }
+            });
+    };
 
     const initialFormState = {
         common_name: "",
         botanical_name: "",
+        plant_image: "",
         category: "",
         description: "",
         pot_size: "",
@@ -152,10 +154,14 @@ const NewPlant = ({history}) => {
         price: 0
     } 
 
-    const [formState, setFormState] = useState(initialFormState)
-    const [errorMessage, setErrorMessage] = useState(null)
-    const [category, setCategory] = React.useState('');
-    const [potSize, setPotSize] = React.useState('');
+    const [formState, setFormState] = useState(initialFormState);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [category, setCategory] = useState('');
+    const [potSize, setPotSize] = useState('');
+    const [upload, setUpload] = useState(true)
+    const [loading, setLoading] = useState(null);
+
+
     const { store, dispatch } = useGlobalState()
     const { plants } = store
 
@@ -165,59 +171,121 @@ const NewPlant = ({history}) => {
             <Typography variant="h2">New Plant</Typography>
             <form className={classes.root} onSubmit={handleSubmit}>
                 <div>
-                    <TextField className={classes.textArea} id="standard-basic" required type="text" name="common_name" label="Common Name" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea} 
+                        variant="outlined"
+                        id="outlined" 
+                        required 
+                        type="text" 
+                        name="common_name" 
+                        label="Common Name" 
+                        onChange={handleChange}
+                    />
                 </div>
                 <div>
-                    <TextField className={classes.textArea} required id="standard-basic" type="text" name="botanical_name" label="Botanical Name" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea} 
+                        required 
+                        variant="outlined"
+                        id="outlined" 
+                        type="text" 
+                        name="botanical_name" 
+                        label="Botanical Name" 
+                        onChange={handleChange}
+                    />
+                </div>
+                { upload ? (
+                    <div>
+                        <input 
+                            type="file" 
+                            name="plant_image" 
+                            accept="image/*"
+                            ref={fileInput} 
+                            onChange={handleClick}
+                        />
+                    </div>
+                ) : (
+                    <Grid container justify="center" className={classes.loadingBar}>
+                        { loading ? (
+                            <LinearProgress color="secondary"/>
+                        ) : (
+                            <Alert severity="success">Image upload Successful!</Alert>
+                        )}
+                    </Grid>
+                )}
+                <div className={classes.select}>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-outlined-label">
+                            Category
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={category}
+                            onChange={handleCategoryChange}
+                            label="Category"
+                        >
+                            <MenuItem value="tree">Tree</MenuItem>
+                            <MenuItem value="shrub">Shrub</MenuItem>
+                            <MenuItem value="grass">Grass</MenuItem>
+                            <MenuItem value="ground cover">Ground Cover</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-outlined-label">
+                            Pot Size
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={potSize}
+                            onChange={handlePotSizeChange}
+                            label="Pot Size"
+                        >
+                            <MenuItem value="140mm">140mm</MenuItem>
+                            <MenuItem value="250mm">250mm</MenuItem>
+                            <MenuItem value="350mm">350mm</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
                 <div>
-                    <input type="file" name="plant_image" onChange={handleImageUpload}/>
-                </div>
-                {/* <div>
-                    <TextField className={classes.textArea} id="standard-basic" type="text" name="category" label="Category" onChange={handleChange}></TextField>
-                </div> */}
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        value={category}
-                        onChange={handleCategoryChange}
-                        label="Category"
-                    >
-                        <MenuItem value="tree">Tree</MenuItem>
-                        <MenuItem value="shrub">Shrub</MenuItem>
-                        <MenuItem value="grass">Grass</MenuItem>
-                        <MenuItem value="ground cover">Ground Cover</MenuItem>
-                    </Select>
-                </FormControl>
-                <div>
-                    <TextField className={classes.textArea} multiline required rows={4} name="description" label="Description" onChange={handleChange}></TextField>
-                </div>
-                {/* <div>
-                    <TextField className={classes.textArea} type="text" name="pot_size" label="Pot Size" onChange={handleChange}></TextField>
-                </div> */}
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Pot Size</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        value={potSize}
-                        onChange={handlePotSizeChange}
-                        label="Pot Size"
-                    >
-                        <MenuItem value="140mm">140mm</MenuItem>
-                        <MenuItem value="250mm">250mm</MenuItem>
-                        <MenuItem value="350mm">350mm</MenuItem>
-                    </Select>
-                </FormControl>
-                <div>
-                    <TextField className={classes.textArea} type="number" name="quantity" label="Quantity" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea} 
+                        multiline 
+                        required 
+                        variant="outlined"
+                        id="outlined" 
+                        rows={4} 
+                        name="description" 
+                        label="Description" 
+                        onChange={handleChange}
+                    />
                 </div>
                 <div>
-                    <TextField className={classes.textArea} type="number" name="price" label="Price" onChange={handleChange}></TextField>
+                    <TextField 
+                        className={classes.textArea}
+                        variant="outlined"
+                        id="outlined" 
+                        onChange={handleChange}
+                        type="number" 
+                        name="quantity" 
+                        label="Quantity" 
+                    />
                 </div>
-                <Button type="submit" value="Add Plant">Add Plant</Button>
+                <div>
+                    <TextField 
+                        className={classes.textArea}
+                        variant="outlined"
+                        id="outlined"  
+                        type="number" 
+                        name="price" 
+                        label="Price" 
+                        onChange={handleChange}
+                    />
+                </div>
+                <Button type="submit" value="Add Plant">
+                    Add Plant
+                </Button>
             </form>
         </div>
     )

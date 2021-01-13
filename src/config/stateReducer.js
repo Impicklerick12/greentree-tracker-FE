@@ -36,10 +36,10 @@ export default function (state, action) {
                 searchValue: action.data
             }
         }
-        case "setUserAdmin": {
+        case "setAdmin": {
             return {
                 ...state,
-                userAdmin: action.data
+                admin: action.data
             }
         }
         case "setError": {
