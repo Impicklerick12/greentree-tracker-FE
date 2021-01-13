@@ -35,7 +35,7 @@ const Footer = () => {
     return (
         <div>
             <hr />
-            <BottomNavigation className={classes.footer}>
+            <BottomNavigation className={classes.root}>
                 <Grid container spacing={2} style={{ backgroundColor: 'transparent', boxShadow: 'none', color: 'black'}}>
                     <Grid item xs={4}>
                         <Typography variant="body2" align="center" display="block">

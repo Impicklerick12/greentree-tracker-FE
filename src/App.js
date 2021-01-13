@@ -5,7 +5,7 @@ import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
 import { getPlantFromId, getAllPlants } from './services/plantServices'
 import { getCart } from './services/cartServices'
-import { userAuthenticated, setLoggedInUser, getLoggedInUser, userAdmin } from './services/authServices'
+import { userAuthenticated, setLoggedInUser, getLoggedInUser, userAdmin, getUserId } from './services/authServices'
 
 import {
   Navbar,
@@ -47,6 +47,7 @@ const App = () => {
   const initialState = {
     plants: [],
     loggedInUser: null,
+    userId: null,
     quotePlants: [],
     quoteRequestData: [],
     submittedQuotes: [],
@@ -117,7 +118,7 @@ const App = () => {
   useEffect(() => {
     // Checking the local storage to see if there is a current user
     const currentUser = getLoggedInUser()
-
+    const currentUserId = getUserId()
     // If current user, set global state again to current user
     if (currentUser) {
       dispatch({
@@ -126,6 +127,20 @@ const App = () => {
       });
     } else {
       console.log("No user in Local Storage");
+    }
+  }, []);
+
+  useEffect(() => {
+    // Checking the local storage to see if there is a userId
+    const currentUserId = getUserId()
+    // If current user, set global state again to current user
+    if (currentUserId) {
+      dispatch({
+          type: "setUserId",
+          data: currentUserId,
+      });
+    } else {
+      console.log("No userId in Local Storage");
     }
   }, []);
 

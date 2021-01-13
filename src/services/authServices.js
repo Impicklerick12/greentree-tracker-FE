@@ -4,7 +4,6 @@ export async function loginUser(userInfo) {
     // call to server to login user
     // return user info if successful and error if not
     const response = await api.post("/auth/login", userInfo)
-    console.log("got user back from server", response) 
     return response.data
 }
 
@@ -83,18 +82,17 @@ export function removeLoggedInUser() {
     localStorage.removeItem("loggedInUser")
 }
 
-// Store admin boolean in local storage
-export function setAdmin(admin) {
-    localStorage.setItem("admin", admin)
+// Get userId from localStorage
+export function getUserId() {
+    return localStorage.getItem("userId")
 }
 
-// Remove Admin from local storage
-export function removeAdmin() {
-    localStorage.removeItem("admin")
+// Store loggedInUser username in local storage
+export function setUserId(user_id) {
+    localStorage.setItem("userId", user_id)
 }
 
-
-// Get admin from localStorage
-export function getAdmin() {
-    return localStorage.getItem("admin")
+// Remove loggedInUser username from local storage
+export function removeUserId() {
+    localStorage.removeItem("userId")
 }

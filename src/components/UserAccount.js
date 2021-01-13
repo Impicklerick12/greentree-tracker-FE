@@ -1,29 +1,70 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
-import { findUser, updateUser, logoutUser, removeLoggedInUser } from '../services/authServices'
+import { 
+    findUser, 
+    updateUser, 
+    logoutUser, 
+    removeLoggedInUser, 
+    removeUserId 
+} from '../services/authServices'
+
+import { 
+    CircularProgress,
+    Grid,
+    Button,
+    TextField,
+    Typography
+} from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    form: {
+        minHeight: 200,
+        minWidth: 300,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginTop: theme.spacing(2)
+    },
+    textField: {
+        width: '100%'
+    },
+    notLoggedIn: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        minHeight: 300
+    },
+    links: {
+        margin: theme.spacing(1)
+    }
+}))
 
 const UserAccount = ({history}) => {
 
+    const classes = useStyles()
     const { store, dispatch } = useGlobalState()
-    const { loggedInUser } = store
+    const { loggedInUser, userId } = store
     
     useEffect(() => {
-        findUser(loggedInUser)
+        if (loggedInUser) {
+            setLoading(true)
+            findUser(userId)
             .then((res) => {
                 let user = res.data
                 setFormState({
                     username: user.username,
                     email: user.email
                 })
+                setLoading(false)
             })
             .catch((error) => console.log(error))
+        }
     },[])
 
     const handleSubmit = (event) => {
         event.preventDefault()
-
         const updatedUser = {
             _id: loggedInUser,
             username: formState.username,
@@ -32,7 +73,6 @@ const UserAccount = ({history}) => {
 
         updateUser(updatedUser)
             .then((res) => {
-
                 logoutUser().then((response) => {
                     console.log("Got back response on logout", response.status)
                 }).catch ((error) => {
@@ -44,12 +84,11 @@ const UserAccount = ({history}) => {
                     data: null
                 })
                 removeLoggedInUser()
-
+                removeUserId()
                 history.push('/auth/login')
             })
             .catch((error) => {
                 const status = error.response ? error.response.status : 500
-                console.log("caught error on user edit", error)
                 if(status === 403)
                     setErrorMessage("You are not the user, and unable to edit the details")
                 else
@@ -75,34 +114,88 @@ const UserAccount = ({history}) => {
     const [formState, setFormState] = useState(initialFormState)
     const [errorMessage, setErrorMessage] = useState(null)
     const [formChange, setFormChange] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     return (
         <div>
         { loggedInUser ? (
-            <>
-                <h1>User Account</h1>
+            <Grid container justify="center">
+                <Typography variant="h2">Account</Typography>
                 {errorMessage && <p>{errorMessage}</p>}
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>Username</label>
-                        <input required type="text" name="username" value={formState.username} onChange={handleChange}></input>
-                    </div>
-                    <div>
-                        <label>Email</label>
-                        <input required type="email" name="email" value={formState.email} onChange={handleChange}></input>
-                    </div>
-                    { formChange && (
+                { formChange && (
+                    <Grid container justify="center" className={classes.alert}>
                         <Alert severity="info">Upon updating your user information, you will be prompted to log in again.</Alert>
-                    )}
-                    <input type="submit" value="Update"></input>
-                </form>
-            </>
+                    </Grid>
+                )}
+                { loading ? (
+                    <Grid container justify="center">
+                        <CircularProgress color="secondary" size={100}/>
+                    </Grid>
+                ) : (
+                    <Grid container justify="center">
+                        <form onSubmit={handleSubmit} className={classes.form}>
+                            <div>
+                                <TextField
+                                    required 
+                                    className={classes.textField}
+                                    variant="outlined"
+                                    id="outlined" 
+                                    type="text" 
+                                    name="username" 
+                                    label="username" 
+                                    value={formState.username}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div>
+                                <TextField
+                                    required 
+                                    className={classes.textField}
+                                    variant="outlined"
+                                    id="outlined" 
+                                    type="text" 
+                                    name="email" 
+                                    label="email" 
+                                    value={formState.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <Button 
+                                type="submit" 
+                                value="Update"
+                                color="primary"
+                                variant="contained"
+                            >
+                                Update
+                            </Button>
+                        </form>
+                    </Grid>
+                )}
+            </Grid>
         ): (
-            <>
-                <h2>You are not logged in</h2>
-                <Link to="/auth/login">Login</Link>
-                <Link to="/auth/register">Register</Link>
-            </>
+            <Grid container justify="center" className={classes.notLoggedIn}>
+                <Typography variant="h2">You are not logged in</Typography>
+                <Grid item>
+                    <Link 
+                        component={Button} 
+                        to="/auth/login" 
+                        variant="contained" 
+                        color="primary"
+                        className={classes.links}
+                    >
+                        Login
+                    </Link>
+                    <Link 
+                        component={Button} 
+                        to="/auth/register" 
+                        variant="outlined" 
+                        color="secondary"
+                        className={classes.links}
+                    >
+                        Register
+                    </Link>
+                </Grid>
+            </Grid>
         )}
         </div>
     )

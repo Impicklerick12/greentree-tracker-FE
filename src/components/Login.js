@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useGlobalState } from '../config/store'
-import { loginUser, setLoggedInUser, setAdmin } from '../services/authServices'
+import { loginUser, setLoggedInUser, setUserId } from '../services/authServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme) => ({
       '& > *': {
         margin: theme.spacing(1),
       },
-    },
-    container: {
-        // height: '100vh'
     },
     textArea: {
         width: '100%'
@@ -54,29 +51,34 @@ const Login = ({history}) => {
         // For use when connecting to SERVER
         event.preventDefault()
         // Attempt login on server
-        loginUser(userDetails).then((res) => {
-            let currentUser = res.user
-            console.log(currentUser)
-
-            if (currentUser.role === "admin") {
+        loginUser(userDetails)
+            .then((res) => {
+                let currentUser = res.user
+                console.log(currentUser)
+                if (currentUser.role === "admin") {
+                    dispatch({
+                        type:'setAdmin',
+                        data: true
+                    })
+                    history.push('/admin')
+                }
+                setLoggedInUser(currentUser.username)
+                setUserId(currentUser._id)
                 dispatch({
-                    type:'setAdmin',
-                    data: true
+                    type: "setLoggedInUser",
+                    data: currentUser.username
                 })
-                history.push('/admin')
-            }
-
-            setLoggedInUser(currentUser._id)
-            dispatch({
-                type: "setLoggedInUser",
-                data: currentUser._id
+                dispatch({
+                    type: "setUserId",
+                    data: currentUser._id
+                })
             })
-        }).catch((error) => {
-            if (error.response && error.response.status === 401)
-                setErrorMessage("Authentication failed. Please check your username and password.")
-            else   
-                setErrorMessage("There may be a problem with the server. Please try again after a few moments.")
-        })
+            .catch((error) => {
+                if (error.response && error.response.status === 401)
+                    setErrorMessage("Authentication failed. Please check your username and password.")
+                else   
+                    setErrorMessage("There may be a problem with the server. Please try again after a few moments.")
+            })
     }
 
     function loggedInUserRedirect() {
@@ -92,7 +94,12 @@ const Login = ({history}) => {
     // }
     
     return (
-        <Grid container>
+        <div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
@@ -116,7 +123,20 @@ const Login = ({history}) => {
                     </Grid>
                 </>
             )}
-        </Grid>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
     )
 }
 

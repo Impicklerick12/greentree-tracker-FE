@@ -12,7 +12,8 @@ import {
     TableCell,
     TableBody,
     CircularProgress,
-    Button
+    Button,
+    Grid
 } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     userEmail: {
@@ -30,7 +31,9 @@ const Users = ({users, loading}) => {
         <div>
             <Typography variant="h2">Users</Typography>
             { loading ? (
-                <CircularProgress color="secondary" size="large"/>
+                <Grid container justify="center">
+                    <CircularProgress color="secondary" size={100}/>
+                </Grid>
             ) : (
                 <Card>
                     <CardContent>

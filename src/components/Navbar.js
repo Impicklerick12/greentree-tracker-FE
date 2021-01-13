@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
-import { logoutUser, removeLoggedInUser } from '../services/authServices'
+import { logoutUser, removeLoggedInUser, removeUserId } from '../services/authServices'
 import logo from '../images/logo.png';
 
 import {
@@ -73,7 +73,7 @@ const Navbar = ({history}) => {
             data: null
         })
         removeLoggedInUser()
-        
+        removeUserId()
         history.push('/auth/login')
     }
 
