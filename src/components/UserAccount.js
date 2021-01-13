@@ -13,7 +13,6 @@ const UserAccount = ({history}) => {
         findUser(loggedInUser)
             .then((res) => {
                 let user = res.data
-
                 setFormState({
                     username: user.username,
                     email: user.email

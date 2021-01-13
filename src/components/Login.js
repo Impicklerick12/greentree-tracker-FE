@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
       },
     },
+    container: {
+        // height: '100vh'
+    },
     textArea: {
         width: '100%'
     }
@@ -89,12 +92,7 @@ const Login = ({history}) => {
     // }
     
     return (
-        <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+        <Grid container>
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
@@ -118,20 +116,7 @@ const Login = ({history}) => {
                     </Grid>
                 </>
             )}
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-        </div>
+        </Grid>
     )
 }
 

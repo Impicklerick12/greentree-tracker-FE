@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
     fontFamily: "Arial",
+  },
+  container: {
+    // height: '100%'
   }
 }));
 
@@ -185,7 +188,7 @@ const App = () => {
           {/* Navbar Component */}
           <Navbar />
 
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" className={classes.container}>
                 {loggedInUser 
                 ? (
                   <>

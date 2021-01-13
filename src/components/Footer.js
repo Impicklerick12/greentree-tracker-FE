@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         width: '100%',
         bottom: 0,
-        height: 200
+        height: '200px'
     }
   }));
 
@@ -35,7 +35,7 @@ const Footer = () => {
     return (
         <div>
             <hr />
-            <BottomNavigation className={classes.root}>
+            <BottomNavigation className={classes.footer}>
                 <Grid container spacing={2} style={{ backgroundColor: 'transparent', boxShadow: 'none', color: 'black'}}>
                     <Grid item xs={4}>
                         <Typography variant="body2" align="center" display="block">
