@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import StockPlant from '../images/stock-plant.jpg'
 
@@ -64,8 +64,7 @@ const PlantsEach = ({history, plant}) => {
     const { 
         common_name, 
         botanical_name, 
-        price,
-        plant_image
+        price
     } = plant
 
     return (

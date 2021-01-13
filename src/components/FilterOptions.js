@@ -8,12 +8,9 @@ import {
     FormControlLabel,
     FormControl,
     FormLabel,
-    Button,
-    useMediaQuery
+    Button
 } from '@material-ui/core'
 import grey from '@material-ui/core/colors/grey'
-
-import SearchIcon from '@material-ui/icons/Search';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -128,15 +125,16 @@ const FilerOptions = ({filterOptions}) => {
         filterOptions(null)
     }
 
-    {/*const handleSearchChange = (event) => {
+    // const handleSearchChange = (event) => {
 
-        setSearchValue(event.target.value)
+    //     setSearchValue(event.target.value)
 
-        dispatch({
-            type: "setSearchValue",
-            data: searchValue
-        })
-    }*/}
+    //     dispatch({
+    //         type: "setSearchValue",
+    //         data: searchValue
+    //     })
+    // }
+    
     const classes = useStyles()
 
     const categoryRadio = {

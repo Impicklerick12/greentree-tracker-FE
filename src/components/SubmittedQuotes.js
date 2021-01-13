@@ -3,15 +3,12 @@ import { useGlobalState } from '../config/store'
 import { getPlantFromId } from '../services/plantServices'
 import { findUser } from '../services/authServices'
 import { deleteQuote, updateQuote } from '../services/quoteServices'
+import { alertBanner } from './Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Card,
-    CardActionArea,
-    CardActions,
     CardContent,
-    CardMedia,
-    Button,
     Typography,
     IconButton,
     Grid,
@@ -22,7 +19,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    CircularProgress,
     LinearProgress
 } from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
@@ -62,7 +58,6 @@ const SubmittedQuotes = ({quote}) => {
 
     const { store, dispatch } = useGlobalState()
     const { plants, submittedQuotes } = store
-    // console.log(plants)
 
     useEffect(() => {
         // Find the data of each user
@@ -95,6 +90,7 @@ const SubmittedQuotes = ({quote}) => {
                     id: plant._id,
                     quantity: p.quantity
                 })
+                return x
             })
             setPlantInfo(x)
         }
@@ -142,6 +138,7 @@ const SubmittedQuotes = ({quote}) => {
     return (
         <>
             <Card className={classes.root} raised>
+                { errorMessage && alertBanner(errorMessage) }
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="h2" color="textSecondary">
                         Quote No. <strong>{_id}</strong>

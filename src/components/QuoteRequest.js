@@ -4,6 +4,7 @@ import { useGlobalState } from '../config/store'
 import { addQuote } from '../services/quoteServices'
 import { clearCart } from '../services/cartServices'
 import QuoteItem from './QuoteItem'
+import { alertBanner } from './Alerts'
 
 import { 
     Button,
@@ -67,6 +68,7 @@ const QuoteRequest = ({history}) => {
                 plant_id: p.plant_id,
                 quantity: p.quantity
             })
+            return plantInfo
         })
 
         const newQuoteRequest = {
@@ -133,7 +135,7 @@ const QuoteRequest = ({history}) => {
                 <>
                     <Grid container justify="center">
                         <Typography variant="h2">Quote Request</Typography>
-                        { errorMessage && <p>{errorMessage}</p>}
+                        { errorMessage && alertBanner(errorMessage)}
                     </Grid>
                     { loggedInUser && (quotePlants.length > 0) ? (
                         <Grid container justify="center">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useGlobalState } from '../config/store'
 import { getPlantFromId } from '../services/plantServices'
 import { deleteItemFromCart, updateCart } from '../services/cartServices'
+import { alertBanner } from './Alerts'
 
 import { 
     IconButton,
@@ -55,6 +56,7 @@ const QuoteItem = ({ cartPlants }) => {
     const { plants, quotePlants } = store
     const [plantInfo, setPlantInfo] = useState([])
     const [errorMessage, setErrorMessage] = useState(null)
+    const [cartErrorMessage, setCartErrorMessage] = useState(null)
 
     useEffect(() => {
         // If there are plants in the cart, then find their information and set it in plantInfo state
@@ -64,7 +66,7 @@ const QuoteItem = ({ cartPlants }) => {
         } else {
             console.log("No cartPlants")
         }
-    }, [quantity])
+    }, [cartPlants])
 
     const {common_name, price, pot_size} = plantInfo
 
@@ -120,15 +122,16 @@ const QuoteItem = ({ cartPlants }) => {
                 const status = error.response ? error.response.status : 500
                 console.log("caught error on quantity edit", error)
                 if(status === 403)
-                    setErrorMessage("Sorry there was an error")
+                    setCartErrorMessage("Sorry you do not have permission to update the cart")
                 else
-                    setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+                    setCartErrorMessage("Well, this is embarrassing... There was a problem on the server.")
             })
     }
 
     return (
         <Grid container className={classes.container}>
-            { errorMessage && (<Typography>{errorMessage}</Typography>)}
+            { errorMessage && alertBanner(errorMessage)}
+            { cartErrorMessage && alertBanner(cartErrorMessage)}
             <Paper className={classes.plantQuote}>
                 <TextField 
                     type="number" 

@@ -1,11 +1,10 @@
 import react, { useEffect, useReducer } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import plantData from './data/plant_data'
 import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
 import { getPlantFromId, getAllPlants } from './services/plantServices'
 import { getCart } from './services/cartServices'
-import { userAuthenticated, setLoggedInUser, getLoggedInUser, userAdmin } from './services/authServices'
+import { getLoggedInUser, userAdmin } from './services/authServices'
 
 import {
   Navbar,
@@ -20,7 +19,6 @@ import {
   Contact,
   Admin,
   NotFound,
-  Footer
 } from './Exports'
 
 import {
@@ -53,7 +51,7 @@ const App = () => {
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants, quotePlants, admin } = store
+  const { loggedInUser, plants, admin } = store
   console.log("userAdmin: ", admin)
 
   function fetchAllPlants() {
@@ -63,10 +61,6 @@ const App = () => {
         data: plantData
       })
     }).catch((error) => {
-      dispatch({
-        type: "setError",
-        data: true
-      })
       console.log("An error occurred fetching plants from the server:", error)
     })
   }
@@ -78,43 +72,13 @@ const App = () => {
         data: cartData
       })
     }).catch((error) => {
-      dispatch({
-        type: "setError",
-        data: true
-      })
       console.log("An error occurred fetching the cart from the server:", error)
     })
-    console.log("QuotePlants: ", quotePlants)
   }
-
-  // useEffect(() => {
-  //   // dispatch({
-  //   //   type: "setPlants",
-  //   //   data: plantData
-  //   // })
-
-  //   // TO USE IN PRODUCION - REPLACE CODE ABOVE
-	// 	userAuthenticated().then(() => {			 
-	// 		dispatch({
-	// 			type: "setLoggedInUser",
-	// 			data: getLoggedInUser()
-	// 		})
-	// 	}).catch((error) => {
-	// 		console.log("got an error trying to check authenticated user:", error)
-	// 		setLoggedInUser(null) 
-	// 		dispatch({
-	// 			type: "setLoggedInUser",
-	// 			data: null
-	// 		})
-	// 	})
-  //   // return a function that specifies any actions on component unmount
-  //   return () => {}
-  // },[])
 
   useEffect(() => {
     // Checking the local storage to see if there is a current user
     const currentUser = getLoggedInUser()
-
     // If current user, set global state again to current user
     if (currentUser) {
       dispatch({
@@ -126,7 +90,6 @@ const App = () => {
     }
   }, []);
 
-  // ONLY CURRENTLY WORKING IN DEVELOPMENT 
   useEffect(() => {
     userAdmin().then((res) => {
       console.log(res.status)
@@ -138,7 +101,7 @@ const App = () => {
     .catch((error) => {
       console.log(error)
     })
-},[])
+  },[])
 
   useEffect(() => {
     fetchAllPlants()
@@ -152,30 +115,6 @@ const App = () => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
-
-  // // Register user
-  // function registerUser(user) {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: user.username
-  //   })
-  // }
-
-  // // Login user
-  // function loginUser(user) {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: user.username
-  //   })
-  // }
-
-  // // Logout user
-  // function logoutUser() {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: null
-  //   })
-  // }
 
   return (
     <div className={classes.root}>
@@ -226,7 +165,7 @@ const App = () => {
                 <Route exact path="/admin"><Admin /></Route>
 
                 {/* Not found component which will display if a URL doesn't match a route */}
-                {/* <Route component={NotFound} /> */}
+                <Route component={NotFound} />
               </Switch>
             </Container>
 

@@ -17,9 +17,6 @@ import {
     ListItemText
 } from "@material-ui/core"
 import MenuIcon from '@material-ui/icons/Menu'
-import EcoIcon from '@material-ui/icons/Eco';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import PhoneIcon from '@material-ui/icons/Phone';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import EcoRoundedIcon from '@material-ui/icons/EcoRounded';
@@ -50,16 +47,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = ({history}) => {
 
-    const menuLinks = {
-        account: "My Account",
-        plants: "Plants",
-        contact: "contact",
-        admin: "Admin",
-        login: "login",
-        logout: "logout",
-        register: "Register"
-    }
-    
+    const {store, dispatch} = useGlobalState()
+    const {loggedInUser, quotePlants, admin } = store
+
+    const classes = useStyles()
+
+    const [anchorEl, setAnchorEl] = React.useState(null)
+    const open = Boolean(anchorEl);
+
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down("xs"))
+
     // Logout user
     function handleLogout() {
         logoutUser().then((response) => {
@@ -76,17 +74,6 @@ const Navbar = ({history}) => {
         
         history.push('/auth/login')
     }
-
-    const {store, dispatch} = useGlobalState()
-    const {loggedInUser, quotePlants, admin } = store
-
-    const classes = useStyles()
-
-    const [anchorEl, setAnchorEl] = React.useState(null)
-    const open = Boolean(anchorEl);
-
-    const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down("xs"))
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget)

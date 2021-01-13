@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useGlobalState } from '../config/store'
-import { loginUser, setLoggedInUser, setAdmin } from '../services/authServices'
+import { loginUser, setLoggedInUser } from '../services/authServices'
+import { alertBanner } from './Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -94,7 +95,7 @@ const Login = ({history}) => {
                 loggedInUserRedirect()
             ) : (
                 <>
-                    {errorMessage && <p>{errorMessage}</p>}
+                    {errorMessage && alertBanner(errorMessage)}
                     <Grid container justify="center">
                         <Typography variant="h2">Log In</Typography>
                     </Grid>

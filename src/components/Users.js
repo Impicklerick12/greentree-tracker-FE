@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -11,9 +11,9 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    CircularProgress,
-    Button
+    CircularProgress
 } from '@material-ui/core';
+
 const useStyles = makeStyles((theme) => ({
     userEmail: {
         filter: "blur(3px)",
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Users = ({users, loading}) => {
     const classes = useStyles()
-
     return (
         <div>
             <Typography variant="h2">Users</Typography>

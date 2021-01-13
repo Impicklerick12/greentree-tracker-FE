@@ -40,13 +40,12 @@ const Plants = () => {
     const classes = useStyles();
 
     const { store } = useGlobalState()
-    const { plants, searchValue } = store
-    // console.log("Plants: ", plants)
+    const { plants } = store
 
     const [filteredPlants, setFilteredPlants] = useState([])
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [plantsPerPage, setPlantsPerPage] = useState(12)
+    const [plantsPerPage] = useState(12)
     const [noFilteredPlants, setNoFilteredPlants] = useState(false)
     const [loading, setLoading] = useState(false)
 

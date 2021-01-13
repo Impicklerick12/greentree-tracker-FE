@@ -5,6 +5,8 @@ import { addPlant } from '../services/plantServices'
 import { config } from '../config/awsConfig'
 import S3 from 'aws-s3';
 
+import { successBanner, alertBanner } from './Alerts'
+
 import { makeStyles } from '@material-ui/core/styles';
 import {
     TextField, 
@@ -17,7 +19,6 @@ import {
     LinearProgress,
     Grid
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,12 +48,26 @@ const useStyles = makeStyles((theme) => ({
 const NewPlant = ({history}) => {
 
     const classes = useStyles();
+    const { store, dispatch } = useGlobalState()
+    const { plants } = store
 
-    // Gets the next available id for a new post 
-    function getNextId(){
-        const ids = plants.map((plant) => plant._id)
-        return ids.sort()[ids.length-1] + 1
-    }
+    const initialFormState = {
+        common_name: "",
+        botanical_name: "",
+        plant_image: "",
+        category: "",
+        description: "",
+        pot_size: "",
+        quantity: 0,
+        price: 0
+    } 
+
+    const [formState, setFormState] = useState(initialFormState);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [category, setCategory] = useState('');
+    const [potSize, setPotSize] = useState('');
+    const [upload, setUpload] = useState(true)
+    const [loading, setLoading] = useState(null);
 
     function handleChange(event) {
         const name = event.target.name
@@ -143,31 +158,9 @@ const NewPlant = ({history}) => {
             });
     };
 
-    const initialFormState = {
-        common_name: "",
-        botanical_name: "",
-        plant_image: "",
-        category: "",
-        description: "",
-        pot_size: "",
-        quantity: 0,
-        price: 0
-    } 
-
-    const [formState, setFormState] = useState(initialFormState);
-    const [errorMessage, setErrorMessage] = useState(null);
-    const [category, setCategory] = useState('');
-    const [potSize, setPotSize] = useState('');
-    const [upload, setUpload] = useState(true)
-    const [loading, setLoading] = useState(null);
-
-
-    const { store, dispatch } = useGlobalState()
-    const { plants } = store
-
     return (
         <div>
-            {errorMessage && <p>{errorMessage}</p>}
+            {errorMessage && alertBanner(errorMessage)}
             <Typography variant="h2">New Plant</Typography>
             <form className={classes.root} onSubmit={handleSubmit}>
                 <div>
@@ -209,7 +202,7 @@ const NewPlant = ({history}) => {
                         { loading ? (
                             <LinearProgress color="secondary"/>
                         ) : (
-                            <Alert severity="success">Image upload Successful!</Alert>
+                            successBanner("Image upload Successful!")
                         )}
                     </Grid>
                 )}
