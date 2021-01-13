@@ -234,6 +234,7 @@ const App = () => {
           {/* <Footer /> */}
 
         </BrowserRouter>
+        <Footer />
       </StateContext.Provider>
     </div>
   );
