@@ -6,6 +6,12 @@ export default function (state, action) {
                 loggedInUser: action.data
             }
         }
+        case "setUserId": {
+            return {
+                ...state,
+                userId: action.data
+            }
+        }
         case "setPlants": {
             return {
                 ...state,

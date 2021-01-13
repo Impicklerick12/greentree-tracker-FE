@@ -4,7 +4,7 @@ import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
 import { getPlantFromId, getAllPlants } from './services/plantServices'
 import { getCart } from './services/cartServices'
-import { getLoggedInUser, userAdmin } from './services/authServices'
+import { getLoggedInUser, userAdmin, getUserId } from './services/authServices'
 
 import {
   Navbar,
@@ -19,6 +19,7 @@ import {
   Contact,
   Admin,
   NotFound,
+  Footer
 } from './Exports'
 
 import {
@@ -32,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
     fontFamily: "Arial",
+  },
+  container: {
+    // height: '100%'
   }
 }));
 
@@ -42,6 +46,7 @@ const App = () => {
   const initialState = {
     plants: [],
     loggedInUser: null,
+    userId: null,
     quotePlants: [],
     quoteRequestData: [],
     submittedQuotes: [],
@@ -91,6 +96,21 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    // Checking the local storage to see if there is a userId
+    const currentUserId = getUserId()
+    // If current userId, set global state again to current userId
+    if (currentUserId) {
+      dispatch({
+          type: "setUserId",
+          data: currentUserId,
+      });
+    } else {
+      console.log("No userId in Local Storage");
+    }
+  }, []);
+
+  // ONLY CURRENTLY WORKING IN DEVELOPMENT 
+  useEffect(() => {
     userAdmin().then((res) => {
       console.log(res.status)
       dispatch({
@@ -124,7 +144,7 @@ const App = () => {
           {/* Navbar Component */}
           <Navbar />
 
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" className={classes.container}>
                 {loggedInUser 
                 ? (
                   <>
@@ -173,6 +193,7 @@ const App = () => {
           {/* <Footer /> */}
 
         </BrowserRouter>
+        <Footer />
       </StateContext.Provider>
     </div>
   );

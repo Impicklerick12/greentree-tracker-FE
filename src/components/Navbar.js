@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
-import { logoutUser, removeLoggedInUser } from '../services/authServices'
+import { logoutUser, removeLoggedInUser, removeUserId } from '../services/authServices'
 import logo from '../images/logo.png';
 
 import {
@@ -33,7 +33,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -71,7 +71,7 @@ const Navbar = ({history}) => {
             data: null
         })
         removeLoggedInUser()
-        
+        removeUserId()
         history.push('/auth/login')
     }
 

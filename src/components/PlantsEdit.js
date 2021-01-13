@@ -124,6 +124,7 @@ const PlantsEdit = ({history, match}) => {
         history.goBack()
     }
     
+    
     const initialFormState = {
         common_name: "",
         botanical_name: "",

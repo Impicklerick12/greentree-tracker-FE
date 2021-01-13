@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useGlobalState } from '../config/store'
 import { withRouter } from 'react-router-dom'
 import { getAllQuotes } from '../services/quoteServices.js'
-import { findAllUsers } from '../services/authServices.js'
+import { findAllUsers } from '../services/authServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
