@@ -108,6 +108,11 @@ const Login = ({history}) => {
     
     return (
         <div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
@@ -131,6 +136,19 @@ const Login = ({history}) => {
                     </Grid>
                 </>
             )}
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
         </div>
     )
 }
