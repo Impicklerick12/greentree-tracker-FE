@@ -1,8 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { getQueriesForElement } from '@testing-library/dom'
+import ReactDOM from 'react-dom';
+import { getQueriesForElement } from '@testing-library/dom';
 
-import { App } from '../App'
+import App from '../App'
 
 test("Renders the correct content", () => {
     // Render the React App component to DOM
@@ -15,5 +15,4 @@ test("Renders the correct content", () => {
     // expect(root.querySelector("h1").textContent).toBe("Home")
 
     expect(getByText("Guest")).not.toBeNull();
-    
 })
