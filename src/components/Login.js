@@ -3,6 +3,7 @@ import { useGlobalState } from '../config/store'
 import { loginUser, setLoggedInUser, setAdmin } from '../services/authServices'
 
 import { makeStyles } from '@material-ui/core/styles';
+import { sizing } from '@material-ui/core';
 import { 
     Grid,
     TextField,
@@ -13,7 +14,7 @@ import {
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
-        margin: theme.spacing(1),
+        margin: theme.spacing(1)
       },
     },
     textArea: {
@@ -108,11 +109,6 @@ const Login = ({history}) => {
     
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
@@ -136,19 +132,6 @@ const Login = ({history}) => {
                     </Grid>
                 </>
             )}
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
         </div>
     )
 }
