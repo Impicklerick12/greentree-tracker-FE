@@ -110,7 +110,7 @@ const Admin = ({history}) => {
                                 </Grid>
                                 <Grid item>
                                     <Paper className={classes.paper}>
-                                        <Users users={users}/>
+                                        <Users users={users} loading={userLoading} />
                                     </Paper>
                                 </Grid>
                             </Grid>
