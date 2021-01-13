@@ -51,42 +51,33 @@ const Login = ({history}) => {
         // For use when connecting to SERVER
         event.preventDefault()
         // Attempt login on server
-        loginUser(userDetails).then((res) => {
-            let currentUser = res.user
-            console.log(currentUser)
-
-            if (currentUser.role === "admin") {
+        loginUser(userDetails)
+            .then((res) => {
+                let currentUser = res.user
+                setLoggedInUser(currentUser.username)
                 dispatch({
-                    type:'setAdmin',
-                    data: true
+                    type: "setLoggedInUser",
+                    data: userDetails.username
                 })
-                history.push('/admin')
-            }
-
-            setLoggedInUser(currentUser.username)
-            dispatch({
-                type: "setLoggedInUser",
-                data: userDetails.username
+                if (currentUser.role === "admin") {
+                    dispatch({
+                        type:'setAdmin',
+                        data: true
+                    })
+                    history.push('/admin')
+                }
             })
-        }).catch((error) => {
-            if (error.response && error.response.status === 401)
-                setErrorMessage("Authentication failed. Please check your username and password.")
-            else   
-                setErrorMessage("There may be a problem with the server. Please try again after a few moments.")
-        })
+            .catch((error) => {
+                if (error.response && error.response.status === 401)
+                    setErrorMessage("Authentication failed. Please check your username and password.")
+                else   
+                    setErrorMessage("There may be a problem with the server. Please try again after a few moments.")
+            })
     }
 
     function loggedInUserRedirect() {
         history.goBack()
     }
-
-    // Login User - Will not need in production. Use handleSubmit function
-    // function loginUser() {
-    //     dispatch({
-    //         type: "setLoggedInUser",
-    //         data: userDetails.username
-    //     })
-    // }
     
     return (
         <div>
