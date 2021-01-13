@@ -84,7 +84,7 @@ const Footer = () => {
                             </Link>
                         
                         <p>
-                            <Link variant="body2" onClick={() => {console.log('plants clicked')}>
+                            <Link variant="body2" onClick={() => {console.log('plants clicked')}}>
                                 Plants
                             </Link>
                         </p>
