@@ -76,7 +76,10 @@ const SubmittedQuotes = ({quote}) => {
                 })
                 setUserDataLoading(false)
             })
-            .catch((error) => console.log(error))  
+            .catch((error) => {
+                console.log(error)
+                setUserDataLoading(false)
+            })  
         }
     }, [])
 
