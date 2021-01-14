@@ -1,13 +1,15 @@
 import React from 'react'
 import { 
     Grid,
-    Box,
-    BottomNavigation
+    BottomNavigation,
+    Typography,
+    Link,
+    IconButton
 } from '@material-ui/core'
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+
+import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
+import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
+import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -22,7 +24,16 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         width: '100%',
         bottom: 0,
-        height: 200
+        height: '200px'
+    },
+    info: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    pages: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     }
   }));
 
@@ -32,13 +43,59 @@ const Footer = () => {
 
     return (
         <div>
-            <BottomNavigation
-                showLabels
-                className={classes.root}
-                >
-                <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-                <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-                <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+            <hr />
+            <BottomNavigation className={classes.root}>
+                <Grid container spacing={2} style={{ backgroundColor: 'transparent', boxShadow: 'none', color: 'black'}}>
+                    <Grid item xs={4}>
+                        <Typography variant="body2" align="center" display="block">
+                            Disclaimer
+                        </Typography>
+                        <Typography variant="body2" align="center" display="block">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
+                            do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={4} align="center" className={classes.info}>
+                        <Typography variant="body2" align="center" display="block">
+                            Contact
+                        </Typography>
+                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <PhoneRoundedIcon fontSize="small" />
+                            <Typography variant="body2" align="center" display="block">
+                                (07) 3800 1983
+                            </Typography>
+                        </IconButton>
+                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <EmailRoundedIcon fontSize="small" />
+                            <Typography variant="body2" align="center" display="block">
+                                nursery@nurserywholesale.com.au
+                            </Typography>
+                        </IconButton>
+                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <BusinessRoundedIcon fontSize="small" />
+                            <Typography variant="body2" align="center" display="block">
+                                14 Adelaide Street, Brisbane QLD 4000
+                            </Typography>
+                        </IconButton>
+                    </Grid>
+                    <Grid item xs={4} align="center" className={classes.pages}>
+                        <Typography variant="body2" display="block">
+                            Pages
+                        </Typography>
+                        <Link variant="body2" onClick={() => {console.log('home clicked')}}>
+                            Home
+                        </Link>
+                        <Link variant="body2" onClick={() => {console.log('plants clicked')}}>
+                            Plants
+                        </Link>
+                        <Link variant="body2" onClick={() => {console.log('contact us clicked')}}>
+                            Contact Us
+                        </Link>
+                        <Link variant="body2" onClick={() => {console.log('account clicked')}}>
+                            Login to Account
+                        </Link>
+                    </Grid>
+                </Grid>
             </BottomNavigation>
         </div>
     )

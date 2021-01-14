@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import StockPlant from '../images/stock-plant.jpg'
 
@@ -11,7 +11,7 @@ import {
     CardActionArea
 } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = plant => makeStyles((theme) => ({
     root: {
         margin: theme.spacing(2),
     },
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "30px",
         minWidth: 200,
         minHeight: 300,
-        backgroundImage: `url(${StockPlant})`, // or plant_image from DB
+        backgroundImage: `url(${plant.plant_image ? plant.plant_image : StockPlant})`, // or plant_image from DB
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         filter: "grayscale(20%)",
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PlantsEach = ({history, plant}) => {
 
-    const classes = useStyles();
+    const classes = useStyles(plant)();
 
     // If we don't have a plant, return null
     if (!plant) return null
@@ -64,8 +64,7 @@ const PlantsEach = ({history, plant}) => {
     const { 
         common_name, 
         botanical_name, 
-        price,
-        plant_image
+        price
     } = plant
 
     return (

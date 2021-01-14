@@ -6,6 +6,12 @@ export default function (state, action) {
                 loggedInUser: action.data
             }
         }
+        case "setUserId": {
+            return {
+                ...state,
+                userId: action.data
+            }
+        }
         case "setPlants": {
             return {
                 ...state,
@@ -36,10 +42,10 @@ export default function (state, action) {
                 searchValue: action.data
             }
         }
-        case "setUserAdmin": {
+        case "setAdmin": {
             return {
                 ...state,
-                userAdmin: action.data
+                admin: action.data
             }
         }
         case "setError": {

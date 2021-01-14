@@ -4,6 +4,7 @@ import { useGlobalState } from '../config/store'
 import StockPlant from '../images/stock-plant.jpg'
 import { deletePlant } from '../services/plantServices'
 import { addPlantToCart } from '../services/cartServices'
+import { alertBanner } from './Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -64,7 +65,7 @@ const PlantsShow = ({history, plant, capitalize}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { plants, loggedInUser } = store
+    const { plants, loggedInUser, admin } = store
 
     const initialQuoteFormState = {
         quantity: 1,
@@ -73,6 +74,7 @@ const PlantsShow = ({history, plant, capitalize}) => {
 
     const [quoteFormState, setQuoteFormState] = useState(initialQuoteFormState)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [cartErrorMessage, setCartErrorMessage] = useState(null)
 
     // If we don't have a plant, return null
     if (!plant) return null
@@ -153,16 +155,17 @@ const PlantsShow = ({history, plant, capitalize}) => {
             const status = error.response ? error.response.status : 500
             console.log("caught error on Add to cart", error)
             if(status === 403) {
-                setErrorMessage("There was an error adding the plant to your cart")
+                setCartErrorMessage("There was an error adding the plant to your cart")
             } else {
-                setErrorMessage("Well, this is embarrassing... There was a problem on the server.")
+                setCartErrorMessage("Well, this is embarrassing... There was a problem on the server.")
             }
         })
     }
 
     return (
         <div>
-            {errorMessage && <p>{errorMessage}</p>}
+            {errorMessage && alertBanner(errorMessage)}
+            {cartErrorMessage && alertBanner(cartErrorMessage)}
             <Card className={classes.root}>
                 <Grid container className={classes.plant}>
                     <Grid item sm={12} md={6} className={classes.details}>
@@ -197,7 +200,7 @@ const PlantsShow = ({history, plant, capitalize}) => {
                                 </Typography>
                             </Grid>
                             {/* NEED TO CHANGE TO ONLY ADMIN ROLE */}
-                            { loggedInUser && (
+                            { admin && (
                                 <Grid item>
                                     <CardActions>
                                         <IconButton aria-label="edit" color="primary" onClick={handleEdit}>

@@ -1,17 +1,16 @@
 import react, { useState } from 'react';
-import { useGlobalState } from '../config/store'
+
 import {
     Grid,
     Paper,
-    InputBase,
     Radio,
     RadioGroup,
     FormControlLabel,
     FormControl,
-    FormLabel
+    FormLabel,
+    Button
 } from '@material-ui/core'
-
-import SearchIcon from '@material-ui/icons/Search';
+import grey from '@material-ui/core/colors/grey'
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +21,13 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        padding: theme.spacing(3),
+        backgroundColor: grey[100],
+        border: `2px solid ${grey[600]}`,
+        borderRadius: '4px',
+        [theme.breakpoints.down('sm')]: {
+            flexWrap: 'wrap'
+        },
     },
     search: {
         position: 'relative',
@@ -61,75 +67,178 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     radioChecks: {
+        '&$checked': {
+            colour: 'green'
+        }
+    },
+    filterButtons: {
+        display: 'flex',
+        flexDirection: 'column',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            flexDirection: 'row',
+        },
+    },
+    buttons: {
+        margin: theme.spacing(0.5)
     }
   }));
 
-const FilerOptions = () => {
+const FilerOptions = ({filterOptions}) => {
+    // const [searchValue, setSearchValue] = useState(null)
 
-    const { dispatch } = useGlobalState()
+    const initialFilterState = {
+        category: null,
+        pot_size: null,
+        price: null
+    }
+    const [filters, setFilters] = useState(initialFilterState)
+    // console.log("Filters: ", filters)
 
-    const [value, setValue] = useState(null);
-    const [searchValue, setSearchValue] = useState(null)
+    const handleFilterChange = (event) => {
+        let filterType = event.target.name
+        let filterValue = event.target.value
 
-    const handleChange = (event) => {
-        
-    };
-
-    const handleSearchChange = (event) => {
-
-        setSearchValue(event.target.value)
-
-        dispatch({
-            type: "setSearchValue",
-            data: searchValue
+        setFilters({
+            ...filters,
+            [filterType]: filterValue
         })
     }
+    
+    const submitFilters = () => {
+        function clean(obj) {
+            for (var propName in obj) {
+              if (obj[propName] === null || obj[propName] === undefined) {
+                delete obj[propName];
+              }
+            }
+            return obj
+        }
 
+        let filteredOptions = clean(filters)
+        // console.log(filteredOptions)
+        filterOptions(filteredOptions)
+    }
+
+    const handleReset = () => {
+        setFilters(initialFilterState)
+        filterOptions(null)
+    }
+
+    // const handleSearchChange = (event) => {
+
+    //     setSearchValue(event.target.value)
+
+    //     dispatch({
+    //         type: "setSearchValue",
+    //         data: searchValue
+    //     })
+    // }
+    
     const classes = useStyles()
+
+    const categoryRadio = {
+        "Tree": 'tree',
+        "Shrub": 'shrub',
+        "Grass": 'grass',
+        'Ground Cover': 'ground cover'
+    }
+
+    const potSizeRadio = ["140mm", "250mm", "350mm"]
+
+    // const priceRadio = {
+    //     "Less than $50": "50",
+    //     "Less than $100": "99",
+    //     "More than $100": "100"
+    // }
+
+    const createRadio = (obj) => {
+        let array = []
+        for (let x in obj) {
+           array.push(<FormControlLabel value={obj[x]} control={<Radio />} label={x} key={obj[x]}/>)
+        }
+        return array
+    }
 
     return (
         <Grid container>
             <Grid item className={classes.container}>
-                <Paper className={classes.paper}>
-                    <div>
+                <Paper>
+                    {/* SEARCH FUNCTION FIELD */}
+                    {/* <div>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                onChange={handleSearchChange}
                                 placeholder="Search Plants…"
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
-                                inputProps={{ 'aria-label': 'search' }}
+                                inputProps={{ 'key': 'search' }}
                             />
                         </div>
-                    </div>
-                    <div className={classes.radioChecks}>
-                        <div className={classes.category}>
+                    </div> */}
+                    <Grid container className={classes.paper}>
+                        <Grid className={classes.radioChecks}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Category</FormLabel>
-                                <RadioGroup row aria-label="Category" name="category" value={value} onChange={handleChange}>
-                                    <FormControlLabel value="tree" control={<Radio />} label="Tree" />
-                                    <FormControlLabel value="shrub" control={<Radio />} label="Shrub" />
-                                    <FormControlLabel value="grass" control={<Radio />} label="Grass" />
-                                    <FormControlLabel value="ground_cover" control={<Radio />} label="Ground Cover" />
+                                <RadioGroup 
+                                    row
+                                    key="Category" 
+                                    name="category" 
+                                    value={filters.category} 
+                                    onChange={handleFilterChange}
+                                >
+                                    { createRadio(categoryRadio) }
                                 </RadioGroup>
                             </FormControl>
-                        </div>
-                        <div className={classes.potSize}>
+                        </Grid>
+                        <Grid className={classes.radioChecks}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Pot Size</FormLabel>
-                                <RadioGroup row aria-label="Pot Size" name="pot_size" value={value} onChange={handleChange}>
-                                    <FormControlLabel value="140mm" control={<Radio />} label="140mm" />
-                                    <FormControlLabel value="250mm" control={<Radio />} label="250mm" />
-                                    <FormControlLabel value="350mm" control={<Radio />} label="350mm" />
+                                <RadioGroup 
+                                    row
+                                    key="Pot Size" 
+                                    name="pot_size" 
+                                    value={filters.pot_size} 
+                                    onChange={handleFilterChange}
+                                >
+                                    { potSizeRadio.map( (pot, i) => {
+                                        return <FormControlLabel value={pot} control={<Radio />} label={pot} key={i.toString()}/>
+                                    })}
                                 </RadioGroup>
                             </FormControl>
-                        </div>
-                    </div>
+                        </Grid>
+                        {/* PRICE RADIO BUTTONS */}
+                        {/* <div className={classes.price}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Price</FormLabel>
+                                <RadioGroup row key="price" name="price" value={filters.price} onChange={handleFilterChange}>
+                                    { createRadio(priceRadio) }
+                                </RadioGroup>
+                            </FormControl>
+                        </div> */}
+                        <Grid className={classes.filterButtons}>
+                            <Button 
+                                variant="contained" 
+                                color="primary"
+                                onClick={submitFilters}
+                                className={classes.buttons}
+                            >
+                                Filter
+                            </Button>
+                            <Button 
+                                variant="outlined" 
+                                color="secondary"
+                                onClick={handleReset}
+                                className={classes.buttons}
+                            >
+                                Reset
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Paper>
             </Grid>
         </Grid>

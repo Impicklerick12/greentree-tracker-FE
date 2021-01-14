@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { getQueriesForElement } from '@testing-library/dom';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 
 import App from '../App'
 
@@ -12,7 +13,16 @@ test("Renders the correct content", () => {
     const { getByText, getByLabelText } = getQueriesForElement(root)
 
     // Use DOM APIs (querySelector) to make assertions
-    // expect(root.querySelector("h1").textContent).toBe("Home")
+    // Testing landing page, user not logged in
+    expect(root.querySelector("p").textContent).toBe("Welcome Guest")
+    expect(getByText("Who are we?")).not.toBe(null)
+    expect(getByText("What we offer?")).not.toBe(null)
+    expect(getByText("Where to find us")).not.toBe(null)
 
-    expect(getByText("Guest")).not.toBeNull();
+    expect(root.querySelector("header")).not.toBe(null)
+    // Should not have an Admin or logout link if guest is not signed in
+    expect(root.querySelector("span").title).not.toBe("Admin")
+    expect(root.querySelector("span").textContent).not.toBe("Logout")
+    expect(root.querySelector("span").title).not.toBe("Login")
+    expect(root.querySelector("button").textContent).toBe("Register")
 })

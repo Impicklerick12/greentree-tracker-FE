@@ -6,7 +6,7 @@ describe('Testing the login functionality', () => {
 
     it('should log us in with a username name and password', () => {
         // Login span link is present in the Header
-        cy.contains('span', 'Login').click()
+        cy.get('button[id="login"]').click()
         // Once login is clicked, the new URL should contain 'auth/login'
         cy.url().should('contain', 'auth/login')
 
@@ -21,14 +21,15 @@ describe('Testing the login functionality', () => {
         // Should be logged in, and expect to see username on page
         cy.contains(username)
         // Expect to see the account link
-        cy.contains('span', 'My Account')
+        cy.get('button[id="account"]')
         // Expect to see the log out link
-        cy.contains('span', 'Logout')
+        cy.get('button[id="logout"]')
+
     })
 
     it('should not log us in with wrong credentials', () => {
         // Login span link is present in the Header
-        cy.contains('span', 'Login').click()
+        cy.get('button[id="login"]').click()
         // Once login is clicked, the new URL should contain 'auth/login'
         cy.url().should('contain', 'auth/login')
 
@@ -41,11 +42,11 @@ describe('Testing the login functionality', () => {
         cy.get('button[type="submit"]').click()
 
         // error message is shown and we remain on the login page
-        cy.contains('p', 'Authentication failed. Please check your username and password.')
+        cy.contains('div', 'Authentication failed. Please check your username and password.')
         cy.url().should('contain', '/login')
         // Expect to see the Login link
-        cy.contains('span', 'Login')
+        cy.get('button[id="login"]')
         // Expect to see the Register link
-        cy.contains('span', 'Register')
+        cy.get('button[id="register"]')
     })
 })

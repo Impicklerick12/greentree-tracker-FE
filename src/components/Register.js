@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useGlobalState } from '../config/store'
 import { registerUser } from '../services/authServices'
-
+import { alertBanner } from './Alerts'
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid,
@@ -46,11 +46,6 @@ const Register = ({history}) => {
     }
 
     function handleSubmit(event) {
-        // event.preventDefault()
-        // registerUser()
-        // history.goBack()
-
-        // CONNECTION TO SERVER IN DEPOLYMENT
         event.preventDefault()
         registerUser(userDetails).then(() => {
             dispatch({
@@ -78,11 +73,16 @@ const Register = ({history}) => {
  
     return (
         <div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
                 <div>
-                    {errorMessage && <p>{errorMessage}</p>}
+                    {errorMessage && alertBanner(errorMessage)}
                     <Grid container justify="center">
                         <Typography variant="h2">Register</Typography>
                     </Grid>
@@ -110,6 +110,19 @@ const Register = ({history}) => {
                     </Grid>
                 </div>
             )}
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
         </div>
     )
 }

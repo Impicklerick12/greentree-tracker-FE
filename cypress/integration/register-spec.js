@@ -8,7 +8,7 @@ describe('Testing the Register functionality', () => {
             // If not signed in, expect Guest to be shown
             cy.contains('Guest')
             // Login span link is present in the Header
-            cy.contains('span', 'Register').click()
+            cy.get('button[id="register"]').click()
             // Once login is clicked, the new URL should contain 'auth/login'
             cy.url().should('contain', 'auth/register')
 

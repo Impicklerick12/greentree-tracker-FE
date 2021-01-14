@@ -1,11 +1,10 @@
 import react, { useEffect, useReducer } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import plantData from './data/plant_data'
 import stateReducer from './config/stateReducer'
 import { StateContext } from './config/store'
 import { getPlantFromId, getAllPlants } from './services/plantServices'
 import { getCart } from './services/cartServices'
-import { userAuthenticated, setLoggedInUser, getLoggedInUser } from './services/authServices'
+import { getLoggedInUser, userAdmin, getUserId } from './services/authServices'
 
 import {
   Navbar,
@@ -33,6 +32,10 @@ require('dotenv').config()
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
+    fontFamily: "Arial",
+  },
+  container: {
+    // height: '100%'
   }
 }));
 
@@ -43,16 +46,17 @@ const App = () => {
   const initialState = {
     plants: [],
     loggedInUser: null,
+    userId: null,
     quotePlants: [],
     quoteRequestData: [],
     submittedQuotes: [],
     searchValue: null,
-    userAdmin: false
+    admin: null
   }
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants, quotePlants } = store
+  const { loggedInUser, plants, admin } = store
 
   function fetchAllPlants() {
     getAllPlants().then((plantData) => {
@@ -61,10 +65,6 @@ const App = () => {
         data: plantData
       })
     }).catch((error) => {
-      dispatch({
-        type: "setError",
-        data: true
-      })
       console.log("An error occurred fetching plants from the server:", error)
     })
   }
@@ -76,43 +76,13 @@ const App = () => {
         data: cartData
       })
     }).catch((error) => {
-      dispatch({
-        type: "setError",
-        data: true
-      })
       console.log("An error occurred fetching the cart from the server:", error)
     })
-    console.log("QuotePlants: ", quotePlants)
   }
-
-  // useEffect(() => {
-  //   // dispatch({
-  //   //   type: "setPlants",
-  //   //   data: plantData
-  //   // })
-
-  //   // TO USE IN PRODUCION - REPLACE CODE ABOVE
-	// 	userAuthenticated().then(() => {			 
-	// 		dispatch({
-	// 			type: "setLoggedInUser",
-	// 			data: getLoggedInUser()
-	// 		})
-	// 	}).catch((error) => {
-	// 		console.log("got an error trying to check authenticated user:", error)
-	// 		setLoggedInUser(null) 
-	// 		dispatch({
-	// 			type: "setLoggedInUser",
-	// 			data: null
-	// 		})
-	// 	})
-  //   // return a function that specifies any actions on component unmount
-  //   return () => {}
-  // },[])
 
   useEffect(() => {
     // Checking the local storage to see if there is a current user
     const currentUser = getLoggedInUser()
-
     // If current user, set global state again to current user
     if (currentUser) {
       dispatch({
@@ -124,22 +94,33 @@ const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // Checking the local storage to see if there is a current admin
-  //   // If not, set the admin to false
-  //   const isAdmin = getAdmin()
-  //   console.log(isAdmin)
+  useEffect(() => {
+    // Checking the local storage to see if there is a userId
+    const currentUserId = getUserId()
+    // If current userId, set global state again to current userId
+    if (currentUserId) {
+      dispatch({
+          type: "setUserId",
+          data: currentUserId,
+      });
+    } else {
+      console.log("No userId in Local Storage");
+    }
+  }, []);
 
-  //   // If current user, set global state again to current user
-  //   if (isAdmin) {
-  //     dispatch({
-  //         type: "setUserAdmin",
-  //         data: isAdmin,
-  //     });
-  //   } else {
-  //       console.log("No admin in Local Storage");
-  //   }
-  // }, []);
+  // ONLY CURRENTLY WORKING IN DEVELOPMENT 
+  useEffect(() => {
+    userAdmin().then((res) => {
+      console.log(res.status)
+      dispatch({
+        type:'setAdmin',
+        data: true
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  },[])
 
   useEffect(() => {
     fetchAllPlants()
@@ -154,30 +135,6 @@ const App = () => {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
-  // // Register user
-  // function registerUser(user) {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: user.username
-  //   })
-  // }
-
-  // // Login user
-  // function loginUser(user) {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: user.username
-  //   })
-  // }
-
-  // // Logout user
-  // function logoutUser() {
-  //   dispatch({
-  //     type: "setLoggedInUser",
-  //     data: null
-  //   })
-  // }
-
   return (
     <div className={classes.root}>
       <StateContext.Provider value={{store, dispatch}}>
@@ -186,14 +143,14 @@ const App = () => {
           {/* Navbar Component */}
           <Navbar />
 
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" className={classes.container}>
                 {loggedInUser 
                 ? (
                   <>
-                    <p>{loggedInUser}</p>
+                    <p>Welcome back {loggedInUser}</p>
                   </>
                 )
-                : (<p>Guest</p>)
+                : (<p>Welcome Guest</p>)
                 }
               <Switch>
                 {/* Home Component */}
@@ -227,7 +184,7 @@ const App = () => {
                 <Route exact path="/admin"><Admin /></Route>
 
                 {/* Not found component which will display if a URL doesn't match a route */}
-                {/* <Route component={NotFound} /> */}
+                <Route component={NotFound} />
               </Switch>
             </Container>
 
@@ -235,6 +192,7 @@ const App = () => {
           {/* <Footer /> */}
 
         </BrowserRouter>
+        <Footer />
       </StateContext.Provider>
     </div>
   );

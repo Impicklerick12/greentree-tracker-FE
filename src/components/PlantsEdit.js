@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { getPlantFromId, updatePlant } from '../services/plantServices'
+import { alertBanner } from './Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -123,6 +124,7 @@ const PlantsEdit = ({history, match}) => {
         history.goBack()
     }
     
+    
     const initialFormState = {
         common_name: "",
         botanical_name: "",
@@ -165,7 +167,7 @@ const PlantsEdit = ({history, match}) => {
             <Grid container justify="center">
                 <Typography variant="h2">Edit Plant</Typography>
             </Grid>
-            {errorMessage && <p>{errorMessage}</p>}
+            {errorMessage && alertBanner(errorMessage)}
             <Grid className={classes.container}>
                 <Grid item sm={12} md={6}>
                     <form className={classes.form} onSubmit={handleSubmit}>

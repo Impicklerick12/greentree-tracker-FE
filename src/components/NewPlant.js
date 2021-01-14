@@ -5,6 +5,8 @@ import { addPlant } from '../services/plantServices'
 import { config } from '../config/awsConfig'
 import S3 from 'aws-s3';
 
+import { successBanner, alertBanner } from './Alerts'
+
 import { makeStyles } from '@material-ui/core/styles';
 import {
     TextField, 
@@ -13,7 +15,9 @@ import {
     FormControl,
     InputLabel,
     Select,
-    MenuItem
+    MenuItem,
+    LinearProgress,
+    Grid
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,18 +39,35 @@ const useStyles = makeStyles((theme) => ({
     select: {
         display: "flex",
         justifyContent: "space-around",
+    },
+    loadingBar : {
+        width: '100%'
     }
   }));
 
 const NewPlant = ({history}) => {
 
     const classes = useStyles();
+    const { store, dispatch } = useGlobalState()
+    const { plants } = store
 
-    // Gets the next available id for a new post 
-    function getNextId(){
-        const ids = plants.map((plant) => plant._id)
-        return ids.sort()[ids.length-1] + 1
-    }
+    const initialFormState = {
+        common_name: "",
+        botanical_name: "",
+        plant_image: "",
+        category: "",
+        description: "",
+        pot_size: "",
+        quantity: 0,
+        price: 0
+    } 
+
+    const [formState, setFormState] = useState(initialFormState);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [category, setCategory] = useState('');
+    const [potSize, setPotSize] = useState('');
+    const [upload, setUpload] = useState(true)
+    const [loading, setLoading] = useState(null);
 
     function handleChange(event) {
         const name = event.target.name
@@ -118,6 +139,8 @@ const NewPlant = ({history}) => {
 
         let file = fileInput.current.files[0];
         let newFileName = fileInput.current.files[0].name;
+        setUpload(false)
+        setLoading(true)
         
         ReactS3Client.uploadFile(file, newFileName)
             .then(data => {
@@ -128,35 +151,16 @@ const NewPlant = ({history}) => {
 
                 if (data.status === 204) {
                     console.log("Image Upload Successful");
+                    setLoading(false)
                 } else {
                     console.log("Image Upload fail");
                 }
             });
     };
 
-    const initialFormState = {
-        common_name: "",
-        botanical_name: "",
-        plant_image: "",
-        category: "",
-        description: "",
-        pot_size: "",
-        quantity: 0,
-        price: 0
-    } 
-
-    const [formState, setFormState] = useState(initialFormState)
-    const [errorMessage, setErrorMessage] = useState(null)
-    const [category, setCategory] = React.useState('');
-    const [potSize, setPotSize] = React.useState('');
-
-
-    const { store, dispatch } = useGlobalState()
-    const { plants } = store
-
     return (
         <div>
-            {errorMessage && <p>{errorMessage}</p>}
+            {errorMessage && alertBanner(errorMessage)}
             <Typography variant="h2">New Plant</Typography>
             <form className={classes.root} onSubmit={handleSubmit}>
                 <div>
@@ -183,15 +187,25 @@ const NewPlant = ({history}) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div>
-                    <input 
-                        type="file" 
-                        name="plant_image" 
-                        accept="image/*"
-                        ref={fileInput} 
-                        onChange={handleClick}
-                    />
-                </div>
+                { upload ? (
+                    <div>
+                        <input 
+                            type="file" 
+                            name="plant_image" 
+                            accept="image/*"
+                            ref={fileInput} 
+                            onChange={handleClick}
+                        />
+                    </div>
+                ) : (
+                    <Grid container justify="center" className={classes.loadingBar}>
+                        { loading ? (
+                            <LinearProgress color="secondary"/>
+                        ) : (
+                            successBanner("Image upload Successful!")
+                        )}
+                    </Grid>
+                )}
                 <div className={classes.select}>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel id="demo-simple-select-outlined-label">
@@ -199,7 +213,7 @@ const NewPlant = ({history}) => {
                         </InputLabel>
                         <Select
                             labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
+                            id="category"
                             value={category}
                             onChange={handleCategoryChange}
                             label="Category"
@@ -216,7 +230,7 @@ const NewPlant = ({history}) => {
                         </InputLabel>
                         <Select
                             labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
+                            id="pot_size"
                             value={potSize}
                             onChange={handlePotSizeChange}
                             label="Pot Size"
