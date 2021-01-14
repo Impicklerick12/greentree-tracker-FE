@@ -59,7 +59,6 @@ const Login = ({history}) => {
                         type:'setAdmin',
                         data: true
                     })
-                    history.push('/admin')
                 }
                 setLoggedInUser(currentUser.username)
                 setUserId(currentUser._id)
