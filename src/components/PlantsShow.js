@@ -203,10 +203,10 @@ const PlantsShow = ({history, plant, capitalize}) => {
                             { admin && (
                                 <Grid item>
                                     <CardActions>
-                                        <IconButton aria-label="edit" color="primary" onClick={handleEdit}>
+                                        <IconButton id="edit" color="primary" onClick={handleEdit}>
                                             <EditIcon fontSize="large"/>
                                         </IconButton>
-                                        <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
+                                        <IconButton id="delete" color="secondary" onClick={handleDelete}>
                                             <DeleteIcon fontSize="large"/>
                                         </IconButton>
                                     </CardActions>

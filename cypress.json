@@ -6,6 +6,10 @@
           "email": "cypress@testing.com",
           "password": "Password123",
           "username": "CypressTesting"
+        },
+        "admin": {
+          "username": "Admin",
+          "password": "Password123"
         }
     }
 }

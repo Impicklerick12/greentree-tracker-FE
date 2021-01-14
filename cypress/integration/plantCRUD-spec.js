@@ -1,23 +1,12 @@
-describe('Testing the plant CRUD functionality', () => {
+describe('Testing the create plant functionality', () => {
     beforeEach(() => {
-        cy.visit('/')
-        // No logged in user
+        // log in admin
+        cy.loginAdmin()
     })
 
     it('should allow Admin account to create a plant', () => {
-        // Login span link is present in the Header
-        cy.get('button[id="login"]').click()
-        // Once login is clicked, the new URL should contain 'auth/login'
-        cy.url().should('contain', 'auth/login')
-        // sign in
-        const username = "Admin"
-        const password = "Password123"
-        cy.get('input[name="username"]').type(username)
-        cy.get('input[type="password"]').type(password)
-        cy.get('button[type="submit"]').click()
-
         // admin link should be present
-        cy.get('button[id="admin"]').click()
+        cy.visit('/admin')
         cy.url().should('contain', 'admin')
 
         // new plant information
@@ -45,7 +34,25 @@ describe('Testing the plant CRUD functionality', () => {
         cy.contains(common_name)
         cy.contains(botanical_name)
         cy.contains(description)
-        cy.contains(quantity)
         cy.contains(price)
+
+        // delete test plant
+        cy.get('button[id="delete"]').click()
+        cy.url().should('contain', '/plants')
+    })
+})
+
+
+describe("Testing that the user cannot perform CRUD functions", () => { 
+    beforeEach(() => {
+        // log in user
+        cy.loginUser()
+    })
+
+    it('should not allow a regular account to create a plant', () => {
+        // admin link should be not present
+        cy.visit('/admin').then((res) => {
+            expect(res.status).to.eq(403)
+        })
     })
 })
