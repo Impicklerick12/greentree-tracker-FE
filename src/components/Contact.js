@@ -29,7 +29,7 @@ const Contact = () => {
 
     return (
         <div>
-            <Box py={4} shadow="none" align="center">
+            <Box py={4} align="center">
                 <Typography variant="h6">
                     Contact Us
                 </Typography>
