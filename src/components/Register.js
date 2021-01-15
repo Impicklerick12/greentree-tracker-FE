@@ -7,7 +7,8 @@ import {
     Grid,
     TextField,
     Typography,
-    Button
+    Button,
+    Box
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
@@ -83,31 +84,33 @@ const Register = ({history}) => {
             ) : (
                 <div>
                     {errorMessage && <p>{errorMessage}</p>}
-                    <Grid container justify="center">
-                        <Typography variant="h2">Register</Typography>
-                    </Grid>
-                    <Grid container justify="center">
-                        <Grid item xs={10} sm={8} md={6} lg={4}>
-                            <form className={classes.root} onSubmit={handleSubmit}>
-                                <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
-                                </div>
-                                <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
-                                </div>
-                                <div>
-                                    {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField> */}
-                                </div>
-                                <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
-                                </div>
-                                <div>
-                                    {/* <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField> */}
-                                </div>
-                                <Button type="submit" value="Register">Register</Button>
-                            </form>
+                    <Box py={4} align="center">
+                        <Grid container justify="center">
+                            <Typography variant="h2">Register</Typography>
                         </Grid>
-                    </Grid>
+                        <Grid container justify="center">
+                            <Grid item xs={10} sm={8} md={6} lg={4}>
+                                <form className={classes.root} onSubmit={handleSubmit}>
+                                    <div>
+                                        <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
+                                    </div>
+                                    <div>
+                                        <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
+                                    </div>
+                                    <div>
+                                        {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField> */}
+                                    </div>
+                                    <div>
+                                        <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
+                                    </div>
+                                    <div>
+                                        {/* <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField> */}
+                                    </div>
+                                    <Button type="submit" value="Register">Register</Button>
+                                </form>
+                            </Grid>
+                        </Grid>
+                    </Box>
                 </div>
             )}
         </div>

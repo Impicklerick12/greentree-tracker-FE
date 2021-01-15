@@ -2,7 +2,6 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { logoutUser, removeLoggedInUser } from '../services/authServices'
-import logo from '../images/logo.png';
 
 import {
     AppBar,
@@ -34,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: "black",
+      color: "white",
     },
     title: {
       flexGrow: 1,
-      color: "black"
+      color: "white"
     }
   }));
 
@@ -92,7 +91,7 @@ const Navbar = ({history}) => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
+                <AppBar position="static" style={{ background: 'black', boxShadow: 'none' }}>
                     <Toolbar>
                         <Typography variant="h5" className={classes.title}>
                             Greentree Tracker
@@ -109,7 +108,7 @@ const Navbar = ({history}) => {
                             {isMobile ? (
                                 <>
                                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
-                                        <MenuIcon style={{ color: 'black' }} />
+                                        <MenuIcon/>
                                     </IconButton>
                                     <Menu
                                         id="menu-appbar"
@@ -203,7 +202,7 @@ const Navbar = ({history}) => {
                                             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
                                             </IconButton>
-                                            <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                                            <Button onClick={() => handleMenuClick('/auth/register')} style={{ color: 'white'}}>Register</Button>
                                         </>
                                     )}
                                 </>
@@ -211,7 +210,6 @@ const Navbar = ({history}) => {
                         </div>
                     </Toolbar>
                 </AppBar>
-            <hr />
             </div>
         </>
     )

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         width: '100%',
         bottom: 0,
-        height: 200
+        height: 200,
     }
   }));
 
@@ -34,10 +34,9 @@ const Footer = () => {
 
     return (
         <div>
-            <hr />
-            <BottomNavigation className={classes.root}>
-                <Grid container spacing={2} style={{ backgroundColor: 'transparent', boxShadow: 'none', color: 'black'}}>
-                    <Grid item xs={4}>
+            <BottomNavigation className={classes.root} style={{ backgroundColor: 'black' }} >
+                <Grid container spacing={2}>
+                    <Grid item xs={4} style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
                         <Typography variant="body2" align="center" display="block">
                             <p><b>Disclaimer</b></p>
                             <p>
@@ -46,7 +45,7 @@ const Footer = () => {
                             </p>
                         </Typography>
                     </Grid>
-                    <Grid item xs={4} align="center">
+                    <Grid item xs={4} align="center" style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
                         <Typography variant="body2" align="center" display="block">
                             <p><b>Contact</b></p>
                         </Typography>
@@ -75,7 +74,7 @@ const Footer = () => {
                             </IconButton>
                         </p>
                     </Grid>
-                    <Grid item xs={4} align="center">
+                    <Grid item xs={4} align="center" style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
                             <Typography variant="body2" display="block">
                                 <p><b>Pages</b></p>
                             </Typography>
