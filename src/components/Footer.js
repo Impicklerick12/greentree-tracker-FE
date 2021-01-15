@@ -3,15 +3,15 @@ import {
     Grid,
     BottomNavigation,
     Typography,
-    Link,
-    IconButton
+    IconButton,
+    Link
 } from '@material-ui/core'
-
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
-
 import { makeStyles } from '@material-ui/core/styles';
+import { MemoryRouter as Router } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,8 +26,12 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         height: 200,
     }
-  }));
+}));
 
+const LinkBehavior = React.forwardRef((props, ref) => (
+    <RouterLink ref={ref} to="/plants" {...props} />
+  ));
+  
 const Footer = () => {
 
     const classes = useStyles();
@@ -76,27 +80,25 @@ const Footer = () => {
                     </Grid>
                     <Grid item xs={4} align="center" style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
                             <Typography variant="body2" display="block">
-                                <p><b>Pages</b></p>
+                                Pages
                             </Typography>
                             <Link variant="body2" onClick={() => {console.log('home clicked')}}>
                                 Home
                             </Link>
-                        
-                        <p>
                             <Link variant="body2" onClick={() => {console.log('plants clicked')}}>
                                 Plants
                             </Link>
-                        </p>
-                        <p>
                             <Link variant="body2" onClick={() => {console.log('contact us clicked')}}>
                                 Contact Us
                             </Link>
-                        </p>
-                        <p>
                             <Link variant="body2" onClick={() => {console.log('account clicked')}}>
                                 Login to Account
                             </Link>
-                        </p>
+                            <Router>
+                                <div>
+                                    <Link component={LinkBehavior}>Plants</Link>
+                                </div>
+                            </Router>
                     </Grid>
                 </Grid>
             </BottomNavigation>
@@ -104,4 +106,4 @@ const Footer = () => {
     )
 }
 
-export default Footer
+export default Footer;
