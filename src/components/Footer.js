@@ -4,6 +4,7 @@ import {
     BottomNavigation,
     Typography,
     IconButton,
+    Button,
     Link
 } from '@material-ui/core'
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
@@ -12,6 +13,7 @@ import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 import { makeStyles } from '@material-ui/core/styles';
 import { MemoryRouter as Router } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
+import EcoRoundedIcon from '@material-ui/icons/EcoRounded';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,13 +30,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const LinkBehavior = React.forwardRef((props, ref) => (
-    <RouterLink ref={ref} to="/plants" {...props} />
-  ));
-  
 const Footer = () => {
 
-    const classes = useStyles();
+    const classes = useStyles()
 
     return (
         <div>
@@ -82,23 +80,10 @@ const Footer = () => {
                             <Typography variant="body2" display="block">
                                 Pages
                             </Typography>
-                            <Link variant="body2" onClick={() => {console.log('home clicked')}}>
-                                Home
-                            </Link>
-                            <Link variant="body2" onClick={() => {console.log('plants clicked')}}>
-                                Plants
-                            </Link>
-                            <Link variant="body2" onClick={() => {console.log('contact us clicked')}}>
-                                Contact Us
-                            </Link>
-                            <Link variant="body2" onClick={() => {console.log('account clicked')}}>
-                                Login to Account
-                            </Link>
-                            <Router>
-                                <div>
-                                    <Link component={LinkBehavior}>Plants</Link>
-                                </div>
-                            </Router>
+                            <a href="/">Home</a>
+                            <a href="/plants">Plants</a>
+                            <a href="/contact">Contact Us</a>
+                            <a href="/auth/login">Login to Account</a>
                     </Grid>
                 </Grid>
             </BottomNavigation>
