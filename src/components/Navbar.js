@@ -188,7 +188,7 @@ const Navbar = ({history}) => {
                                                 </ListItemIcon>
                                                 <ListItemText primary="Login" />
                                             </MenuItem>
-                                            <MenuItem id="register" onClick={() => handleMenuClick('/auth/register')} edge="start" color="inherit" aria-label="menu">
+                                            <MenuItem id="register" onClick={() => handleMenuClick('/auth/register')} edge="start" aria-label="menu">
                                                 <ListItemIcon>
                                                     <CheckBoxOutlineBlankIcon fontSize="large" className={classes.menuButton}/>
                                                 </ListItemIcon>
@@ -251,7 +251,7 @@ const Navbar = ({history}) => {
                                             >
                                                 <AccountCircleRoundedIcon fontSize="large" />
                                             </IconButton>
-                                            <Button id="register" onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                                            <Button id="register" onClick={() => handleMenuClick('/auth/register')} style={{ color: 'white'}}>Register</Button>
                                         </>
                                     )}
                                 </>
