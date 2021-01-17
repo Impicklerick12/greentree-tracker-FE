@@ -80,10 +80,12 @@ const Footer = () => {
                             <Typography variant="body2" display="block">
                                 Pages
                             </Typography>
-                            <a href="/">Home</a>
-                            <a href="/plants">Plants</a>
-                            <a href="/contact">Contact Us</a>
-                            <a href="/auth/login">Login to Account</a>
+                            <ui>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/plants">Plants</a></li>
+                                <li><a href="/contact">Contact Us</a></li>
+                                <li><a href="/auth/login">Login to Account</a></li>
+                            </ui>
                     </Grid>
                 </Grid>
             </BottomNavigation>
