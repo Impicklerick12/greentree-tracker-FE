@@ -116,6 +116,13 @@ const Register = ({history}) => {
                             </Grid>
                         </Grid>
                     </Box>
+                    <Box py={4}>
+                        <Grid item xs={12} align="center">
+                            <Typography variant="body2">
+                                <a href="/auth/login">Already registered? Login to your account.</a>
+                            </Typography>
+                        </Grid>
+                    </Box>
                 </div>
             )}
         </div>
