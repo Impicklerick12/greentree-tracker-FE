@@ -80,9 +80,19 @@ const Register = ({history}) => {
                 <div>
                     {errorMessage && alertBanner(errorMessage)}
                     <Box py={4}>
+                        <Grid item xs={12}>
+                            <Typography variant="body1" align="center">
+                            <p>Welcome to Greentree Tracker!</p> 
+                            <p>Customers are required to sign up for an account to be able to request a quote from our team.</p>
+                            </Typography>
+                        </Grid>
+                    </Box>
+                    <Box py={4}>
                         <Grid container justify="center">
                             <Typography variant="h2">Register</Typography>
                         </Grid>
+                    </Box>
+                    <Box py={4}>
                         <Grid container justify="center">
                             <Grid item xs={10} sm={8} md={6} lg={4}>
                                 <form className={classes.root} onSubmit={handleSubmit}>

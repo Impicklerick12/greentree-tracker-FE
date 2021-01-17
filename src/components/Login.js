@@ -95,6 +95,8 @@ const Login = ({history}) => {
                         <Grid container justify="center">
                             <Typography variant="h2">Log In</Typography>
                         </Grid>
+                    </Box>
+                    <Box py={4}>
                         <Grid container justify="center">
                             <Grid item xs={10} sm={8} md={6} lg={4}>
                                 <form className={classes.root} onSubmit={handleSubmit}>
@@ -107,6 +109,13 @@ const Login = ({history}) => {
                                     <Button type="submit" value="Sign In">Sign In</Button>
                                 </form>
                             </Grid>
+                        </Grid>
+                    </Box>
+                    <Box py={4}>
+                        <Grid item xs={12} align="center">
+                            <Typography variant="body2">
+                                <a href="/auth/register">Create new Greentree Tracker accout</a>
+                            </Typography>
                         </Grid>
                     </Box>
                 </>
