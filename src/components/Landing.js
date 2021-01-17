@@ -13,7 +13,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     color: {
-        color: "skyblue"
+        color: "black"
     },
     text: {
 
