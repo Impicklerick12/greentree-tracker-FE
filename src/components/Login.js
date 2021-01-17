@@ -8,14 +8,15 @@ import {
     Grid,
     TextField,
     Typography,
-    Button
+    Button,
+    Box
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
-        margin: theme.spacing(1),
-      },
+        margin: theme.spacing(1)
+    },
     },
     textArea: {
         width: '100%'
@@ -85,11 +86,6 @@ const Login = ({history}) => {
     
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
@@ -113,19 +109,6 @@ const Login = ({history}) => {
                     </Grid>
                 </>
             )}
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
         </div>
     )
 }

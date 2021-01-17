@@ -3,15 +3,17 @@ import {
     Grid,
     BottomNavigation,
     Typography,
-    Link,
-    IconButton
+    IconButton,
+    Button,
+    Link
 } from '@material-ui/core'
-
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
-
 import { makeStyles } from '@material-ui/core/styles';
+import { MemoryRouter as Router } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
+import EcoRoundedIcon from '@material-ui/icons/EcoRounded';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,65 +37,64 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-between'
     }
-  }));
+}));
 
 const Footer = () => {
 
-    const classes = useStyles();
+    const classes = useStyles()
 
     return (
         <div>
-            <hr />
-            <BottomNavigation className={classes.root}>
-                <Grid container spacing={2} style={{ backgroundColor: 'transparent', boxShadow: 'none', color: 'black'}}>
-                    <Grid item xs={4}>
+            <BottomNavigation className={classes.root} style={{ backgroundColor: 'black' }} >
+                <Grid container spacing={2}>
+                    <Grid item xs={4} style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
                         <Typography variant="body2" align="center" display="block">
-                            Disclaimer
-                        </Typography>
-                        <Typography variant="body2" align="center" display="block">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            <p><b>Disclaimer</b></p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
+                                do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            </p>
                         </Typography>
                     </Grid>
-                    <Grid item xs={4} align="center" className={classes.info}>
+                    <Grid item xs={4} align="center" style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
                         <Typography variant="body2" align="center" display="block">
-                            Contact
+                            <p><b>Contact</b></p>
                         </Typography>
-                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <PhoneRoundedIcon fontSize="small" />
-                            <Typography variant="body2" align="center" display="block">
-                                (07) 3800 1983
-                            </Typography>
-                        </IconButton>
-                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <EmailRoundedIcon fontSize="small" />
-                            <Typography variant="body2" align="center" display="block">
-                                nursery@nurserywholesale.com.au
-                            </Typography>
-                        </IconButton>
-                        <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <BusinessRoundedIcon fontSize="small" />
-                            <Typography variant="body2" align="center" display="block">
-                                14 Adelaide Street, Brisbane QLD 4000
-                            </Typography>
-                        </IconButton>
+                        <p>
+                            <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <PhoneRoundedIcon fontSize="small" />
+                                <Typography variant="body2" align="center" display="block">
+                                    (07) 3800 1983
+                                </Typography>
+                            </IconButton>
+                        </p>
+                        <p>
+                            <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <EmailRoundedIcon fontSize="small" />
+                                <Typography variant="body2" align="center" display="block">
+                                    nursery@nurserywholesale.com.au
+                                </Typography>
+                            </IconButton>   
+                        </p>
+                        <p>
+                            <IconButton variant="body2" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                                <BusinessRoundedIcon fontSize="small" />
+                                <Typography variant="body2" align="center" display="block">
+                                    14 Adelaide Street, Brisbane QLD 4000
+                                </Typography>
+                            </IconButton>
+                        </p>
                     </Grid>
-                    <Grid item xs={4} align="center" className={classes.pages}>
-                        <Typography variant="body2" display="block">
-                            Pages
-                        </Typography>
-                        <Link variant="body2" onClick={() => {console.log('home clicked')}}>
-                            Home
-                        </Link>
-                        <Link variant="body2" onClick={() => {console.log('plants clicked')}}>
-                            Plants
-                        </Link>
-                        <Link variant="body2" onClick={() => {console.log('contact us clicked')}}>
-                            Contact Us
-                        </Link>
-                        <Link variant="body2" onClick={() => {console.log('account clicked')}}>
-                            Login to Account
-                        </Link>
+                    <Grid item xs={4} align="center" style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
+                            <Typography variant="body2" display="block">
+                                Pages
+                            </Typography>
+                            <Typography variant="body2">
+                                <p><a href="/">Home</a></p>
+                                <p><a href="/plants">Plants</a></p>
+                                <p><a href="/contact">Contact Us</a></p>
+                                <p><a href="/auth/login">Login to Account</a></p>
+                            </Typography>
                     </Grid>
                 </Grid>
             </BottomNavigation>
@@ -101,4 +102,4 @@ const Footer = () => {
     )
 }
 
-export default Footer
+export default Footer;

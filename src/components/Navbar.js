@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: "black",
+      color: "white",
     },
     title: {
       flexGrow: 1,
-      color: "black"
+      color: "white"
     }
   }));
 
@@ -87,7 +87,7 @@ const Navbar = ({history}) => {
     return (
         <>
             <div className={classes.root}>
-                <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none' }}>
+                <AppBar position="static" style={{ background: 'black', boxShadow: 'none' }}>
                     <Toolbar>
                         <Typography variant="h5" className={classes.title}>
                             Greentree Tracker
@@ -259,7 +259,6 @@ const Navbar = ({history}) => {
                         </div>
                     </Toolbar>
                 </AppBar>
-            <hr />
             </div>
         </>
     )
