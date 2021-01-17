@@ -104,7 +104,7 @@ const Navbar = ({history}) => {
                             { isMobile ? (
                                 <>
                                     <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenu}>
-                                        <MenuIcon style={{ color: 'black' }} />
+                                        <MenuIcon style={{ color: 'white' }} />
                                     </IconButton>
                                     <Menu
                                         id="menu-appbar"
