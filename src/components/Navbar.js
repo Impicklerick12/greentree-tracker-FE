@@ -107,7 +107,7 @@ const Navbar = ({history}) => {
                             )}
                             {isMobile ? (
                                 <>
-                                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                    <IconButton edge="start" className={classes.menuButton} style={{ color: 'white'}} aria-label="menu" onClick={handleMenu}>
                                         <MenuIcon/>
                                     </IconButton>
                                     <Menu
