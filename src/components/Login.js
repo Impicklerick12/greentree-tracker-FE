@@ -92,6 +92,14 @@ const Login = ({history}) => {
                 <>
                     {errorMessage && alertBanner(errorMessage)}
                     <Box py={4}>
+                        <Grid item xs={12}>
+                            <Typography variant="body1" align="center">
+                            <p>Welcome to Greentree Tracker!</p> 
+                            <p>Customers are required to login to an active account to be able to request a quote from our team.</p>
+                            </Typography>
+                        </Grid>
+                    </Box>
+                    <Box py={4}>
                         <Grid container justify="center">
                             <Typography variant="h2">Log In</Typography>
                         </Grid>
