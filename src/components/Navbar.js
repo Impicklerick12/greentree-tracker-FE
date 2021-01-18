@@ -35,17 +35,11 @@ const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1
     },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      color: "white",
-    },
     icon: {
+        marginRight: theme.spacing(2),
         color: {
             xs: "black",
-            sm: "white",
-            md: "white",
-            lg: "white",
-            xl: "white",
+            sm: "white !important"
         }
     },
     title: {
@@ -228,7 +222,7 @@ const Navbar = ({history}) => {
                                         </>
                                     ) : (
                                         <>
-                                            <IconButton aria-label="menu" title="Home" className={classes.icon} onClick={() => handleMenuClick('/')} id="home">
+                                            <IconButton id="home" edge="start" color="inherit" aria-label="menu" title="Home" className={classes.icon} onClick={() => handleMenuClick('/')}>
                                                 <HomeRoundedIcon fontSize="large" />
                                             </IconButton>
                                             <IconButton id="plants" edge="start" color="inherit" aria-label="menu" title="Plants" className={classes.icon} onClick={() => handleMenuClick('/plants')}>
