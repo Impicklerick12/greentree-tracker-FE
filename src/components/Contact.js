@@ -39,7 +39,7 @@ const Contact = () => {
         <div>
             <Box py={4} align="center">
                 <ThemeProvider theme={theme}>
-                    <Typography variant="h4">
+                    <Typography variant="h3">
                         Contact Us
                     </Typography>
                 </ThemeProvider>

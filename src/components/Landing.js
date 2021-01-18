@@ -46,7 +46,7 @@ const Landing = () => {
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <ThemeProvider theme={theme}>
-                        <Typography className={classes.text} variant="h4" align="center" display="block">
+                        <Typography className={classes.text} variant="h3" align="center" display="block">
                             Who are we?
                         </Typography>
                         <Typography className={classes.text} variant="h6" align="center" display="block">
@@ -66,7 +66,7 @@ const Landing = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <ThemeProvider theme={theme}>
-                        <Typography className={classes.text} variant="h4" align="center" display="block">
+                        <Typography className={classes.text} variant="h3" align="center" display="block">
                             <p>What we offer?</p>
                         </Typography> 
                     <Typography className={classes.text} variant="h6" align="center" display="block">
@@ -80,7 +80,7 @@ const Landing = () => {
                 </Grid>
                 <Grid item xs={12} className={classes.color}>
                     <ThemeProvider theme={theme}>
-                        <Typography className={classes.text} variant="h4" align="center" display="block">
+                        <Typography className={classes.text} variant="h3" align="center" display="block">
                             Where to find us
                         </Typography>
                     </ThemeProvider>
