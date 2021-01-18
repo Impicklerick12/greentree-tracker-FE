@@ -78,7 +78,7 @@ const Footer = () => {
                     </Grid>
                     <Grid item xs={4} align="center" style={{ backgroundColor: 'black', boxShadow: 'none', color: 'white'}}>
                             <Typography variant="body2" display="block">
-                                Pages
+                                <b>Pages</b>
                             </Typography>
                             <Typography variant="body2">
                                 <p><a href="/">Home</a></p>

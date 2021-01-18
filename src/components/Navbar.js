@@ -160,7 +160,7 @@ const Navbar = ({history}) => {
                                             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
                                             </IconButton>
-                                            <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button>
+                                            {/* <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button> */}
                                         </>
                                     )}
                                     </Menu>
@@ -202,7 +202,7 @@ const Navbar = ({history}) => {
                                             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
                                             </IconButton>
-                                            <Button onClick={() => handleMenuClick('/auth/register')} style={{ color: 'white'}}>Register</Button>
+                                            {/* <Button onClick={() => handleMenuClick('/auth/register')} style={{ color: 'white'}}>Register</Button> */}
                                         </>
                                     )}
                                 </>
