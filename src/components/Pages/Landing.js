@@ -1,9 +1,9 @@
 import React from 'react'
 import AliceCarousel from 'react-alice-carousel';
 import "react-alice-carousel/lib/alice-carousel.css";
-import image1 from "../images/artem-kniaz-03Dhzux8mCI-unsplash.jpg";
-import image2 from "../images/george-bakos-SEFaaIjrjZA-unsplash.jpg";
-import image3 from "../images/stock-plant.jpg";
+import image1 from "../../images/artem-kniaz-03Dhzux8mCI-unsplash.jpg";
+import image2 from "../../images/george-bakos-SEFaaIjrjZA-unsplash.jpg";
+import image3 from "../../images/stock-plant.jpg";
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 

@@ -1,19 +1,13 @@
 import React from 'react'
 import { 
     Grid,
-    BottomNavigation,
     Typography,
     IconButton,
-    Button,
-    Link
 } from '@material-ui/core'
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import BusinessRoundedIcon from '@material-ui/icons/BusinessRounded';
 import { makeStyles } from '@material-ui/core/styles';
-import { MemoryRouter as Router } from 'react-router';
-import { Link as RouterLink } from 'react-router-dom';
-import EcoRoundedIcon from '@material-ui/icons/EcoRounded';
 
 const useStyles = makeStyles((theme) => ({
     footer: {

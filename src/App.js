@@ -43,6 +43,7 @@ const App = () => {
 
   const classes = useStyles();
 
+  // Set initial values for all global states
   const initialState = {
     plants: [],
     loggedInUser: null,
@@ -56,28 +57,33 @@ const App = () => {
 
   // Create state reducer store and dispatcher
   const [store, dispatch] = useReducer(stateReducer, initialState)
-  const { loggedInUser, plants, admin } = store
+  const { loggedInUser, plants } = store
 
   function fetchAllPlants() {
-    getAllPlants().then((plantData) => {
-      dispatch({
-        type: "setPlants",
-        data: plantData
+    getAllPlants()
+      .then((plantData) => {
+        dispatch({
+          type: "setPlants",
+          data: plantData
+        })
       })
-    }).catch((error) => {
-      console.log("An error occurred fetching plants from the server:", error)
-    })
+      .catch((error) => {
+        console.log("An error occurred fetching plants from the server:", error)
+      })
   }
 
+  // Function to call DB and find if current user has any items in their cart (stored in user entry as an array)
   const getCartData = () => {
-    getCart().then((cartData) => {
-      dispatch({
-        type: "setQuotePlants",
-        data: cartData
+    getCart()
+      .then((cartData) => {
+        dispatch({
+          type: "setQuotePlants",
+          data: cartData
+        })
       })
-    }).catch((error) => {
-      console.log("An error occurred fetching the cart from the server:", error)
-    })
+      .catch((error) => {
+        console.log("An error occurred fetching the cart from the server:", error)
+      })
   }
 
   useEffect(() => {
@@ -108,18 +114,17 @@ const App = () => {
     }
   }, []);
 
-  // ONLY CURRENTLY WORKING IN DEVELOPMENT 
   useEffect(() => {
-    userAdmin().then((res) => {
-      console.log(res.status)
-      dispatch({
-        type:'setAdmin',
-        data: true
+    userAdmin()
+      .then((res) => {
+        dispatch({
+          type:'setAdmin',
+          data: true
+        })
       })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+      .catch((error) => {
+        // console.log(error)
+      })
   },[])
 
   useEffect(() => {

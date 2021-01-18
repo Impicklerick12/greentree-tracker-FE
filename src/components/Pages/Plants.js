@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import PlantsEach from './PlantsEach'
-import FilterOptions from './FilterOptions'
-import { useGlobalState } from '../config/store'
-import { getAllFilteredPlants } from '../services/plantServices'
+import PlantsEach from '../PlantsEach'
+import FilterOptions from '../FilterOptions'
+import { useGlobalState } from '../../config/store'
+import { getAllFilteredPlants } from '../../services/plantServices'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 

@@ -2,10 +2,10 @@
 export { default as Navbar } from './components/Navbar'
 
 // Home/Landing Page
-export { default as Landing } from './components/Landing'
+export { default as Landing } from './components/Pages/Landing'
 
 // Login Page
-export { default as Login } from './components/Login'
+export { default as Login } from './components/Pages/Login'
 
 // Register Page
 export { default as Register } from './components/Register'
@@ -14,7 +14,7 @@ export { default as Register } from './components/Register'
 export { default as UserAccount } from './components/UserAccount'
 
 // Plants Page
-export { default as Plants } from './components/Plants'
+export { default as Plants } from './components/Pages/Plants'
 
 // Plants Show Page
 export { default as PlantsShow } from './components/PlantsShow'
@@ -26,13 +26,13 @@ export { default as PlantsEdit } from './components/PlantsEdit'
 export { default as QuoteRequest } from './components/QuoteRequest'
 
 // Contact Page
-export { default as Contact } from './components/Contact'
+export { default as Contact } from './components/Pages/Contact'
 
 // Admin Page
-export { default as Admin } from './components/Admin'
+export { default as Admin } from './components/Pages/Admin'
 
 // Not Found Page
-export { default as NotFound } from './components/NotFound'
+export { default as NotFound } from './components/Pages/NotFound'
 
 // Footer Component
 export { default as Footer } from './components/Footer'
