@@ -33,13 +33,18 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: "white",
+      color: {
+          xs: "black",
+          sm: "white",
+          md: "white",
+          lg: "white",
+          xl: "white",
     },
     title: {
       flexGrow: 1,
       color: "white"
     }
-  }));
+}}));
 
 const Navbar = ({history}) => {
 
@@ -160,7 +165,6 @@ const Navbar = ({history}) => {
                                             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
                                             </IconButton>
-                                            {/* <Button onClick={() => handleMenuClick('/auth/register')}>Register</Button> */}
                                         </>
                                     )}
                                     </Menu>
@@ -202,7 +206,6 @@ const Navbar = ({history}) => {
                                             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
                                             </IconButton>
-                                            {/* <Button onClick={() => handleMenuClick('/auth/register')} style={{ color: 'white'}}>Register</Button> */}
                                         </>
                                     )}
                                 </>
