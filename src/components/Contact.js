@@ -5,13 +5,21 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import { 
+    makeStyles, 
+    createMuiTheme,
+    ThemeProvider, 
+    responsiveFontSizes
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
 });
+
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme)
 
 function createData(contact, information) {
     return { contact, information };
@@ -30,9 +38,11 @@ const Contact = () => {
     return (
         <div>
             <Box py={4} align="center">
-                <Typography variant="h6">
-                    Contact Us
-                </Typography>
+                <ThemeProvider theme={theme}>
+                    <Typography variant="h4">
+                        Contact Us
+                    </Typography>
+                </ThemeProvider>
             </Box>
             <Box py={4} align="center">
                 <TableContainer component={Paper}>
