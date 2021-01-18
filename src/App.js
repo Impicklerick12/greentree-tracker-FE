@@ -163,7 +163,7 @@ const App = () => {
                 <Route exact path="/auth/register" component={Register} />
 
                 {/* UserAccount Component */}
-                <Route exact path="/account"><UserAccount /></Route>
+                <Route exact path="/account" component={UserAccount}/>
 
                 {/* Plants Component */}
                 <Route exact path="/plants" component={Plants} />
@@ -189,10 +189,9 @@ const App = () => {
             </Container>
 
           {/* Footer component */}
-          {/* <Footer /> */}
+          <Footer />
 
         </BrowserRouter>
-        <Footer />
       </StateContext.Provider>
     </div>
   );
