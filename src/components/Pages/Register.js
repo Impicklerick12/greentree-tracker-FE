@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useGlobalState } from '../config/store'
-import { registerUser } from '../services/authServices'
-import { alertBanner } from './Alerts'
+import { useGlobalState } from '../../config/store'
+import { registerUser } from '../../services/authServices'
+import { alertBanner } from '../Alerts'
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid,

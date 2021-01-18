@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import StockPlant from '../images/stock-plant.jpg'
+import StockPlant from '../../images/stock-plant.jpg'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { useGlobalState } from '../config/store'
-import { addQuote } from '../services/quoteServices'
-import { clearCart } from '../services/cartServices'
-import QuoteItem from './QuoteItem'
-import { alertBanner } from './Alerts'
+import { useGlobalState } from '../../config/store'
+import { addQuote } from '../../services/quoteServices'
+import { clearCart } from '../../services/cartServices'
+import QuoteItem from '../Quotes/QuoteItem'
+import { alertBanner } from '../Alerts'
 
 import { 
     Button,

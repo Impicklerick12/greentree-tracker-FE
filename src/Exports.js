@@ -8,22 +8,22 @@ export { default as Landing } from './components/Pages/Landing'
 export { default as Login } from './components/Pages/Login'
 
 // Register Page
-export { default as Register } from './components/Register'
+export { default as Register } from './components/Pages/Register'
 
 // User Account Page
-export { default as UserAccount } from './components/UserAccount'
+export { default as UserAccount } from './components/Pages/UserAccount'
 
 // Plants Page
 export { default as Plants } from './components/Pages/Plants'
 
 // Plants Show Page
-export { default as PlantsShow } from './components/PlantsShow'
+export { default as PlantsShow } from './components/Plants/PlantsShow'
 
 // Plants Edit Page
-export { default as PlantsEdit } from './components/PlantsEdit'
+export { default as PlantsEdit } from './components/Plants/PlantsEdit'
 
 // Quote Request Page
-export { default as QuoteRequest } from './components/QuoteRequest'
+export { default as QuoteRequest } from './components/Pages/QuoteRequest'
 
 // Contact Page
 export { default as Contact } from './components/Pages/Contact'

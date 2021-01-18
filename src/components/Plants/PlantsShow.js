@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { useGlobalState } from '../config/store'
-import StockPlant from '../images/stock-plant.jpg'
-import { deletePlant } from '../services/plantServices'
-import { addPlantToCart } from '../services/cartServices'
-import { alertBanner } from './Alerts'
+import { useGlobalState } from '../../config/store'
+import StockPlant from '../../images/stock-plant.jpg'
+import { deletePlant } from '../../services/plantServices'
+import { addPlantToCart } from '../../services/cartServices'
+import { alertBanner } from '../Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {

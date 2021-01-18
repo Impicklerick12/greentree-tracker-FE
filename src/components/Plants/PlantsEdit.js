@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { useGlobalState } from '../config/store'
-import { getPlantFromId, updatePlant } from '../services/plantServices'
-import { alertBanner } from './Alerts'
+import { useGlobalState } from '../../config/store'
+import { getPlantFromId, updatePlant } from '../../services/plantServices'
+import { alertBanner } from '../Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {

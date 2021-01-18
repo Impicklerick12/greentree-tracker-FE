@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react'
 import { withRouter } from 'react-router-dom'
-import { useGlobalState } from '../config/store'
-import { addPlant } from '../services/plantServices'
-import { config } from '../config/awsConfig'
+import { useGlobalState } from '../../config/store'
+import { addPlant } from '../../services/plantServices'
+import { config } from '../../config/awsConfig'
 import S3 from 'aws-s3';
 
-import { successBanner, alertBanner } from './Alerts'
+import { successBanner, alertBanner } from '../Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {

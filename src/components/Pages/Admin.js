@@ -12,8 +12,8 @@ import {
     CircularProgress
 } from '@material-ui/core';
 
-import NewPlant from '../NewPlant'
-import SubmittedQuotes from '../SubmittedQuotes'
+import NewPlant from '../Plants/NewPlant'
+import SubmittedQuotes from '../Quotes/SubmittedQuotes'
 import Users from '../Users'
 
 const useStyles = makeStyles((theme) => ({
@@ -49,20 +49,23 @@ const Admin = ({history}) => {
     const [userLoading, setUserLoading] = useState(false)
     const [users, setUsers] = useState([])
 
+    // Load all submitted quotes
     useEffect(() => {
-        setQuoteLoading(true)
-        getAllQuotes()
-            .then((res) => {
-                dispatch({
-                    type: "setSubmittedQuotes",
-                    data: res
+        if (submittedQuotes)
+            setQuoteLoading(true)
+            getAllQuotes()
+                .then((res) => {
+                    dispatch({
+                        type: "setSubmittedQuotes",
+                        data: res
+                    })
+                    setQuoteLoading(false)
                 })
-                setQuoteLoading(false)
-            })
-            .catch((error) => console.log(error))
+                .catch((error) => console.log(error))
     }, [])
 
     useEffect(() => {
+        if (admin)
         setUserLoading(true)
         findAllUsers()
             .then((res) => {

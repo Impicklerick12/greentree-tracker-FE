@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useGlobalState } from '../config/store'
-import { getPlantFromId } from '../services/plantServices'
-import { deleteItemFromCart, updateCart } from '../services/cartServices'
-import { alertBanner } from './Alerts'
+import { useGlobalState } from '../../config/store'
+import { getPlantFromId } from '../../services/plantServices'
+import { deleteItemFromCart, updateCart } from '../../services/cartServices'
+import { alertBanner } from '../Alerts'
 
 import { 
     IconButton,

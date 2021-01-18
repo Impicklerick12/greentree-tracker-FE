@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useGlobalState } from '../config/store'
-import { getPlantFromId } from '../services/plantServices'
-import { findUser } from '../services/authServices'
-import { deleteQuote, updateQuote } from '../services/quoteServices'
-import { alertBanner } from './Alerts'
+import { useGlobalState } from '../../config/store'
+import { getPlantFromId } from '../../services/plantServices'
+import { findUser } from '../../services/authServices'
+import { deleteQuote, updateQuote } from '../../services/quoteServices'
+import { alertBanner } from '../Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {

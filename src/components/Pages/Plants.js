@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PlantsEach from '../PlantsEach'
+import PlantsEach from '../Plants/PlantsEach'
 import FilterOptions from '../FilterOptions'
 import { useGlobalState } from '../../config/store'
 import { getAllFilteredPlants } from '../../services/plantServices'

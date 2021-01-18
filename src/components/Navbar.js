@@ -2,14 +2,12 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { useGlobalState } from '../config/store'
 import { logoutUser, removeLoggedInUser, removeUserId } from '../services/authServices'
-import logo from '../images/logo.png';
 
 import {
     AppBar,
     Toolbar,
     Typography,
     IconButton,
-    Button,
     MenuItem,
     Menu,
     useMediaQuery,
@@ -24,7 +22,6 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import { 
     makeStyles,
@@ -60,19 +57,20 @@ const Navbar = ({history}) => {
 
     // Logout user
     function handleLogout() {
-        logoutUser().then((response) => {
-            console.log("Got back response on logout", response.status)
-        }).catch ((error) => {
-            console.log("The server may be down - caught an exception on logout:", error)
-        })
-        // Even if we catch an error, logout the user locally
-        dispatch({
-            type: "setLoggedInUser",
-            data: null
-        })
-        removeLoggedInUser()
-        removeUserId()
-        history.push('/auth/login')
+        logoutUser()
+            .then((response) => {
+                console.log("Got back response on logout", response.status)
+            }).catch ((error) => {
+                console.log("The server may be down - caught an exception on logout:", error)
+            })
+            // Even if we catch an error, logout the user locally
+            dispatch({
+                type: "setLoggedInUser",
+                data: null
+            })
+            removeLoggedInUser()
+            removeUserId()
+            history.push('/auth/login')
     }
 
     const handleMenu = (event) => {
@@ -110,20 +108,20 @@ const Navbar = ({history}) => {
                                         id="menu-appbar"
                                         anchorEl={anchorEl}
                                         anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
+                                            vertical: 'top',
+                                            horizontal: 'right',
                                         }}
                                         keepMounted
                                         transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
+                                            vertical: 'top',
+                                            horizontal: 'right',
                                         }}
                                         open={open}
                                         onClose={() => setAnchorEl(null)}
                                     >
                                     {loggedInUser ? (
                                         <>
-                                            <MenuItem id="home" onClick={() => handleMenuClick('/')} edge="start" color="inherit" aria-label="menu" title="Home">
+                                            <MenuItem id="home" onClick={() => handleMenuClick('/')} edge="start" color="inherit" aria-label="menu">
                                                 <ListItemIcon>
                                                     <HomeRoundedIcon fontSize="large" className={classes.menuButton}/>
                                                 </ListItemIcon>
@@ -164,7 +162,7 @@ const Navbar = ({history}) => {
                                         </>
                                     ) : (
                                         <>
-                                            <MenuItem id="home" onClick={() => handleMenuClick('/')} edge="start" color="inherit" aria-label="menu" title="Home">
+                                            <MenuItem id="home" onClick={() => handleMenuClick('/')} edge="start" color="inherit" aria-label="menu">
                                                 <ListItemIcon>
                                                     <HomeRoundedIcon fontSize="large" className={classes.menuButton}/>
                                                 </ListItemIcon>
@@ -182,7 +180,7 @@ const Navbar = ({history}) => {
                                                 </ListItemIcon>
                                                 <ListItemText primary="Contact" />
                                             </MenuItem>
-                                            <MenuItem id="login" onClick={() => handleMenuClick('/auth/login')}edge="start" color="inherit" aria-label="menu">
+                                            <MenuItem id="login" onClick={() => handleMenuClick('/auth/login')} edge="start" color="inherit" aria-label="menu">
                                                 <ListItemIcon>
                                                     <AccountCircleRoundedIcon fontSize="large" className={classes.menuButton}/>
                                                 </ListItemIcon>

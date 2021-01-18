@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import { useGlobalState } from '../config/store'
+import { useGlobalState } from '../../config/store'
 import { 
     findUser, 
     updateUser, 
     logoutUser, 
     removeLoggedInUser, 
     removeUserId 
-} from '../services/authServices'
+} from '../../services/authServices'
 
 import { 
     CircularProgress,

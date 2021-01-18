@@ -4,6 +4,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import image1 from "../../images/artem-kniaz-03Dhzux8mCI-unsplash.jpg";
 import image2 from "../../images/george-bakos-SEFaaIjrjZA-unsplash.jpg";
 import image3 from "../../images/stock-plant.jpg";
+import logo from '../../images/logo.png';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -29,7 +30,9 @@ const Landing = () => {
             <AliceCarousel 
                 autoPlay 
                 autoPlayInterval="3000"
-                disableButtonsControls="true">
+                disableButtonsControls="true"
+            >
+                <img src={logo} width="100%" height="100%" alt="plant image 3"/>
                 <img src={image1} width="100%" height="100%" alt="plant image 1"/>
                 <img src={image2} width="100%" height="100%" alt="plant image 2"/>
             </AliceCarousel>
@@ -85,7 +88,9 @@ const Landing = () => {
                         style={{ border: 0 }} 
                         allowFullScreen="" 
                         aria-hidden="false" 
-                        tabIndex="0">
+                        tabIndex="0"
+                        title="Greentree Tracker Location"
+                    >
                     </iframe>
                 </Grid>
             </Grid>
