@@ -33,12 +33,15 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: {
-          xs: "black",
-          sm: "white",
-          md: "white",
-          lg: "white",
-          xl: "white",
+      color: "white",
+    icon: {
+        color: {
+            xs: "black",
+            sm: "white",
+            md: "white",
+            lg: "white",
+            xl: "white",
+        }
     },
     title: {
       flexGrow: 1,
@@ -132,37 +135,37 @@ const Navbar = ({history}) => {
                                     >
                                     {loggedInUser ? (
                                         <>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <HomeRoundedIcon onClick={() => handleMenuClick('/')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/account')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <EcoRoundedIcon onClick={() => handleMenuClick('/plants')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <PhoneRoundedIcon onClick={() => handleMenuClick('/contact')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <SupervisorAccountRoundedIcon onClick={() => handleMenuClick('/admin')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <ExitToAppRoundedIcon onClick={handleLogout} fontSize="large" />
                                             </IconButton>
                                         </>
                                     ) : (
                                         <>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <HomeRoundedIcon onClick={() => handleMenuClick('/')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <EcoRoundedIcon onClick={() => handleMenuClick('/plants')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <PhoneRoundedIcon onClick={() => handleMenuClick('/contact')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
                                             </IconButton>
                                         </>
@@ -173,37 +176,37 @@ const Navbar = ({history}) => {
                                 <>
                                     { loggedInUser ? (
                                         <>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <HomeRoundedIcon onClick={() => handleMenuClick('/')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/account')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <EcoRoundedIcon onClick={() => handleMenuClick('/plants')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <PhoneRoundedIcon onClick={() => handleMenuClick('/contact')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <SupervisorAccountRoundedIcon onClick={() => handleMenuClick('/admin')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <ExitToAppRoundedIcon onClick={handleLogout} fontSize="large" />
                                             </IconButton>
                                         </>
                                     ) : (
                                         <>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <HomeRoundedIcon onClick={() => handleMenuClick('/')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <EcoRoundedIcon onClick={() => handleMenuClick('/plants')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <PhoneRoundedIcon onClick={() => handleMenuClick('/contact')} fontSize="large" />
                                             </IconButton>
-                                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenu}>
+                                            <IconButton edge="start" className={classes.icon} color="inherit" aria-label="menu" onClick={handleMenu}>
                                                 <AccountCircleRoundedIcon onClick={() => handleMenuClick('/auth/login')} fontSize="large" />
                                             </IconButton>
                                         </>
