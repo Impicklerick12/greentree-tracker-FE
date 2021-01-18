@@ -1,10 +1,10 @@
-import react, { useEffect, useReducer } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import stateReducer from './config/stateReducer'
-import { StateContext } from './config/store'
-import { getPlantFromId, getAllPlants } from './services/plantServices'
-import { getCart } from './services/cartServices'
-import { getLoggedInUser, userAdmin, getUserId } from './services/authServices'
+import react, { useEffect, useReducer } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import stateReducer from './config/stateReducer';
+import { StateContext } from './config/store';
+import { getPlantFromId, getAllPlants } from './services/plantServices';
+import { getCart } from './services/cartServices';
+import { getLoggedInUser, userAdmin, getUserId } from './services/authServices';
 
 import {
   Navbar,
@@ -20,14 +20,14 @@ import {
   Admin,
   NotFound,
   Footer
-} from './Exports'
+} from './Exports';
 
 import {
   Container
-} from '@material-ui/core'
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-require('dotenv').config()
+require('dotenv').config();
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,10 +53,10 @@ const App = () => {
     submittedQuotes: [],
     searchValue: null,
     admin: null
-  }
+  };
 
   // Create state reducer store and dispatcher
-  const [store, dispatch] = useReducer(stateReducer, initialState)
+  const [store, dispatch] = useReducer(stateReducer, initialState);
   const { loggedInUser, plants } = store
 
   function fetchAllPlants() {
@@ -65,12 +65,12 @@ const App = () => {
         dispatch({
           type: "setPlants",
           data: plantData
-        })
+        });
       })
       .catch((error) => {
-        console.log("An error occurred fetching plants from the server:", error)
+        console.log("An error occurred fetching plants from the server:", error);
       })
-  }
+  };
 
   // Function to call DB and find if current user has any items in their cart (stored in user entry as an array)
   const getCartData = () => {
@@ -79,39 +79,33 @@ const App = () => {
         dispatch({
           type: "setQuotePlants",
           data: cartData
-        })
+        });
       })
       .catch((error) => {
-        console.log("An error occurred fetching the cart from the server:", error)
+        console.log("An error occurred fetching the cart from the server:", error);
       })
-  }
+  };
 
   useEffect(() => {
     // Checking the local storage to see if there is a current user
-    const currentUser = getLoggedInUser()
+    const currentUser = getLoggedInUser();
     // If current user, set global state again to current user
-    if (currentUser) {
+    if (currentUser)
       dispatch({
           type: "setLoggedInUser",
           data: currentUser,
       });
-    } else {
-      console.log("No user in Local Storage");
-    }
   }, []);
 
   useEffect(() => {
     // Checking the local storage to see if there is a userId
     const currentUserId = getUserId()
     // If current userId, set global state again to current userId
-    if (currentUserId) {
+    if (currentUserId)
       dispatch({
           type: "setUserId",
           data: currentUserId,
       });
-    } else {
-      console.log("No userId in Local Storage");
-    }
   }, []);
 
   useEffect(() => {
@@ -120,25 +114,25 @@ const App = () => {
         dispatch({
           type:'setAdmin',
           data: true
-        })
+        });
       })
       .catch((error) => {
         // console.log(error)
-      })
+      });
   },[])
 
   useEffect(() => {
-    fetchAllPlants()
-  }, [])
+    fetchAllPlants();
+  }, []);
 
   useEffect(() => {
-    getCartData()
-  }, [])
+    getCartData();
+  }, []);
 
   const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
-  }
+  };
 
   return (
     <div className={classes.root}>
