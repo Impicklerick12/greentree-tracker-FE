@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Greentree Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Coder Academy T3A1 Full Stack App (Part B) assessment
 
-## Available Scripts
+Created by Tyler Hall and Katrina Marquez 
 
-In the project directory, you can run:
+# Links
 
-### `yarn start`
+**Deployed site (Front End)** - [GreenTree Tracker Front End](https://www.greentree-tracker.netlify.app "Greentree Tracker Wesbite")
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Github Repository (Front End)** - [Github Repo Front End](https://github.com/Impicklerick12/greentree-tracker-FE "Greentree Tracker Github Repo")
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Deployed site (Back End)** - [GreenTree Tracker Back End](https://limitless-springs-78183.herokuapp.com/ "Greentree Tracker Wesbite Back End")
 
-### `yarn test`
+**Github Repository (Back End)** - [Github Repo Back End](https://github.com/katrinamarquez/app-greentree-tracker "Greentree Tracker Github Repo Back End")
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Test Admin Access
 
-### `yarn build`
+Will allow access to plant CRUD functionalities, and /admin dashboard
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Username:** testAdmin
+**Password:** Password123
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Purpose 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Greentree Tracker is an inventory and order management solution designed for small to medium wholesale nursery businesses. 
 
-### `yarn eject`
+The key issues small to medium sized wholesale nurseries currently face is finding software that is simple to use and includes product classification fields specific for inventory found in nurseries.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Greentree Tracker worked in collaboration with a wholesale nursery in Queensland to develop a solution that is simple and easy to use with a twist. The solution provides additional functionality for customers to view and select items and request a final quotation from the nursery. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Greentree Tracker's focus is to reduce the amount of software small to medium wholesale nurseries are required to set up and manage by combining inventory and sales function in one solution. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Functionality/Features 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**User Authentication**
 
-## Learn More
+Users are able to register for an account with Greentree Tracker, which will enable them to make a quote request to the wholesaler. Users are able to sign in using their registered email address and password. Once signed in, they will be able to edit their information on their account page, changing their password and client information.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Authorisation**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Authorisation will be implemented to restrict the CRUD functionality to the Admin. Users accounts will have a different role to the Business, which will have the only Admin role. The Admin will be able to add, update and delete plant listings, and every user role will be able to read all components and content of the application. Authorisation will also restrict regular browsers from placing a quote request to the business, and will be prompted to sign in first. This will ensure that the business will only be dealing with accredited users.
 
-### Code Splitting
+**Admin CRUD Functionality**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Admin will have the ability to create new plant listings, update existing plants, and delete any or all plant listings. As mentioned previously, these functions will be limited only to users with the Admin role.
 
-### Analyzing the Bundle Size
+**Image Upload**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Image upload will be implemented to allow the Admin to post photos with plant listings. These will be stored with Amazon S3 cloud storage services, which will allow for multiple images to be hosted online for easy accessibility. If no image is uploaded, a stock image will be assigned to the plants.
 
-### Making a Progressive Web App
+**Quote Request**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The main functionality of Greentree Tracker is to allow users to make a quote request for a variety of plants from the wholesaler. Inventory can be a tricky component of Nurseries, as although the plants may be in location, they may not always be available for sale due to a number of reasons (bugs, plant quality etc). The quote request feature is provided for users to select multiple plants they wish to purchase, which can be sent to the business as well as a comment and also their contact information. The business will be able to access these quote requests through their admin dashboard, and subsequently can respond to each individual request with an informed response of their stock.
 
-### Advanced Configuration
+**Inventory Management**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+As mentioned in the feature for Quote Request, inventory available for sale might not actually be ready for purchase due to plant conditions. The concept of remaining stock is to indicate if the nursery still has the plant available for purchase pending nursery confirmation from the stock. Admin accounts will have the functionality to add in *'remaining stock'* of a particular plant.
+### Target Audience 
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The target audience for Greetree Tracker is small to medium wholesale nurseries. Wholesale nuseries operate with a B2B (Business to Business) model rather than B2C (Business to Customer).
