@@ -14,7 +14,8 @@ import {
     Grid,
     Button,
     TextField,
-    Typography
+    Typography,
+    Box
 } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
@@ -119,59 +120,71 @@ const UserAccount = ({history}) => {
     return (
         <div>
         { loggedInUser ? (
-            <Grid container justify="center">
-                <Typography variant="h2">Account</Typography>
-                {errorMessage && <p>{errorMessage}</p>}
-                { formChange && (
-                    <Grid container justify="center" className={classes.alert}>
-                        <Alert severity="info">Upon updating your user information, you will be prompted to log in again.</Alert>
-                    </Grid>
-                )}
-                { loading ? (
-                    <Grid container justify="center">
-                        <CircularProgress color="secondary" size={100}/>
-                    </Grid>
-                ) : (
-                    <Grid container justify="center">
-                        <form onSubmit={handleSubmit} className={classes.form}>
-                            <div>
-                                <TextField
-                                    required 
-                                    className={classes.textField}
-                                    variant="outlined"
-                                    id="outlined" 
-                                    type="text" 
-                                    name="username" 
-                                    label="username" 
-                                    value={formState.username}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    required 
-                                    className={classes.textField}
-                                    variant="outlined"
-                                    id="outlined" 
-                                    type="text" 
-                                    name="email" 
-                                    label="email" 
-                                    value={formState.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <Button 
-                                type="submit" 
-                                value="Update"
-                                color="primary"
-                                variant="contained"
-                            >
-                                Update
-                            </Button>
-                        </form>
-                    </Grid>
-                )}
-            </Grid>
+            <Box py={4}>
+                <Grid container justify="center">
+                    <Box py={4}>
+                        <Typography variant="body1" align="center">
+                            Update your Greentree Tracker details
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid container justify="center">
+                    <Box py={4}>
+                        <Typography variant="h2">Account</Typography>
+
+                    </Box>
+                    {errorMessage && <p>{errorMessage}</p>}
+                    { formChange && (
+                        <Grid container justify="center" className={classes.alert}>
+                            <Alert severity="info">Upon updating your user information, you will be prompted to log in again.</Alert>
+                        </Grid>
+                    )}
+                    { loading ? (
+                        <Grid container justify="center">
+                            <CircularProgress color="secondary" size={100}/>
+                        </Grid>
+                    ) : (
+                            <Grid container justify="center">
+                                <form onSubmit={handleSubmit} className={classes.form}>
+                                    <div>
+                                        <TextField
+                                            required 
+                                            className={classes.textField}
+                                            variant="outlined"
+                                            id="outlined" 
+                                            type="text" 
+                                            name="username" 
+                                            label="username" 
+                                            value={formState.username}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div>
+                                        <TextField
+                                            required 
+                                            className={classes.textField}
+                                            variant="outlined"
+                                            id="outlined" 
+                                            type="text" 
+                                            name="email" 
+                                            label="email" 
+                                            value={formState.email}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <Button 
+                                        type="submit" 
+                                        value="Update"
+                                        color="primary"
+                                        variant="contained"
+                                    >
+                                        Update
+                                    </Button>
+                                </form>
+                            </Grid>
+                    )}
+                </Grid>
+            </Box>
         ): (
             <Grid container justify="center" className={classes.notLoggedIn}>
                 <Typography variant="h2">You are not logged in</Typography>
