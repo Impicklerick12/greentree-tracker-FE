@@ -7,7 +7,8 @@ import {
     Grid,
     TextField,
     Typography,
-    Button
+    Button,
+    Box
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
@@ -73,56 +74,57 @@ const Register = ({history}) => {
  
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
                 <div>
                     {errorMessage && alertBanner(errorMessage)}
-                    <Grid container justify="center">
-                        <Typography variant="h2">Register</Typography>
-                    </Grid>
-                    <Grid container justify="center">
-                        <Grid item xs={10} sm={8} md={6} lg={4}>
-                            <form className={classes.root} onSubmit={handleSubmit}>
-                                <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
-                                </div>
-                                <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
-                                </div>
-                                <div>
-                                    {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField> */}
-                                </div>
-                                <div>
-                                    <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
-                                </div>
-                                <div>
-                                    {/* <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField> */}
-                                </div>
-                                <Button type="submit" value="Register">Register</Button>
-                            </form>
+                    <Box py={4}>
+                        <Grid item xs={12}>
+                            <Typography variant="body1" align="center">
+                            <p>Welcome to Greentree Tracker!</p> 
+                            <p>Customers are required to sign up for an account to be able to request a quote from our team.</p>
+                            </Typography>
                         </Grid>
-                    </Grid>
+                    </Box>
+                    <Box py={4}>
+                        <Grid container justify="center">
+                            <Typography variant="h2">Register</Typography>
+                        </Grid>
+                    </Box>
+                    <Box py={4}>
+                        <Grid container justify="center">
+                            <Grid item xs={10} sm={8} md={6} lg={4}>
+                                <form className={classes.root} onSubmit={handleSubmit}>
+                                    <div>
+                                        <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField>
+                                    </div>
+                                    <div>
+                                        <TextField className={classes.textArea} id="standard-basic" required type="email" name="email" label="Email" onChange={handleChange}></TextField>
+                                    </div>
+                                    <div>
+                                        {/* <TextField className={classes.textArea} id="standard-basic" required type="text" name="username" label="Username" onChange={handleChange}></TextField> */}
+                                    </div>
+                                    <div>
+                                        <TextField className={classes.textArea} id="standard-basic" required type="password" name="password" label="Password" onChange={handleChange}></TextField>
+                                    </div>
+                                    <div>
+                                        {/* <TextField className={classes.textArea} id="standard-basic" required type="password" name="password_confirmation" label="Confirm Password" onChange={handleChange}></TextField> */}
+                                    </div>
+                                    <Button type="submit" value="Register">Register</Button>
+                                </form>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    <Box py={4}>
+                        <Grid item xs={12} align="center">
+                            <Typography variant="body2">
+                                <a href="/auth/login">Already registered? Login to your account.</a>
+                            </Typography>
+                        </Grid>
+                    </Box>
                 </div>
             )}
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
         </div>
     )
 }

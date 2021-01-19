@@ -8,20 +8,20 @@ import {
     Grid,
     TextField,
     Typography,
-    Button
+    Button,
+    Box
 } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
-        margin: theme.spacing(1),
-      },
+        margin: theme.spacing(1)
+    },
     },
     textArea: {
         width: '100%'
     }
   }));
-
 
 const Login = ({history}) => {
 
@@ -59,7 +59,6 @@ const Login = ({history}) => {
                         type:'setAdmin',
                         data: true
                     })
-                    history.push('/admin')
                 }
                 setLoggedInUser(currentUser.username)
                 setUserId(currentUser._id)
@@ -86,47 +85,48 @@ const Login = ({history}) => {
     
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             { loggedInUser ? (
                 loggedInUserRedirect()
             ) : (
                 <>
                     {errorMessage && alertBanner(errorMessage)}
-                    <Grid container justify="center">
-                        <Typography variant="h2">Log In</Typography>
-                    </Grid>
-                    <Grid container justify="center">
-                        <Grid item xs={10} sm={8} md={6} lg={4}>
-                            <form className={classes.root} onSubmit={handleSubmit}>
-                                <div>
-                                    <TextField className={classes.textArea} required type="text" name="username" label="Username" onChange={handleChange}></TextField>
-                                </div>
-                                <div>
-                                    <TextField className={classes.textArea} required type="password" name="password" label="Password" onChange={handleChange}></TextField>
-                                </div>
-                                <Button type="submit" value="Sign In">Sign In</Button>
-                            </form>
+                    <Box py={4}>
+                        <Grid item xs={12}>
+                            <Typography variant="body1" align="center">
+                            <p>Welcome to Greentree Tracker!</p> 
+                            <p>Customers are required to login to an active account to be able to request a quote from our team.</p>
+                            </Typography>
                         </Grid>
-                    </Grid>
+                    </Box>
+                    <Box py={4}>
+                        <Grid container justify="center">
+                            <Typography variant="h2">Log In</Typography>
+                        </Grid>
+                    </Box>
+                    <Box py={4}>
+                        <Grid container justify="center">
+                            <Grid item xs={10} sm={8} md={6} lg={4}>
+                                <form className={classes.root} onSubmit={handleSubmit}>
+                                    <div>
+                                        <TextField className={classes.textArea} required type="text" name="username" label="Username" onChange={handleChange}></TextField>
+                                    </div>
+                                    <div>
+                                        <TextField className={classes.textArea} required type="password" name="password" label="Password" onChange={handleChange}></TextField>
+                                    </div>
+                                    <Button type="submit" value="Sign In">Sign In</Button>
+                                </form>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    <Box py={4}>
+                        <Grid item xs={12} align="center">
+                            <Typography variant="body2">
+                                <a href="/auth/register">Create new Greentree Tracker accout</a>
+                            </Typography>
+                        </Grid>
+                    </Box>
                 </>
             )}
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
         </div>
     )
 }

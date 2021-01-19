@@ -8,12 +8,12 @@ import image3 from "../images/stock-plant.jpg";
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid,
-    Typography 
+    Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     color: {
-        color: "skyblue"
+        color: "black"
     },
     text: {
 
@@ -37,7 +37,7 @@ const Landing = () => {
             <br />
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Typography className={classes.text} variant="h5" align="center" display="block">
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
                         Who are we?
                     </Typography>
                     <Typography className={classes.text} variant="h6" align="center" display="block">
@@ -55,7 +55,7 @@ const Landing = () => {
                     <img src={image3} width="90%" height="90%" alt="plant image"/>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography className={classes.text} variant="h5" align="center" display="block">
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
                         <p>What we offer?</p>
                     </Typography> 
                     <Typography className={classes.text} variant="h6" align="center" display="block">
@@ -67,16 +67,16 @@ const Landing = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} className={classes.color}>
-                    <Typography className={classes.text} variant="h5" align="center" display="block">
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
                         Where to find us
                     </Typography>
                 </Grid>
-                <br />
                 <Grid item xs={12} align="center">
                     <Typography className={classes.text} variant="h6" align="center" display="block">
                         14 Adelaide Street, Brisbane City QLD 4000
                     </Typography>
-                    <br />
+                </Grid>
+                <Grid container justify="center" item xs={12}>
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.978764016295!2d153.02095171505695!3d-27.469920482890775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b915a0467886afb%3A0x7e7af927778ca136!2s14%20Adelaide%20St%2C%20Brisbane%20City%20QLD%204000!5e0!3m2!1sen!2sau!4v1610415566345!5m2!1sen!2sau" 
                         width="600" 

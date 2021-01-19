@@ -5,6 +5,8 @@ import { StateContext } from './config/store'
 import { getPlantFromId, getAllPlants } from './services/plantServices'
 import { getCart } from './services/cartServices'
 import { getLoggedInUser, userAdmin, getUserId } from './services/authServices'
+import { typographyStyle } from './helpers/typography'
+import './styles/App.css'
 
 import {
   Navbar,
@@ -22,20 +24,32 @@ import {
   Footer
 } from './Exports'
 
+import { 
+  makeStyles,
+  ThemeProvider,
+  responsiveFontSizes,
+  createMuiTheme
+} from '@material-ui/core/styles';
+
 import {
-  Container
+  Container,
+  Typography
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
 
 require('dotenv').config()
+
+const headingFont = "'Domine', serif"
+const paragraphFont = "'Montserrat', sans-serif"
+let themeTypography = typographyStyle(headingFont, paragraphFont)
+let theme = createMuiTheme({
+  typography: themeTypography
+});
+theme = responsiveFontSizes(theme)
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
-    fontFamily: "Arial",
-  },
-  container: {
-    // height: '100%'
   }
 }));
 
@@ -139,60 +153,57 @@ const App = () => {
     <div className={classes.root}>
       <StateContext.Provider value={{store, dispatch}}>
         <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            {/* Navbar Component */}
+            <Navbar />
+              <Container maxWidth="lg" className={classes.container}>
+                  {loggedInUser 
+                  ? (
+                    <>
+                      <Typography variant="body1">Welcome back {loggedInUser}</Typography>
+                    </>
+                  )
+                  : (<Typography variant="body1">Welcome Guest</Typography>)
+                  }
+                <Switch>
+                  {/* Home Component */}
+                  <Route exact path="/"><Landing /></Route>
 
-          {/* Navbar Component */}
-          <Navbar />
+                  {/* Login Component */}
+                  <Route exact path="/auth/login" component={Login} />
 
-            <Container maxWidth="lg" className={classes.container}>
-                {loggedInUser 
-                ? (
-                  <>
-                    <p>Welcome back {loggedInUser}</p>
-                  </>
-                )
-                : (<p>Welcome Guest</p>)
-                }
-              <Switch>
-                {/* Home Component */}
-                <Route exact path="/"><Landing /></Route>
+                  {/* Register Component */}
+                  <Route exact path="/auth/register" component={Register} />
 
-                {/* Login Component */}
-                <Route exact path="/auth/login" component={Login} />
+                  {/* UserAccount Component */}
+                  <Route exact path="/account" component={UserAccount}/>
 
-                {/* Register Component */}
-                <Route exact path="/auth/register" component={Register} />
+                  {/* Plants Component */}
+                  <Route exact path="/plants" component={Plants} />
 
-                {/* UserAccount Component */}
-                <Route exact path="/account"><UserAccount /></Route>
+                  {/* Show Plant Component */}
+                  <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} capitalize={capitalize} /> } />
 
-                {/* Plants Component */}
-                <Route exact path="/plants" component={Plants} />
+                  {/* Edit Plant Component */}
+                  <Route exact path="/plants/edit/:id" component={PlantsEdit} />
 
-                {/* Show Plant Component */}
-                <Route exact path="/plants/:id" render={(props) => <PlantsShow {...props} plant={getPlantFromId(plants, props.match.params.id)} capitalize={capitalize} /> } />
+                  {/* Quote Request Component */}
+                  <Route exact path="/quote"><QuoteRequest /></Route>
 
-                {/* Edit Plant Component */}
-                <Route exact path="/plants/edit/:id" component={PlantsEdit} />
+                  {/* Contact Component */}
+                  <Route exact path="/contact"><Contact /></Route>
 
-                {/* Quote Request Component */}
-                <Route exact path="/quote"><QuoteRequest /></Route>
+                  {/* Admin Component */}
+                  <Route exact path="/admin"><Admin /></Route>
 
-                {/* Contact Component */}
-                <Route exact path="/contact"><Contact /></Route>
-
-                {/* Admin Component */}
-                <Route exact path="/admin"><Admin /></Route>
-
-                {/* Not found component which will display if a URL doesn't match a route */}
-                <Route component={NotFound} />
-              </Switch>
-            </Container>
-
-          {/* Footer component */}
-          {/* <Footer /> */}
-
+                  {/* Not found component which will display if a URL doesn't match a route */}
+                  <Route component={NotFound} />
+                </Switch>
+              </Container>
+            {/* Footer component */}
+            <Footer />
+          </ThemeProvider>
         </BrowserRouter>
-        <Footer />
       </StateContext.Provider>
     </div>
   );
