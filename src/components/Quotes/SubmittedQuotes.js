@@ -104,7 +104,6 @@ const SubmittedQuotes = ({quote}) => {
 
     function handleQuoteDelete() {
         deleteQuote(_id).then(() => {
-            console.log("deleted quote")
             const updatedQuotes = submittedQuotes ? submittedQuotes.filter((q) => q._id !== _id) : null
             dispatch({
                 type: "setSubmittedQuotes",
@@ -112,7 +111,6 @@ const SubmittedQuotes = ({quote}) => {
             })
         }).catch((error) => {
             const status = error.response ? error.response.status : 500
-            console.log("caught error on quote delete", error)
             if(status === 403)
                 setErrorMessage("You are not an admin, and unable to delete a quote")
             else
@@ -128,7 +126,10 @@ const SubmittedQuotes = ({quote}) => {
             .then((res) => {
                 setCompleted(false)
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                setErrorMessage(error)
+                
+            })
         
         // return quote.completed
     }

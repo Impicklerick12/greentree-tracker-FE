@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { useGlobalState } from '../config/store'
-import { logoutUser, removeLoggedInUser, removeUserId } from '../services/authServices'
+import { useGlobalState } from '../../config/store'
+import { logoutUser, removeLoggedInUser, removeUserId } from '../../services/authServices'
 
 import {
     AppBar,

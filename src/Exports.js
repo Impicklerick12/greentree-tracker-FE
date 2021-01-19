@@ -1,5 +1,5 @@
 // Navbar Page
-export { default as Navbar } from './components/Navbar'
+export { default as Navbar } from './components/Navigation/Navbar'
 
 // Home/Landing Page
 export { default as Landing } from './components/Pages/Landing'
@@ -35,4 +35,4 @@ export { default as Admin } from './components/Pages/Admin'
 export { default as NotFound } from './components/Pages/NotFound'
 
 // Footer Component
-export { default as Footer } from './components/Footer'
+export { default as Footer } from './components/Navigation/Footer'

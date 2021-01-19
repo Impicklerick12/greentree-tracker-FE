@@ -79,7 +79,6 @@ const Plants = () => {
     }
 
     let pageNumbers = Math.ceil((filteredPlants.length > 0) ? (filteredPlants.length / plantsPerPage) : (plants.length / plantsPerPage))
-    console.log("pageNumbers: ", pageNumbers)
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber)

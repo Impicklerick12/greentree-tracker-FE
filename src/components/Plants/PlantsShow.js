@@ -100,7 +100,6 @@ const PlantsShow = ({history, plant, capitalize}) => {
 
         deletePlant(plant._id)
             .then(() => {
-                console.log("deleted plant")
                 const updatedPlants = plants.filter((p) => p._id !== plant._id)
                 dispatch({
                     type: "setPlants",
@@ -110,7 +109,6 @@ const PlantsShow = ({history, plant, capitalize}) => {
             })
             .catch((error) => {
                 const status = error.response ? error.response.status : 500
-                console.log("caught error on delete", error)
                 if(status === 403) {
                     setErrorMessage("You are not an admin, and unable to delete a plant")
                 } else {

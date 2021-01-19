@@ -77,17 +77,14 @@ const QuoteItem = ({ cartPlants }) => {
 
         deleteItemFromCart(plant_id)
             .then((res) => {
-                console.log("attempted deleted plant successful")
                 const updatedCart = quotePlants.filter((p) => p.plant_id !== plant_id)
                 dispatch({
                     type: "setQuotePlants",
                     data: updatedCart
                 })
-                console.log(quotePlants)
             })
             .catch((error) => {
                 const status = error.response ? error.response.status : 500
-                console.log("caught error on cart delete", error)
                 if(status === 403)
                     setErrorMessage("You are not an admin, and unable to delete a plant")
                 else
@@ -111,7 +108,6 @@ const QuoteItem = ({ cartPlants }) => {
 
         updateCart(data)
             .then((res) => {
-                console.log(res)
                 // const otherCartItmes = quotePlants.filter((p) => p.plant_id !== plant_id)
                 // dispatch({
                 //     type: "setQuotePlants",
@@ -120,7 +116,6 @@ const QuoteItem = ({ cartPlants }) => {
             })
             .catch((error) => {
                 const status = error.response ? error.response.status : 500
-                console.log("caught error on quantity edit", error)
                 if(status === 403)
                     setCartErrorMessage("Sorry you do not have permission to update the cart")
                 else

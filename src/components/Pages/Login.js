@@ -54,7 +54,6 @@ const Login = ({history}) => {
         loginUser(userDetails)
             .then((res) => {
                 let currentUser = res.user
-                console.log(currentUser)
                 if (currentUser.role === "admin") {
                     dispatch({
                         type:'setAdmin',

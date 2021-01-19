@@ -46,7 +46,6 @@ const QuoteRequest = ({history}) => {
 
     const { store, dispatch } = useGlobalState()
     const { loggedInUser, quotePlants } = store
-    // console.log(quotes)
 
     const [quoteRequestComment, setQuoteRequestComment] = useState("")
     const [total, setTotal] = useState([])
@@ -103,7 +102,6 @@ const QuoteRequest = ({history}) => {
     }
 
     const updateTotal = (plantSubtotal) => {
-        console.log("plant subtotal: ", plantSubtotal)
         setTotal(plantSubtotal)
     }
 

@@ -77,7 +77,6 @@ const NewPlant = ({history}) => {
             ...formState,
             [name]: value
         })
-        console.log(formState)
     }
 
     const handleCategoryChange = (event) => {
@@ -113,7 +112,6 @@ const NewPlant = ({history}) => {
             quantity: formState.quantity,
             price: formState.price
         }
-        console.log("newPlant: ", newPlant)
         addPlant(newPlant).then((newPlant) => {
             dispatch({
                 type: "setPlants",
