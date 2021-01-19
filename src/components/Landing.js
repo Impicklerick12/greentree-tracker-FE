@@ -5,12 +5,7 @@ import image1 from "../images/artem-kniaz-03Dhzux8mCI-unsplash.jpg";
 import image2 from "../images/george-bakos-SEFaaIjrjZA-unsplash.jpg";
 import image3 from "../images/stock-plant.jpg";
 
-import { 
-    makeStyles, 
-    createMuiTheme,
-    ThemeProvider,
-    responsiveFontSizes,
-} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid,
     Typography,
@@ -24,15 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
     }
 }));
-
-let theme = createMuiTheme({
-    typography: {
-        h3: {
-            fontFamily: "verdana"
-        },
-    }
-});
-theme = responsiveFontSizes(theme)
 
 const Landing = () => {
 
@@ -51,30 +37,9 @@ const Landing = () => {
             <br />
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <ThemeProvider theme={theme}>
-                        <Typography className={classes.text} variant="h3" align="center" display="block">
-                            Who are we?
-                        </Typography>
-                        <Typography className={classes.text} variant="h6" align="center" display="block">
-                            <ul>
-                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
-                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
-                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
-                            </ul>
-                        </Typography>
-                    </ThemeProvider>
-                </Grid>
-                <Grid item xs={6}>
-                    <img src={image3} width="90%" height="90%" alt="plant image"/>
-                </Grid>
-                <Grid item xs={6}>
-                    <img src={image3} width="90%" height="90%" alt="plant image"/>
-                </Grid>
-                <Grid item xs={6}>
-                    <ThemeProvider theme={theme}>
-                        <Typography className={classes.text} variant="h3" align="center" display="block">
-                            <p>What we offer?</p>
-                        </Typography> 
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
+                        Who are we?
+                    </Typography>
                     <Typography className={classes.text} variant="h6" align="center" display="block">
                         <ul>
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
@@ -82,21 +47,34 @@ const Landing = () => {
                             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
                         </ul>
                     </Typography>
-                    </ThemeProvider>
+                </Grid>
+                <Grid item xs={6}>
+                    <img src={image3} width="90%" height="90%" alt="plant image"/>
+                </Grid>
+                <Grid item xs={6}>
+                    <img src={image3} width="90%" height="90%" alt="plant image"/>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
+                        <p>What we offer?</p>
+                    </Typography> 
+                    <Typography className={classes.text} variant="h6" align="center" display="block">
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</li>
+                        </ul>
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} className={classes.color}>
-                    <ThemeProvider theme={theme}>
-                        <Typography className={classes.text} variant="h3" align="center" display="block">
-                            Where to find us
-                        </Typography>
-                    </ThemeProvider>
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
+                        Where to find us
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} align="center">
-                    <ThemeProvider theme={theme}>
-                        <Typography className={classes.text} variant="h6" align="center" display="block">
-                            14 Adelaide Street, Brisbane City QLD 4000
-                        </Typography>
-                    </ThemeProvider>
+                    <Typography className={classes.text} variant="h6" align="center" display="block">
+                        14 Adelaide Street, Brisbane City QLD 4000
+                    </Typography>
                 </Grid>
                 <Grid container justify="center" item xs={12}>
                     <iframe 
