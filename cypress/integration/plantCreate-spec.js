@@ -7,8 +7,8 @@ describe('Testing the create plant functionality', () => {
     it('should allow Admin account to create a plant', () => {
         // admin link should be present
         cy.visit('/admin')
+        cy.wait(5000)
         cy.url().should('contain', 'admin')
-
         // new plant information
         const newPlant = {
             common_name: "Cypress",
@@ -39,6 +39,28 @@ describe('Testing the create plant functionality', () => {
         // delete test plant
         cy.get('button[id="delete"]').click()
         cy.url().should('contain', '/plants')
+    })
+
+    it('should not allow Admin to create a plant with missing information', () => {
+        // new plant information
+        const newPlant = {
+            common_name: "Cypress",
+            description: "Cypress",
+            quantity: 1,
+        }
+        const { common_name, description, quantity } = newPlant
+        // add in new plant information into form fields
+        cy.get('input[name="common_name"]').type(common_name)
+        cy.get('textarea[name="description"]').type(description)
+        cy.get('input[name="quantity"]').type(quantity)
+        cy.get('#category').click()
+        cy.contains('li', 'Ground Cover').click()
+        cy.get('#pot_size').click()
+        cy.contains('li', '250mm').click()
+        cy.contains('span', 'Add Plant').click()
+
+        // should not be redirected away from /admin
+        cy.url().should('contain', '/admin')
     })
 })
 
