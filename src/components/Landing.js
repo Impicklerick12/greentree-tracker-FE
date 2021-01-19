@@ -9,11 +9,11 @@ import {
     makeStyles, 
     createMuiTheme,
     ThemeProvider,
-    responsiveFontSizes
+    responsiveFontSizes,
 } from '@material-ui/core/styles';
 import { 
     Grid,
-    Typography 
+    Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-let theme = createMuiTheme();
+let theme = createMuiTheme({
+    typography: {
+        h3: {
+            fontFamily: "verdana"
+        },
+    }
+});
 theme = responsiveFontSizes(theme)
 
 const Landing = () => {
