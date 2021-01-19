@@ -19,7 +19,10 @@ Created by Tyler Hall and Katrina Marquez
 Will allow access to plant CRUD functionalities, and /admin dashboard
 
 **Username:** testAdmin
+
 **Password:** Password123
+
+--
 
 ### Purpose 
 
