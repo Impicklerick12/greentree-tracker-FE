@@ -54,8 +54,6 @@ const Plants = () => {
     const indexOfFirstPlant = indexOfLastPlant - plantsPerPage
     const currentPlants = filteredPlants.slice(indexOfFirstPlant, indexOfLastPlant)
     const currentPlantsNoFilters = plants.slice(indexOfFirstPlant, indexOfLastPlant)
-    // console.log(searchValue)
-    console.log("filtered plants: ", filteredPlants)
 
     const filterOptions = (filteredOptions) => {
         if (filteredOptions !== null) {
