@@ -19,7 +19,13 @@ const useStyles = makeStyles({
     },
 });
 
-let theme = createMuiTheme();
+let theme = createMuiTheme({
+    typography: {
+        h3: {
+            fontFamily: "verdana"
+        },
+    }
+});
 theme = responsiveFontSizes(theme)
 
 function createData(contact, information) {
