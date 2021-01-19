@@ -9,7 +9,7 @@ import logo from '../../images/logo.png';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid,
-    Typography 
+    Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ const Landing = () => {
             <br />
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Typography className={classes.text} variant="h5" align="center" display="block">
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
                         Who are we?
                     </Typography>
                     <Typography className={classes.text} variant="h6" align="center" display="block">
@@ -58,7 +58,7 @@ const Landing = () => {
                     <img src={image3} width="90%" height="90%" alt="plant image"/>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography className={classes.text} variant="h5" align="center" display="block">
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
                         <p>What we offer?</p>
                     </Typography> 
                     <Typography className={classes.text} variant="h6" align="center" display="block">
@@ -70,7 +70,7 @@ const Landing = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} className={classes.color}>
-                    <Typography className={classes.text} variant="h5" align="center" display="block">
+                    <Typography className={classes.text} variant="h3" align="center" display="block">
                         Where to find us
                     </Typography>
                 </Grid>

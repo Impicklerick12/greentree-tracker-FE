@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         backgroundColor: 'black',
         color: 'white',
-        padding: theme.spacing(2)
+        padding: theme.spacing(2),
+        marginTop: theme.spacing(3)
     },
     info: {
         display: 'flex',

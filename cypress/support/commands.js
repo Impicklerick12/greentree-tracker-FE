@@ -32,16 +32,6 @@ Cypress.Commands.add("loginAdmin", (admin = Cypress.env('admin')) => {
     cy.get('input[name="username"]').type(admin.username)
     cy.get('input[type="password"]').type(admin.password)
     cy.get('button[type="submit"]').click()
-
-    // cy.request({
-    //     method: 'POST',
-    //     url: '/auth/login', // baseUrl is prepended to url
-    //     form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
-    //     body: {
-    //       username: admin.username,
-    //       password: admin.password
-    //     }
-    //   })
 })
 
 Cypress.Commands.add("logoutUser", () => {

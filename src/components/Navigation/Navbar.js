@@ -30,7 +30,8 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1
+        marginBottom: theme.spacing(3),
+        flexGrow: 1
     },
     icon: {
         marginRight: theme.spacing(2),
@@ -99,7 +100,7 @@ const Navbar = ({history}) => {
                                     onClick={() => handleMenuClick('/quote')}
                                     color="inherit"
                                 >
-                                    <ShoppingCartIcon />
+                                    <ShoppingCartIcon fontSize="large" className={classes.icon}/>
                                 </IconButton>
                             )}
                             { isMobile ? (
