@@ -20,6 +20,9 @@ export const typographyStyle = (headingFont, paragraphFont) => {
         },
         body1: {
             fontFamily: paragraphFont
+        },
+        body2: {
+            fontFamily: paragraphFont
         }
     }
     return style
