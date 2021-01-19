@@ -123,15 +123,14 @@ const UserAccount = ({history}) => {
             <Box py={4}>
                 <Grid container justify="center">
                     <Box py={4}>
-                        <Typography variant="body1" align="center">
-                            Update your Greentree Tracker details
-                        </Typography>
+                        <Typography variant="h2">Account</Typography>
                     </Box>
                 </Grid>
                 <Grid container justify="center">
                     <Box py={4}>
-                        <Typography variant="h2">Account</Typography>
-
+                        <Typography variant="body1" align="center">
+                            Update your Greentree Tracker details below
+                        </Typography>
                     </Box>
                     {errorMessage && <p>{errorMessage}</p>}
                     { formChange && (
