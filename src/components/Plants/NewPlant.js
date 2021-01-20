@@ -101,7 +101,6 @@ const NewPlant = ({history}) => {
 
     function handleSubmit(event) {
         event.preventDefault()
-
         const newPlant = {
             common_name: formState.common_name,
             botanical_name: formState.botanical_name,

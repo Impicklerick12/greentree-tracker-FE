@@ -188,6 +188,16 @@ const QuoteRequest = ({history}) => {
                         <Grid container justify="center">
                             <Grid item>
                                 <Typography variant="body1" color="textSecondary">Your cart is empty</Typography>
+                                <Grid container justify="center" className={classes.keepShopping}>
+                                    <Button 
+                                        onClick={() => history.push('/plants')}
+                                        variant="outlined"
+                                        color="secondary"
+                                        size="small"
+                                    >
+                                        Keep Shopping
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     )}
