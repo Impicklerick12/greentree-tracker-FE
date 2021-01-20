@@ -7,3 +7,7 @@ export function successBanner(message) {
 export function alertBanner(message) {
     return <Alert severity="error">{message}</Alert>
 }
+
+export function infoBanner(message) {
+    return <Alert severity="info">{message}</Alert>
+}

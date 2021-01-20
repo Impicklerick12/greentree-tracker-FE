@@ -4,7 +4,7 @@ import { useGlobalState } from '../../config/store'
 import StockPlant from '../../images/stock-plant.jpg'
 import { deletePlant } from '../../services/plantServices'
 import { addPlantToCart } from '../../services/cartServices'
-import { alertBanner } from '../Alerts'
+import { alertBanner, infoBanner } from '../Alerts'
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -211,7 +211,7 @@ const PlantsShow = ({history, plant, capitalize}) => {
                                 </Grid>
                             )}
                         </Grid>
-                        { loggedInUser && (
+                        { loggedInUser ? (
                             <form onSubmit={handleAddToCart}>
                                 <Grid container spacing={2}>
                                     <Grid item>
@@ -237,6 +237,8 @@ const PlantsShow = ({history, plant, capitalize}) => {
                                     </Grid>
                                 </Grid>
                             </form>
+                        ) : (
+                            infoBanner("You need to log in to add plants to your cart")
                         )}
                     </Grid>
                     <Grid item sm={12}  md={6}>

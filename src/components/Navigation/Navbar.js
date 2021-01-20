@@ -22,6 +22,7 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import SupervisorAccountRoundedIcon from '@material-ui/icons/SupervisorAccountRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import green from '@material-ui/core/colors/green';
 
 import { 
     makeStyles,
@@ -39,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
             xs: "black",
             sm: "white !important"
         }
+    },
+    cartIcon: {
+        marginRight: theme.spacing(2),
+        color: green[700]
     },
     title: {
       flexGrow: 1,
@@ -98,9 +103,9 @@ const Navbar = ({history}) => {
                             { quotePlants.length >= 1 && (
                                 <IconButton
                                     onClick={() => handleMenuClick('/quote')}
-                                    color="inherit"
+                                    color="primary"
                                 >
-                                    <ShoppingCartIcon fontSize="large" className={classes.icon}/>
+                                    <ShoppingCartIcon fontSize="large" className={classes.cartIcon}/>
                                 </IconButton>
                             )}
                             { isMobile ? (

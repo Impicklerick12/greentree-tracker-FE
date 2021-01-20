@@ -54,7 +54,7 @@ const PlantsEdit = ({history, match}) => {
     const classes = useStyles();
 
     const { store, dispatch } = useGlobalState()
-    const { plants } = store
+    const { plants, loggedInUser, admin } = store
     const plantId = match && match.params ? match.params.id : -1
     const plant = getPlantFromId(plants, plantId)
 
@@ -164,133 +164,139 @@ const PlantsEdit = ({history, match}) => {
 
     return (
         <>
-            <Grid container justify="center">
-                <Typography variant="h2">Edit Plant</Typography>
-            </Grid>
-            {errorMessage && alertBanner(errorMessage)}
-            <Grid className={classes.container}>
-                <Grid item sm={12} md={6}>
-                    <form className={classes.form} onSubmit={handleSubmit}>
-                        <div>
-                            <TextField 
-                                className={classes.textArea} 
-                                variant="outlined"
-                                id="outlined" 
-                                required 
-                                type="text" 
-                                name="common_name"
-                                label="Common Name"
-                                value={common_name}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <TextField 
-                                className={classes.textArea} 
-                                required 
-                                variant="outlined"
-                                id="outlined" 
-                                type="text" 
-                                name="botanical_name" 
-                                label="Botanical Name"
-                                value={botanical_name} 
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className={classes.select}>
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-outlined-label">
-                                    Category
-                                </InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    value={category}
-                                    onChange={handleCategoryChange}
-                                    label="Category"
+            { loggedInUser && admin ? (
+                <>
+                    <Grid container justify="center">
+                        <Typography variant="h2">Edit Plant</Typography>
+                    </Grid>
+                    {errorMessage && alertBanner(errorMessage)}
+                    <Grid className={classes.container}>
+                        <Grid item sm={12} md={6}>
+                            <form className={classes.form} onSubmit={handleSubmit}>
+                                <div>
+                                    <TextField 
+                                        className={classes.textArea} 
+                                        variant="outlined"
+                                        id="outlined" 
+                                        required 
+                                        type="text" 
+                                        name="common_name"
+                                        label="Common Name"
+                                        value={common_name}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div>
+                                    <TextField 
+                                        className={classes.textArea} 
+                                        required 
+                                        variant="outlined"
+                                        id="outlined" 
+                                        type="text" 
+                                        name="botanical_name" 
+                                        label="Botanical Name"
+                                        value={botanical_name} 
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className={classes.select}>
+                                    <FormControl variant="outlined" className={classes.formControl}>
+                                        <InputLabel id="demo-simple-select-outlined-label">
+                                            Category
+                                        </InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-outlined-label"
+                                            id="demo-simple-select-outlined"
+                                            value={category}
+                                            onChange={handleCategoryChange}
+                                            label="Category"
+                                        >
+                                            <MenuItem value="tree">Tree</MenuItem>
+                                            <MenuItem value="shrub">Shrub</MenuItem>
+                                            <MenuItem value="grass">Grass</MenuItem>
+                                            <MenuItem value="ground cover">Ground Cover</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <FormControl variant="outlined" className={classes.formControl}>
+                                        <InputLabel id="demo-simple-select-outlined-label">
+                                            Pot Size
+                                        </InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-outlined-label"
+                                            id="demo-simple-select-outlined"
+                                            value={pot_size}
+                                            onChange={handlePotSizeChange}
+                                            label="Pot Size"
+                                        >
+                                            <MenuItem value="140mm">140mm</MenuItem>
+                                            <MenuItem value="250mm">250mm</MenuItem>
+                                            <MenuItem value="350mm">350mm</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </div>
+                                <div>
+                                    <TextField 
+                                        className={classes.textArea} 
+                                        multiline 
+                                        required 
+                                        variant="outlined"
+                                        id="outlined" 
+                                        rows={4} 
+                                        name="description" 
+                                        label="Description"
+                                        value={description} 
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div>
+                                    <TextField 
+                                        className={classes.textArea}
+                                        variant="outlined"
+                                        id="outlined" 
+                                        onChange={handleChange}
+                                        type="number" 
+                                        name="quantity" 
+                                        label="Quantity"
+                                        value={quantity ? quantity : ""}
+                                    />
+                                </div>
+                                <div>
+                                    <TextField 
+                                        className={classes.textArea}
+                                        variant="outlined"
+                                        id="outlined"  
+                                        type="number" 
+                                        name="price" 
+                                        label="Price"
+                                        value={price}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <Button 
+                                    type="submit" 
+                                    value="Update Plant" 
+                                    variant="contained" 
+                                    color="primary"
+                                    size="medium"
+                                    className={classes.updateButton}
                                 >
-                                    <MenuItem value="tree">Tree</MenuItem>
-                                    <MenuItem value="shrub">Shrub</MenuItem>
-                                    <MenuItem value="grass">Grass</MenuItem>
-                                    <MenuItem value="ground cover">Ground Cover</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-outlined-label">
-                                    Pot Size
-                                </InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-outlined-label"
-                                    id="demo-simple-select-outlined"
-                                    value={pot_size}
-                                    onChange={handlePotSizeChange}
-                                    label="Pot Size"
+                                    Update Plant
+                                </Button>
+                            </form>
+                            <Button 
+                                    variant="outlined" 
+                                    color="secondary"
+                                    size="medium"
+                                    onClick={handleBack}
                                 >
-                                    <MenuItem value="140mm">140mm</MenuItem>
-                                    <MenuItem value="250mm">250mm</MenuItem>
-                                    <MenuItem value="350mm">350mm</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </div>
-                        <div>
-                            <TextField 
-                                className={classes.textArea} 
-                                multiline 
-                                required 
-                                variant="outlined"
-                                id="outlined" 
-                                rows={4} 
-                                name="description" 
-                                label="Description"
-                                value={description} 
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div>
-                            <TextField 
-                                className={classes.textArea}
-                                variant="outlined"
-                                id="outlined" 
-                                onChange={handleChange}
-                                type="number" 
-                                name="quantity" 
-                                label="Quantity"
-                                value={quantity ? quantity : ""}
-                            />
-                        </div>
-                        <div>
-                            <TextField 
-                                className={classes.textArea}
-                                variant="outlined"
-                                id="outlined"  
-                                type="number" 
-                                name="price" 
-                                label="Price"
-                                value={price}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <Button 
-                            type="submit" 
-                            value="Update Plant" 
-                            variant="contained" 
-                            color="primary"
-                            size="medium"
-                            className={classes.updateButton}
-                        >
-                            Update Plant
-                        </Button>
-                    </form>
-                    <Button 
-                            variant="outlined" 
-                            color="secondary"
-                            size="medium"
-                            onClick={handleBack}
-                        >
-                            Back
-                    </Button>
-                </Grid>
-            </Grid>
+                                    Back
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </>
+            ) : (
+                handleBack()
+            )}
         </>
     )
 }
