@@ -84,8 +84,6 @@ const SubmittedQuotes = ({quote}) => {
             let x = []
             quote.plants.map((p) => {
                 let quotePlant = getPlantFromId(plants, p.plant_id)
-                console.log(quote._id)
-                console.log(quotePlant)
                 if (quotePlant != undefined) {
                     x.push({
                         common_name: quotePlant.common_name,
@@ -93,7 +91,6 @@ const SubmittedQuotes = ({quote}) => {
                         id: quotePlant._id,
                         quantity: p.quantity
                     })
-                    console.log("x: ", x)
                     return x
                 }
             })
